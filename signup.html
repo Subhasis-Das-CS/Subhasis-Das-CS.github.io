@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sign Up - Pi & Pixels</title>
+    <link rel="stylesheet" href="signup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="box1"></div>
+      <div class="box2">
+        <h3>Create an account</h3>
+
+        <div class="formContainer">
+          <form>
+            <!-- Personal Details Section -->
+            <fieldset>
+              <legend>Personal Details</legend>
+
+              <input
+                type="text"
+                placeholder="Enter First Name"
+                id="firstName"
+                name="firstName"
+                required
+              />
+
+              <input
+                type="text"
+                placeholder="Enter Last Name"
+                id="lastName"
+                name="lastName"
+                required
+              />
+
+              <input
+                type="date"
+                placeholder="Enter Date of Birth"
+                id="dob"
+                name="dob"
+                required
+              />
+
+              <select id="board" name="academic" required>
+                <option value="Class VIII">Class 8</option>
+                <option value="Class IX">Class 9</option>
+                <option value="Class X">Class 10</option>
+                <option value="Class XI">Class 11</option>
+                <option value="Class XII">Class 12</option>
+                <option value="Bachelors">Bachelors</option>
+              </select>
+            </fieldset>
+
+            <!-- Contact Information Section -->
+            <fieldset>
+              <legend>Contact Information</legend>
+
+              <input
+                type="email"
+                placeholder="Enter Email"
+                id="email"
+                name="email"
+                required
+              />
+
+              <input
+                type="tel"
+                placeholder="Enter Phone Number"
+                id="phone"
+                name="phone"
+                required
+              />
+              <input
+                type="Text"
+                placeholder="Enter Pincode"
+                id="address"
+                name="address"
+                required
+              />
+            </fieldset>
+
+            <!-- Account Details Section -->
+            <fieldset>
+              <legend>Account Details</legend>
+
+              <input
+                type="password"
+                placeholder="Enter Password"
+                id="password"
+                name="password"
+                required
+              />
+
+              <select id="academic" name="academic" required>
+                <option value="Class VIII">Class 8</option>
+                <option value="Class IX">Class 9</option>
+                <option value="Class X">Class 10</option>
+                <option value="Class XI">Class 11</option>
+                <option value="Class XII">Class 12</option>
+                <option value="Bachelors">Bachelors</option>
+              </select>
+            </fieldset>
+
+            <!-- Submit Button -->
+            <button type="submit" value="submit">Sign Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

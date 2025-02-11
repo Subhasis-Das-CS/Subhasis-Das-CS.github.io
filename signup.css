@@ -1,0 +1,165 @@
+body,
+html {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  background: url("2202758.jpg");
+  background-size: 100% 100%; /* Full width and height */
+
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
+
+  align-items: center;
+  justify-content: center;
+}
+
+.box1 {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: calc(95% - 30px);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+
+  margin: 4px;
+  padding: 20px;
+}
+.box2 {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: calc(95% - 30px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+
+  margin: 4px;
+  padding: 20px;
+}
+
+h3 {
+  color: white;
+  margin-bottom: 20px;
+  font-family: "Roboto", sans-serif;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  width: 100%;
+}
+
+form label {
+  color: white;
+  font-size: 14px;
+  display: block;
+  font-family: "Roboto", sans-serif;
+}
+
+form input,
+form select,
+form button {
+  width: 100%;
+  height: 35px;
+  border-radius: 10px;
+  border: none;
+  padding: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin: 5px;
+  background-color: rgba(255, 255, 255, 0.847);
+  font-family: "Roboto", sans-serif;
+}
+
+form select {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: black;
+  font-family: "Roboto", sans-serif;
+}
+
+form button {
+  width: 100%;
+  background-color: rgba(34, 50, 131, 0.57);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s;
+  position: relative;
+  transition: transform 1s;
+  overflow: hidden;
+}
+
+form button:after {
+  content: "";
+  position: absolute;
+  height: 300px;
+  width: 300px;
+  border-radius: 50%;
+  background-color: rgb(50, 50, 205);
+  opacity: 0;
+  transition: opacity 1s, transform 1s, background-color 0.5s;
+  z-index: -1;
+}
+form button:hover:after {
+  transform: scale(3);
+  opacity: 1;
+}
+
+form button:active::after {
+  background-color: rgb(42, 165, 93);
+}
+
+form button:hover {
+  background-color: rgba(34, 50, 131, 1);
+  transform: translateY(-10px);
+}
+
+input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Fieldset Styling */
+fieldset {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+  font-family: "Roboto", sans-serif;
+}
+
+legend {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+}
+
+.formContainer::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  input[type="date"]:after {
+    content: "MM/DD/YYYY"; /* Placeholder text for date */
+    color: gray;
+    position: absolute;
+    margin-top: 0%;
+  }
+}
