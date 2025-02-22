@@ -54,7 +54,10 @@ function Question({
     <div className={styles.questionBox}>
       Score: {context.score}
       <div className={styles.questionArea}>
-        <h4>Question {qno}/10:</h4>
+        <h4>
+          Question {qno}/10:{" "}
+          <img src="./thinking.gif" width="30" alt="question" />
+        </h4>
         <h4>{question}</h4>
       </div>
       <div className={styles.options}>

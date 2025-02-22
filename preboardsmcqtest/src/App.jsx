@@ -7,6 +7,16 @@ import Question from "./question";
 import GlobalState from "./context";
 import { globalContext } from "./context";
 import { motion, AnimatePresence } from "framer-motion";
+import app from "./firebaseConfig";
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+} from "firebase/firestore";
+
 function App() {
   const [localScore, setLocalScore] = useState(0);
 
@@ -14,6 +24,30 @@ function App() {
   const [shaking, setShaking] = useState(false);
   const [startQuiz, setStartQuiz] = useState(false);
   const context = useContext(globalContext);
+  const [dataUploaded, setDataUploaded] = useState(false);
+  const db = getFirestore(app);
+
+  function showAnswer(k, index) {
+    switch (k) {
+      case "A":
+        return <span>{context.options[index].option1}</span>;
+      case "B":
+        return <span>{context.options[index].option2}</span>;
+      case "C":
+        return <span>{context.options[index].option3}</span>;
+      case "D":
+        return <span>{context.options[index].option4}</span>;
+    }
+  }
+
+  async function upload(name, score) {
+    const document = {
+      name,
+      score,
+    };
+
+    await addDoc(collection(db, "scores"), document);
+  }
 
   function continueClicked() {
     const newname = document.getElementById("name").value;
@@ -31,7 +65,16 @@ function App() {
 
   useEffect(() => {
     console.log("updated score: ", context.score);
-  }, [context.score]);
+
+    if (context.index == 10 && !dataUploaded) {
+      upload(name, context.score);
+      setDataUploaded(true); // set to true to prevent multiple uploads
+      console.log(`Uploaded, Name: ${name} Score: ${context.score}`);
+      context.correctIndices.forEach((i) => {
+        console.log(i);
+      });
+    }
+  }, [context.score, context.index]);
 
   return (
     <div className={styles.container}>
@@ -56,9 +99,32 @@ function App() {
           </button>
         </div>
       ) : context.index > 9 ? (
-        <div>
-          <h1 style={{ color: "dodgerblue" }}>Quiz ended</h1>
-          <h2 style={{ color: "dodgerblue" }}>Final Score: {context.score}</h2>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <h1 style={{ color: " #efefef" }}>Name: {name}</h1>
+
+          <h2 style={{ color: " #efefef" }}>Final Score: {context.score}</h2>
+
+          {context.correctIndices.map((i) => (
+            <div
+              className={i.correctNess ? styles.resultBox : styles.resultBoxRed}
+              key={i.index}
+            >
+              <h5>
+                Question {i.index + 1}: {context.questions[i.index]} <br></br>{" "}
+                Status: {i.correctNess ? "correct" : "incorrect"} <br></br>
+                Correct Answer: {context.answers[i.index]}. &nbsp;
+                {showAnswer(context.answers[i.index], i.index)}
+              </h5>
+            </div>
+          ))}
         </div>
       ) : (
         <div
@@ -70,9 +136,10 @@ function App() {
             alignItems: "center",
           }}
         >
-          <h4 style={{ color: "dodgerblue", marginTop: "-5px" }}>
-            User: {name}
+          <h4 style={{ color: " #efefef", marginTop: "-5px" }}>
+            User: <font color="#32e638">{name}</font>
           </h4>
+
           {/* Animated Question Transition */}
           <AnimatePresence mode="wait">
             <motion.div
@@ -99,14 +166,23 @@ function App() {
             onClick={() => {
               if (context.selectedAnswer == context.answers[context.index]) {
                 context.setScore(context.score + 1);
-
-                context.setIndex(context.index + 1);
+                context.setCorrectIndices([
+                  ...context.correctIndices,
+                  { index: context.index, correctNess: true },
+                ]);
+                console.log("index " + context.index + " added in list");
 
                 console.log("correct, Score Increased");
+
+                context.setIndex(context.index + 1);
               } else if (context.selectedAnswer == "") {
                 alert("choose an option");
               } else {
                 console.log("incorrect");
+                context.setCorrectIndices([
+                  ...context.correctIndices,
+                  { index: context.index, correctNess: false },
+                ]);
                 context.setIndex(context.index + 1);
               }
               context.setSelectedAnswer("");
@@ -118,7 +194,11 @@ function App() {
         </div>
       )}
 
-      <h6 style={{ color: "black" }}>Developed by Subhasis</h6>
+      <h6>
+        <a className={styles.link} href="https://instagram.com/Subhasisdas__">
+          🚀 Developed by Subhasis
+        </a>
+      </h6>
     </div>
   );
 }

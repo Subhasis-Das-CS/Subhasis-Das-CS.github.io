@@ -9,6 +9,7 @@ function GlobalState({ children }) {
   const [score, setScore] = useState(0);
   const [index, setIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
+  const [correctIndices, setCorrectIndices] = useState([]);
 
   function initialize() {
     setAnswers(["A", "B", "C", "D", "A", "B", "C", "D", "A", "B"]);
@@ -107,6 +108,8 @@ function GlobalState({ children }) {
         setIndex,
         selectedAnswer,
         setSelectedAnswer,
+        correctIndices,
+        setCorrectIndices,
       }}
     >
       {children}
