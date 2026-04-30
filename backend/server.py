@@ -20,6 +20,13 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+# Configure logging early so routes can use `logger` safely
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
 # Create the main app without a prefix
 app = FastAPI(title="Pi and Pixels API")
 
@@ -152,13 +159,6 @@ app.add_middleware(
 )
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
-
-
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
