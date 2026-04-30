@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
 import { Loader2, Send, ShieldCheck, CheckCircle2 } from "lucide-react";
 import {
@@ -12,6 +13,10 @@ import {
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
+
+const EMAILJS_SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
 
 const CLASS_OPTIONS = [
   "5",
@@ -38,6 +43,16 @@ export default function AdmissionForm() {
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (EMAILJS_PUBLIC_KEY) {
+      try {
+        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+      } catch (e) {
+        console.error("EmailJS init failed", e);
+      }
+    }
+  }, []);
 
   const validate = () => {
     const e = {};
@@ -75,19 +90,52 @@ export default function AdmissionForm() {
     }
     setSubmitting(true);
     try {
+      // 1) Save inquiry to backend (MongoDB) — source of truth
       const res = await axios.post(`${API}/admissions`, form, {
         timeout: 25000,
       });
-      if (res.data?.success) {
-        setSubmitted(true);
-        setForm(initial);
-        toast.success(
-          res.data.message ||
-            "Your response has been recorded. We will contact you soon."
-        );
-      } else {
+
+      if (!res.data?.success) {
         toast.error("Something went wrong. Please try again.");
+        return;
       }
+
+      // 2) Send email via EmailJS (JavaScript). Don't block UX if it fails.
+      if (
+        EMAILJS_SERVICE_ID &&
+        EMAILJS_TEMPLATE_ID &&
+        EMAILJS_PUBLIC_KEY
+      ) {
+        try {
+          await emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
+            {
+              full_name: form.full_name,
+              phone: form.phone,
+              school_name: form.school_name,
+              student_class:
+                form.student_class === "College/Above"
+                  ? "College / Above"
+                  : `Class ${form.student_class}`,
+              submitted_at: new Date().toLocaleString(),
+            },
+            { publicKey: EMAILJS_PUBLIC_KEY }
+          );
+        } catch (emailErr) {
+          // Email failure should NOT block — DB already has the record.
+          console.error("EmailJS send failed:", emailErr);
+        }
+      } else {
+        console.warn("EmailJS env vars missing — skipping email send.");
+      }
+
+      setSubmitted(true);
+      setForm(initial);
+      toast.success(
+        res.data.message ||
+          "Your response has been recorded. We will contact you soon."
+      );
     } catch (err) {
       const detail =
         err?.response?.data?.detail ||

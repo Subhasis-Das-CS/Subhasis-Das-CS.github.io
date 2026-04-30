@@ -3,7 +3,17 @@ import time
 import pytest
 import requests
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://pixel-academy-1.preview.emergentagent.com').rstrip('/')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
+if not BASE_URL:
+    # Fallback to reading from /app/frontend/.env
+    try:
+        with open('/app/frontend/.env') as f:
+            for line in f:
+                if line.startswith('REACT_APP_BACKEND_URL='):
+                    BASE_URL = line.split('=', 1)[1].strip().rstrip('/')
+                    break
+    except Exception:
+        pass
 API = f"{BASE_URL}/api"
 
 
@@ -40,7 +50,7 @@ def test_create_admission_valid(s):
     assert data.get("id")
 
     # email is async-ish; allow time
-    time.sleep(2)
+    time.sleep(1)
     rl = s.get(f"{API}/admissions", timeout=20)
     assert rl.status_code == 200
     items = rl.json()
@@ -48,9 +58,23 @@ def test_create_admission_valid(s):
     found = next((i for i in items if i.get("id") == data["id"]), None)
     assert found is not None, "Admission not persisted"
     assert "_id" not in found
-    assert found["email_status"] in ("sent", "pending", "skipped") or found["email_status"].startswith("failed")
+    # After Resend removal: there must be NO email_status field on the persisted record.
+    assert "email_status" not in found, f"email_status field should be removed but found: {found.get('email_status')}"
     # most recent first
     assert items[0]["id"] == data["id"]
+
+
+def test_backend_has_no_resend_references():
+    """Verify backend code & env have no Resend/Sender/Admin email references after refactor."""
+    forbidden_tokens = ["resend", "RESEND_API_KEY", "SENDER_EMAIL", "ADMIN_EMAIL"]
+    for path in ("/app/backend/server.py", "/app/backend/.env"):
+        try:
+            with open(path) as f:
+                content = f.read().lower()
+        except FileNotFoundError:
+            continue
+        for tok in forbidden_tokens:
+            assert tok.lower() not in content, f"Found '{tok}' in {path}"
 
 
 def test_invalid_class(s):

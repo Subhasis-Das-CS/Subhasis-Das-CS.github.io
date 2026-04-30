@@ -1,0 +1,33 @@
+{
+  "summary": "Re-tested Pi and Pixels MVP after Resend->EmailJS refactor. Backend: 9/9 pytest cases passed including new test asserting NO references to resend/RESEND_API_KEY/SENDER_EMAIL/ADMIN_EMAIL exist in /app/backend/server.py or /app/backend/.env, and that persisted admissions no longer carry an email_status field. Frontend: Hero heading 'Master Coding with Pi and Pixels' renders, Logic/Creativity present in subheading, 4 course cards rendered, WhatsApp href is https://wa.me/917449858122?text=..., header Apply Now scrolls to #apply, empty-form submit shows error-full-name/error-phone/error-school-name/error-class, full submit triggers POST /api/admissions (200) AND POST https://api.emailjs.com/api/v1.0/email/send, success state (data-testid=admission-success) shows 'Your response has been recorded.', mobile menu toggle reveals mobile menu. EmailJS server returned 412 (Precondition Failed) on the test send - this is a remote EmailJS account/template config issue (allowed origins / public key restrictions), NOT a code defect. Per requirements the form success path triggers regardless of EmailJS outcome - verified working.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {"flow": "EmailJS send", "issue": "POST https://api.emailjs.com/api/v1.0/email/send returns 412 Precondition Failed in preview environment. Likely cause: EmailJS public key has allowed-origins restriction that does not include the preview emergentagent.com domain, or the template/service is not yet activated. The request DOES fire correctly from frontend code; success UX works regardless. Action: in EmailJS dashboard add the preview/prod domains to the public key's allowed origins, and confirm template_2mwe97r and service_6fw8naj are published.", "affected_selectors": ["[data-testid='submit-admission-btn']"]}
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_admissions.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "OPTIONAL (config, not code): In EmailJS dashboard, whitelist the preview emergentagent.com domain in the Public Key's allowed origins so api.emailjs.com stops returning 412. Code path is correct."
+  ],
+  "critical_code_review_comments": [
+    "logger is initialised AFTER routes that reference it (server.py line 113 uses logger; logger is defined at line 159). Currently safe because routes are called lazily after module import completes, but it's still poor ordering — move logging.basicConfig and logger = logging.getLogger above the route definitions.",
+    "GET /api/admissions is unauthenticated and returns up to 500 records including phone/school/full_name. For an MVP it's OK, but flag as a security concern before going public.",
+    "AdmissionForm.jsx hardcodes `to_name`-style template params under field names full_name/phone/school_name/student_class - these MUST match variable names inside the EmailJS template_2mwe97r template, otherwise email body will be empty.",
+    "EmailJS 412 error in @emailjs/browser triggered a secondary 'body stream already read' TypeError - cosmetic, swallowed by try/catch, does not impact UX.",
+    "Honeypot returns success:true with id=null — bots can deduce they were dropped by absence of id. Consider returning a synthetic uuid."
+  ],
+  "updated_files": ["/app/backend/tests/test_admissions.py"],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "test_credentials": "N/A — no auth on this MVP",
+  "seed_data_creation": "TEST_-prefixed admissions written during pytest + Playwright runs (TEST_Alice Walker, TEST_Class{5-12,College/Above}, TEST_Playwright User). Safe to leave or purge via Mongo.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend tests at /app/backend/tests/test_admissions.py (9 tests, all pass). Backend cleanly stripped of Resend - no email_status field, no resend imports/env vars. Frontend EmailJS integration is wired correctly and the network call fires; remote 412 from EmailJS is environmental (account/domain config) and is intentionally non-blocking.",
+  "rca of the issue": "EmailJS 412 RCA: api.emailjs.com returns HTTP 412 (Precondition Failed) when the request public key, service id, or template id don't match an active configuration, or when origin is not whitelisted. Reproduction: submit the admission form on preview URL -> network tab shows POST /api/v1.0/email/send -> 412. Mitigation: in EmailJS dashboard, edit the public key DBQnC9Pai--0akuRo to allow https://pixel-academy-1.preview.emergentagent.com (and any prod domain), publish template_2mwe97r, and activate service_6fw8naj. No code change required."
+}
