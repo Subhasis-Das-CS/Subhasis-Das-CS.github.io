@@ -1,70 +1,106 @@
-# Getting Started with Create React App
+# Pi and Pixels — Landing Page
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Modern, responsive landing page for the **Pi and Pixels** educational institute.
+React (CRA) + Tailwind + shadcn/ui + EmailJS. **No backend** — admission inquiries
+are emailed directly from the browser via EmailJS.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Local development
 
-### `npm start`
+```bash
+yarn install
+yarn start          # http://localhost:3000
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Environment variables (already set in `.env`):
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+| Var                              | Purpose                       |
+| -------------------------------- | ----------------------------- |
+| `REACT_APP_EMAILJS_SERVICE_ID`   | EmailJS Service ID            |
+| `REACT_APP_EMAILJS_TEMPLATE_ID`  | EmailJS Template ID           |
+| `REACT_APP_EMAILJS_PUBLIC_KEY`   | EmailJS Public Key            |
 
-### `npm test`
+Production builds use `.env.production` automatically.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Deploy to GitHub Pages
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This project ships with a one-command deploy script.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1. Update `homepage` in `package.json`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Replace the placeholder with your repo URL:
 
-### `npm run eject`
+```json
+"homepage": "https://YOUR_GITHUB_USERNAME.github.io/YOUR_REPO_NAME"
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 2. Make sure `.env.production` has your EmailJS keys
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+(Already done — values are baked into the static build.)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 3. Deploy
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+yarn deploy
+```
 
-## Learn More
+This will:
+1. Run `yarn build` (uses `.env.production`)
+2. Push the `build/` folder to a `gh-pages` branch on your repo
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 4. Enable GitHub Pages
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+In your GitHub repo: **Settings → Pages → Source = `gh-pages` branch → Save.**
 
-### Code Splitting
+Your site goes live at `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME` in ~1 min.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 5. Whitelist the domain in EmailJS
 
-### Analyzing the Bundle Size
+Otherwise EmailJS returns 412 Precondition Failed.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+EmailJS dashboard → **Account → Security → Allowed origins** → add:
+- `https://YOUR_USERNAME.github.io`
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Project structure
 
-### Advanced Configuration
+```
+frontend/
+├── public/
+│   └── index.html           # Google Fonts + page meta
+├── src/
+│   ├── App.js               # Router + Sonner toaster
+│   ├── pages/
+│   │   └── LandingPage.jsx  # Composes all sections
+│   └── components/
+│       ├── ui/              # shadcn primitives
+│       └── landing/
+│           ├── Header.jsx
+│           ├── Hero.jsx
+│           ├── About.jsx
+│           ├── Courses.jsx
+│           ├── AdmissionForm.jsx   ← EmailJS lives here
+│           ├── Footer.jsx
+│           └── WhatsAppButton.jsx
+├── .env                     # Dev env vars
+├── .env.production          # Build-time env vars (baked into bundle)
+└── package.json
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## EmailJS template variables
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The template (`template_2mwe97r`) should reference these:
 
-### `npm run build` fails to minify
+- `{{full_name}}`
+- `{{phone}}`
+- `{{school_name}}`
+- `{{student_class}}`
+- `{{submitted_at}}`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Set the template's **To Email** to the recipient (e.g. `subhashishdas2000@gmail.com`).
