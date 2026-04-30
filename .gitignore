@@ -35,3 +35,12 @@ tests/
 
 # Misc top-level files we don't need on Pages
 README.md.bak
+-e 
+# Environment and credential files
+.env
+.env.*
+*.env
+credentials.json
+*.pem
+*.key
+.credentials
