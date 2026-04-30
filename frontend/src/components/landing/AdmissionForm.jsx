@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
 import { Loader2, Send, ShieldCheck, CheckCircle2 } from "lucide-react";
@@ -10,9 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 const EMAILJS_SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
@@ -88,60 +84,49 @@ export default function AdmissionForm() {
       toast.error("Please fix the highlighted fields and try again.");
       return;
     }
+
+    // Honeypot: silently accept bot submissions, do nothing.
+    if (form.honeypot && form.honeypot.trim()) {
+      setSubmitted(true);
+      setForm(initial);
+      return;
+    }
+
     setSubmitting(true);
     try {
-      // 1) Save inquiry to backend (MongoDB) — source of truth
-      const res = await axios.post(`${API}/admissions`, form, {
-        timeout: 25000,
-      });
-
-      if (!res.data?.success) {
-        toast.error("Something went wrong. Please try again.");
+      if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+        toast.error("Email service is not configured. Please try again later.");
         return;
       }
 
-      // 2) Send email via EmailJS (JavaScript). Don't block UX if it fails.
-      if (
-        EMAILJS_SERVICE_ID &&
-        EMAILJS_TEMPLATE_ID &&
-        EMAILJS_PUBLIC_KEY
-      ) {
-        try {
-          await emailjs.send(
-            EMAILJS_SERVICE_ID,
-            EMAILJS_TEMPLATE_ID,
-            {
-              full_name: form.full_name,
-              phone: form.phone,
-              school_name: form.school_name,
-              student_class:
-                form.student_class === "College/Above"
-                  ? "College / Above"
-                  : `Class ${form.student_class}`,
-              submitted_at: new Date().toLocaleString(),
-            },
-            { publicKey: EMAILJS_PUBLIC_KEY }
-          );
-        } catch (emailErr) {
-          // Email failure should NOT block — DB already has the record.
-          console.error("EmailJS send failed:", emailErr);
-        }
-      } else {
-        console.warn("EmailJS env vars missing — skipping email send.");
-      }
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          full_name: form.full_name,
+          phone: form.phone,
+          school_name: form.school_name,
+          student_class:
+            form.student_class === "College/Above"
+              ? "College / Above"
+              : `Class ${form.student_class}`,
+          submitted_at: new Date().toLocaleString(),
+        },
+        { publicKey: EMAILJS_PUBLIC_KEY }
+      );
 
       setSubmitted(true);
       setForm(initial);
       toast.success(
-        res.data.message ||
-          "Your response has been recorded. We will contact you soon."
+        "Your response has been recorded. We will contact you soon."
       );
     } catch (err) {
-      const detail =
-        err?.response?.data?.detail ||
+      console.error("EmailJS send failed:", err);
+      const text =
+        err?.text ||
         err?.message ||
-        "Could not submit. Please try again.";
-      toast.error(typeof detail === "string" ? detail : "Submission failed.");
+        "Could not submit. Please try again in a moment.";
+      toast.error(typeof text === "string" ? text : "Submission failed.");
     } finally {
       setSubmitting(false);
     }
