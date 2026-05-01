@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pi & Pixels by Subhasis Das</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f9fb;
+      color: #1e1e2f;
+      line-height: 1.6;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    nav .logo {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.2em;
+    }
+    nav .logo img {
+      height: 30px;
+      margin-right: 10px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #2e2e3e;
+      font-weight: 500;
+    }
+    .hero {
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding: 100px 20px 60px;
+    }
+    .hero h1 { font-size: 3em; font-weight: 800; }
+    .hero h2 { font-size: 2em; color: #818cf8; margin-top: 10px; }
+    .hero p { margin: 20px 0; font-size: 1.1em; color: #cbd5e1; }
+    .hero .buttons a {
+      padding: 15px 25px;
+      margin: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      display: inline-block;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .hero .btn-primary {
+      background: #6366f1;
+      color: white;
+    }
+    .hero .btn-primary:hover {
+      background: #4f46e5;
+    }
+    .hero .btn-secondary {
+      background: white;
+      color: #6366f1;
+    }
+    .hero .btn-secondary:hover {
+      background: #e0e7ff;
+    }
+
+    .section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .section h2 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    .section p {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #6b7280;
+    }
+    .resources {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    .resource-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .resource-card h3 {
+      margin-top: 10px;
+    }
+    .resource-card p {
+      font-size: 0.95em;
+      color: #555;
+    }
+    .resource-card a {
+      display: inline-block;
+      margin-top: 15px;
+      text-decoration: none;
+      background: #6366f1;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      transition: background 0.3s ease;
+    }
+    .resource-card a:hover {
+      background: #4f46e5;
+    }
+
+    .contact-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    .contact-info, .contact-form {
+      flex: 1;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      min-width: 300px;
+    }
+    .contact-info h3, .contact-form h3 {
+      margin-bottom: 20px;
+    }
+    .contact-info p, .contact-info a {
+      font-size: 0.95em;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .contact-form button {
+      background: #6366f1;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .contact-form button:hover {
+      background: #4f46e5;
+    }
+    .contact-form form {
+      display: flex;
+      flex-direction: column;
+    }
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1em;
+    }
+    .contact-form button {
+      background: #6366f1;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-weight: 600;
+    }
+    .contact-form button:hover {
+      background: #4f46e5;
+    }
+    footer {
+      background: #1e293b;
+      color: #cbd5e1;
+      padding: 40px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    footer div {
+      flex: 1 1 300px;
+      margin: 10px 20px;
+    }
+    footer h4 {
+      margin-bottom: 10px;
+    }
+    footer input {
+      width: 70%;
+      padding: 8px;
+      border-radius: 4px;
+      border: none;
+    }
+    footer button {
+      background: #6366f1;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-left: 8px;
+      transition: background 0.3s ease;
+    }
+    footer button:hover {
+      background: #4f46e5;
+    }
+    footer a {
+      color: #cbd5e1;
+      display: block;
+      text-decoration: none;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <!-- <img src="logo.png" alt="Logo" /> -->
+    Pi & Pixels
+  </div>
+  <ul>
+    <li><a href="#home">Home</a></li>
+     <li><a href="#contact">Admission Inquiry</a></li>
+    <li><a href="#about">About</a></li>
+    
+   
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <h1>Welcome to</h1>
+  <h2>Pi & Pixels</h2>
+  <p style="font-family: 'Segoe Script', cursive; font-size: 1.2em; margin-top: -10px; color: #a5b4fc;">By Subhasis Sir</p>
+  <p>Empowering students in Computer Science with clarity and passion.</p>
+  <div class="buttons">
+    <a href="#contact" class="btn-primary">Contact Us</a>
+    <a href="#resources" class="btn-secondary">Resources</a>
+
+  </div>
+</section>
+
+<section class="section" id="about">
+  <h2>What We Teach</h2>
+  <p>Offering classes tailored for school and college students with depth, simplicity, and real-world relevance.</p>
+  <div class="resources">
+    <div class="resource-card">
+      <h3>School Level</h3>
+      <p>Classes 8–12 (ICSE, ISC) </p>
+      <p>Classes 11, 12 (CBSE)</p>
+      <p>Subjects: Computer Science</p>
+    </div>
+    <div class="resource-card">
+      <h3>College Level</h3>
+      <p>B.Tech, BCA, BSc Computer Science</p>
+      <p>Topics: DSA, AI, DBMS, OS, CN, DAA, Java, React, and more</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="resources">
+  <h2>Free Resources</h2>
+  <p>Download our free educational materials and PDF notes.</p>
+  <p>Class 8</p>
+  <div class="resources">
+    <div class="resource-card">
+      <h3>Basic Programming Questions</h3>
+      <p>Free PDF for beginners in Java programming.</p>
+      <a href="Class 8 java revision worksheet.pdf">Download PDF</a>
+    </div>
+    <div class="resource-card">
+      <h3>Algorithms</h3>
+      <p>Concise PDF on Algorithm for school level learners.</p>
+      <a href="algo.pdf">Download PDF</a>
+    </div>
+  </div>
+  <br/>
+   <div class="resources">
+    <div class="resource-card">
+      <h3>Questions and answers on Internet and Intranet</h3>
+    
+      <a href="Internet and Intranet.pdf">Download PDF</a>
+    </div>
+    <div class="resource-card">
+      <h3>Condition Writing</h3>
+      <p>Concise PDF on Condition Writing in JAVA</p>
+      <a href="Writing Conditions.pdf">Download PDF</a>
+    </div>
+  </div>
+  <br/>
+   <p><b>Class 9</b></p>
+  <div class="resources">
+    <div class="resource-card">
+      <h3>Introduction to OOP (Study Material)</h3>
+      <p>Free PDF for beginners in Java programming.</p>
+      <a href="Introduction to OOP.pdf">Download PDF</a>
+    </div>
+    <div class="resource-card">
+      <h3>Values and Data types PART 1 (Study material)</h3>
+     
+      <a href="values and data types part 1.pdf">Download PDF</a>
+    </div>
+  </div>
+  <br/>
+   <div class="resources">
+    <div class="resource-card">
+      <h3>Values and Data Types PART 2 (Study material)</h3>
+    
+      <a href="Values & Data Types Module 2.pdf">Download PDF</a>
+    </div>
+    <div class="resource-card">
+      <h3>Conditional Constructs (Study Material)</h3>
+      <p>Concise PDF on Condition Writing in JAVA</p>
+      <a href="Conditional Constructs Class 9.pdf">Download PDF</a>
+    </div>
+  </div>
+  <br/>
+   <div class="resources">
+    <div class="resource-card">
+      <h3>Mathematical Library(Study Material)</h3>
+    
+      <a href="Math Library Functions.pdf">Download PDF</a>
+    </div>
+    <div class="resource-card">
+      <h3>Input Using Scanner</h3>
+      <p>Concise PDF on Taking inputs using Scanner class in JAVA</p>
+      <a href="Notes- Input Using Scanner Class.pdf">Download PDF</a>
+    </div>
+  </div>
+  <br/>
+   <div class="resources">
+    <div class="resource-card">
+      <h3>Introduction to Iterative Constructs (Study material, Yet to be uploaded)</h3>
+    
+      <a href="#">Download PDF</a>
+    </div>
+    <div class="resource-card">
+      <h3>Notes on Nested Loops (Yet to be uploaded)</h3>
+      <p>© 2023 Subhasis Das. All rights reserved.
+No part of this document may be modified without written permission of the author.
+</p>
+      <a href="#">Download PDF</a>
+    </div>
+  </div>
+</section>
+
+<section class="section contact-section" id="contact">
+  <div class="contact-info">
+    <h3>Contact Information</h3>
+    <p><strong>Address:</strong><br />Indradip, Pincol (Behind SBI and icici Bank), Shyamnagar, PIN- 743127, WB, India</p>
+    <p><strong>Phone:</strong><br />+91 7449858122</p>
+    <p><strong>Email:</strong><br />subhasisdascs@gmail.com</p>
+   
+  </div>
+  <div class="contact-form">
+    <h3>Admission Inquiry</h3>
+  
+<form action="https://formsubmit.co/subhasisdascs@gmail.com" method="POST">
+  <!-- Full Name -->
+  <input type="text" name="full_name" placeholder="Full Name" required />
+
+  <!-- Phone Number -->
+  <input type="text" name="phone" placeholder="Phone Number" required />
+
+  <!-- School Name -->
+  <input type="text" name="school" placeholder="School Name" required />
+
+  <!-- Class -->
+  <select name="class" required>
+    <option value="">Select Class</option>
+    <option value="8">Class 8</option>
+    <option value="9">Class 9</option>
+    <option value="10">Class 10</option>
+    <option value="11">Class 11</option>
+    <option value="12">Class 12</option>
+  </select>
+
+  <!-- Board -->
+  <select name="board" required>
+    <option value="">Select Board</option>
+    <option value="ICSE">ICSE</option>
+    <option value="ISC">ISC</option>
+    <option value="CBSE">CBSE</option>
+    <option value="WBCHSE">WBCHSE</option>
+    <option value="Other">Other</option>
+  </select>
+
+  <!-- Anti-spam honeypot field -->
+  <input type="text" name="_honey" style="display:none">
+
+  <!-- Disable CAPTCHA -->
+  <input type="hidden" name="_captcha" value="false">
+
+  <!-- Redirect to thank you page after submit -->
+  <input type="hidden" name="_next" value="https://piandpixels.com">
+
+  <!-- Submit Button -->
+  <button type="submit">Send Message</button>
+</form>
+
+</section>
+
+<footer>
+  <div>
+    <h4>Pi & Pixels</h4>
+    <p>Clarity. Curiosity. Code. Learn better with us.</p>
+  </div>
+  <div>
+    <h4>Quick Links</h4>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#resources">Resources</a>
+    <a href="#contact">Contact</a>
+  </div>
+  
+</footer>
+
+</body>
+</html>
