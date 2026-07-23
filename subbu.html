@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subhasis & Subhanwita | The Chronicle of Us</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+        :root {
+            --bg-color: #fcf5f3;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --primary: #c57b7b;
+            --text-dark: #4a3b3b;
+            --text-light: #7a6b6b;
+            --accent: #e8b4b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Ambient glowing orbs */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 15% 50%, rgba(232, 180, 184, 0.15), transparent 25%),
+                        radial-gradient(circle at 85% 30%, rgba(197, 123, 123, 0.1), transparent 25%);
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        /* Hidden state for step-by-step reveal */
+        .step-section {
+            opacity: 0;
+            transform: translateY(40px);
+            display: none;
+            width: 100%;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .step-section.visible {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step-section.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Card Styling */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(197, 123, 123, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        h1, .romantic-title {
+            font-family: 'Great Vibes', cursive;
+            color: var(--primary);
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-family: 'Lora', serif;
+            font-weight: 600;
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .date-badge {
+            background: var(--primary);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        /* Image Styling */
+        .photo-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 1.5rem auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 4px solid white;
+        }
+
+        .hero-photo {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem auto;
+            border: 6px solid white;
+            box-shadow: 0 10px 30px rgba(197, 123, 123, 0.3);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-container:hover img {
+            transform: scale(1.03);
+        }
+
+        /* Buttons */
+        .reveal-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, #a66363 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(197, 123, 123, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reveal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(197, 123, 123, 0.6);
+        }
+
+        .reveal-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Poem Specific */
+        .poem-text {
+            font-family: 'Lora', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--primary);
+            line-height: 2;
+        }
+
+        /* Connecting Line for Timeline */
+        .timeline-connector {
+            width: 2px;
+            height: 50px;
+            background: var(--accent);
+            margin: 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.8rem; }
+            .card { padding: 1.5rem; }
+            .hero-photo { width: 200px; height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-bg"></div>
+
+    <div class="container">
+        
+        <!-- INTRO SECTION (Always Visible) -->
+        <div class="step-section visible animate-in" id="step-0">
+            <div class="card">
+                <img src="WhatsApp Image 2026-07-23 at 11.37.11 PM.jpeg" alt="The Kiss" class="hero-photo">
+                <div class="date-badge">Our Story</div>
+                <h1>Subhasis & Subhanwita</h1>
+                <p>One step at a time, one beautiful memory after another. Ready to relive it?</p>
+                <button class="reveal-btn" onclick="revealNext(1)">
+                    Unlock Chapter One ✨
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 1: CONFESSION -->
+        <div class="step-section" id="step-1">
+            <div class="timeline-connector"></div>
+            <div class="card">
+                <div class="date-badge">17th March</div>
+                <h2>The Confession</h2>
+                <div class="photo-container">
+                    <img src="WhatsApp Image 2026-07-23 at 11.37.12 PM.jpeg" alt="Confession Day">
+                </div>
+                <p>The first spark. I spoke from the heart, taking a leap of faith that changed my entire world forever.</p>
+                <button class="reveal-btn" onclick="revealNext(2)">
+                    Reveal Our Next Step 💖
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 2: THE START -->
+        <div class="step-section" id="step-2">
+            <div class="timeline-connector"></div>
+            <div class="card">
+                <div class="date-badge">19th March</div>
+                <h2>The Start of Us</h2>
+                <div class="photo-container">
+                    <img src="WhatsApp Image 2026-07-23 at 11.37.12 PM (1).jpeg" alt="The Beginning">
+                </div>
+                <p>Our official Day One. Two hands held tight, two hearts deciding to build a beautiful world together.</p>
+                <button class="reveal-btn" onclick="revealNext(3)">
+                    Continue Our Story 🌹
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 3: 5 MONTHS -->
+        <div class="step-section" id="step-3">
+            <div class="timeline-connector"></div>
+            <div class="card">
+                <div class="date-badge">5 Months Going Strong</div>
+                <h2>Today & Tomorrow</h2>
+                <div class="photo-container">
+                    <img src="WhatsApp Image 2026-07-23 at 11.37.13 PM.jpeg" alt="5 Months">
+                </div>
+                <p>Every single day since March has been an absolute dream. 5 months of magic, beautiful chaos, and endless love.</p>
+                <button class="reveal-btn" onclick="revealNext(4)">
+                    Read Your Surprise 💌
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 4: POEM -->
+        <div class="step-section" id="step-4">
+            <div class="timeline-connector"></div>
+            <div class="card">
+                <h2 class="romantic-title" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Our Love Poem</h2>
+                <p class="poem-text">
+                    From a whispered confession in the spring,<br>
+                    To the joy that every new morning brings.<br>
+                    March 17th, my heart took a chance,<br>
+                    March 19th began our beautiful dance.<br>
+                    Five months of magic, of laughter and light,<br>
+                    With you, Subhanwita, everything's right.
+                </p>
+                <button class="reveal-btn" style="margin-top: 2rem;" onclick="this.innerHTML = 'I Love You! ❤️'; this.style.transform = 'scale(1.1)';">
+                    Just Click Me
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function revealNext(stepNumber) {
+            // Find the next step element
+            const nextStep = document.getElementById('step-' + stepNumber);
+            
+            // Find the button that was just clicked and hide it to clean up the UI
+            const previousStep = document.getElementById('step-' + (stepNumber - 1));
+            const btnToHide = previousStep.querySelector('.reveal-btn');
+            if (btnToHide) {
+                btnToHide.style.display = 'none';
+            }
+
+            // Display the new step
+            nextStep.classList.add('visible');
+            
+            // Trigger animation and scroll after a tiny delay for smooth rendering
+            setTimeout(() => {
+                nextStep.classList.add('animate-in');
+                
+                // Smooth scroll to the newly revealed card
+                nextStep.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }, 50);
+        }
+    </script>
+</body>
+</html>
