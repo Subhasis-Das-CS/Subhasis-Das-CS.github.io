@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subhasis & Subhanwita | The Chronicle of Us</title>
+    <title>Subhasis & Subhanwita | Our Story</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
 
         :root {
-            --bg-color: #fcf5f3;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --primary: #c57b7b;
-            --text-dark: #4a3b3b;
-            --text-light: #7a6b6b;
-            --accent: #e8b4b8;
+            --primary: #ff4d6d;
+            --bg: #1a0b1c;
+            --text: #ffe0e6;
+            --overlay: rgba(0, 0, 0, 0.4);
         }
 
         * {
@@ -23,302 +21,342 @@
         }
 
         body {
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
-            min-height: 100vh;
         }
 
-        /* Ambient glowing orbs */
-        .ambient-bg {
+        /* Floating Hearts Canvas */
+        #heart-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
             z-index: -1;
-            background: radial-gradient(circle at 15% 50%, rgba(232, 180, 184, 0.15), transparent 25%),
-                        radial-gradient(circle at 85% 30%, rgba(197, 123, 123, 0.1), transparent 25%);
+            pointer-events: none;
         }
 
         .container {
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 3rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        /* Hidden state for step-by-step reveal */
-        .step-section {
-            opacity: 0;
-            transform: translateY(40px);
-            display: none;
-            width: 100%;
-            transition: opacity 1s ease, transform 1s ease;
-        }
-
-        .step-section.visible {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .step-section.animate-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Card Styling */
-        .card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2.5rem;
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(197, 123, 123, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 2rem;
             text-align: center;
-            backdrop-filter: blur(10px);
-            position: relative;
         }
 
-        h1, .romantic-title {
-            font-family: 'Great Vibes', cursive;
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 2s forwards;
+            padding-top: 4rem;
+        }
+
+        .hero-image-container {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid var(--primary);
+            box-shadow: 0 0 40px rgba(255, 77, 109, 0.6);
+            margin-bottom: 2rem;
+            transform: scale(0.9);
+            animation: scaleInHero 1.5s ease forwards;
+        }
+
+        .hero-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
             color: var(--primary);
-            font-size: 3.5rem;
-            margin-bottom: 0.5rem;
-            line-height: 1.2;
-        }
-
-        h2 {
-            font-family: 'Lora', serif;
-            font-weight: 600;
-            font-size: 1.8rem;
-            color: var(--text-dark);
+            text-shadow: 0 0 20px rgba(255, 77, 109, 0.5);
             margin-bottom: 1rem;
         }
 
-        p {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-        }
-
-        .date-badge {
-            background: var(--primary);
-            color: white;
-            padding: 0.4rem 1.2rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            display: inline-block;
-            margin-bottom: 1rem;
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        /* Image Styling */
-        .photo-container {
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto 1.5rem auto;
+        /* Interactive Timeline */
+        .timeline {
+            margin: 4rem 0;
+            position: relative;
+        }
+
+        .milestone {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 77, 109, 0.3);
             border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            border: 4px solid white;
         }
 
-        .hero-photo {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 1.5rem auto;
-            border: 6px solid white;
-            box-shadow: 0 10px 30px rgba(197, 123, 123, 0.3);
+        .milestone:hover {
+            transform: scale(1.05);
+            background: rgba(255, 77, 109, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(255, 77, 109, 0.2);
         }
 
-        .photo-container img {
-            width: 100%;
+        .date {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s ease, opacity 0.5s ease;
+            opacity: 0;
+            margin-top: 0;
+        }
+
+        .milestone.active .details {
+            max-height: 1000px; /* Large enough to fit image/text */
+            opacity: 1;
+            margin-top: 1.5rem;
+        }
+
+        .milestone-text {
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 224, 230, 0.8);
+        }
+
+        .milestone-image {
+            max-width: 90%;
             height: auto;
-            display: block;
-            transition: transform 0.5s ease;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 77, 109, 0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.4s ease;
         }
 
-        .photo-container:hover img {
-            transform: scale(1.03);
+        .milestone.active .milestone-image {
+            transform: scale(1.02);
         }
 
-        /* Buttons */
-        .reveal-btn {
-            background: linear-gradient(135deg, var(--primary) 0%, #a66363 100%);
-            color: white;
+        /* Poem Section */
+        .poem-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(180deg, transparent, rgba(255, 77, 109, 0.1), transparent);
+            border-radius: 20px;
+            margin: 4rem 0;
+        }
+
+        .poem {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            line-height: 1.8;
+            color: #fff;
+        }
+
+        /* Interactive Button */
+        .magic-btn {
+            background: var(--primary);
+            color: #fff;
             border: none;
             padding: 1rem 2.5rem;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
+            font-size: 1.2rem;
+            font-family: 'Poppins', sans-serif;
             border-radius: 30px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(197, 123, 123, 0.4);
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
             transition: all 0.3s ease;
-            margin-top: 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            margin-bottom: 4rem;
         }
 
-        .reveal-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(197, 123, 123, 0.6);
+        .magic-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 40px rgba(255, 77, 109, 0.8);
         }
 
-        .reveal-btn:active {
-            transform: translateY(1px);
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* Poem Specific */
-        .poem-text {
-            font-family: 'Lora', serif;
-            font-size: 1.3rem;
-            font-style: italic;
-            color: var(--primary);
-            line-height: 2;
-        }
-
-        /* Connecting Line for Timeline */
-        .timeline-connector {
-            width: 2px;
-            height: 50px;
-            background: var(--accent);
-            margin: 0 auto;
+        @keyframes scaleInHero {
+            to {
+                transform: scale(1);
+            }
         }
 
         @media (max-width: 600px) {
-            h1 { font-size: 2.8rem; }
-            .card { padding: 1.5rem; }
-            .hero-photo { width: 200px; height: 200px; }
+            h1 { font-size: 3rem; }
+            .poem { font-size: 1.5rem; }
+            .hero-image-container { width: 200px; height: 200px; }
+            .details { max-height: 600px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="ambient-bg"></div>
+    <canvas id="heart-canvas"></canvas>
 
     <div class="container">
-        
-        <!-- INTRO SECTION (Always Visible) -->
-        <div class="step-section visible animate-in" id="step-0">
-            <div class="card">
-                <img src="WhatsApp Image 2026-07-23 at 11.37.11 PM.jpeg" alt="The Kiss" class="hero-photo">
-                <div class="date-badge">Our Story</div>
-                <h1>Subhasis & Subhanwita</h1>
-                <p>One step at a time, one beautiful memory after another. Ready to relive it?</p>
-                <button class="reveal-btn" onclick="revealNext(1)">
-                    Unlock Chapter One ✨
-                </button>
+        <section class="hero">
+            <!-- Hero Image: The Kiss -->
+            <div class="hero-image-container">
+                <img src="WhatsApp Image 2026-07-23 at 11.37.11 PM.jpeg" alt="Hero Image">
             </div>
-        </div>
+            <h1>Subhasis & Subhanwita</h1>
+            <div class="subtitle">5 Months of Beautiful Chaos</div>
+        </section>
 
-        <!-- STEP 1: CONFESSION -->
-        <div class="step-section" id="step-1">
-            <div class="timeline-connector"></div>
-            <div class="card">
-                <div class="date-badge">17th March</div>
-                <h2>The Confession</h2>
-                <div class="photo-container">
-                    <img src="WhatsApp Image 2026-07-23 at 11.37.12 PM.jpeg" alt="Confession Day">
+        <section class="timeline">
+            <h2>Our Journey</h2>
+            
+            <!-- Confession Milestone -->
+            <div class="milestone" onclick="this.classList.toggle('active')">
+                <div class="date">17th March</div>
+                <h3>The Confession</h3>
+                <div class="details">
+                    <p class="milestone-text">The day a leap of faith changed everything. A simple confession that started the most beautiful chapter of my life.</p>
+                    <img src="WhatsApp Image 2026-07-23 at 11.37.13 PM.jpeg" alt="Confession Moment" class="milestone-image">
                 </div>
-                <p>The first spark. I spoke from the heart, taking a leap of faith that changed my entire world forever.</p>
-                <button class="reveal-btn" onclick="revealNext(2)">
-                    Reveal Our Next Step 💖
-                </button>
             </div>
-        </div>
 
-        <!-- STEP 2: THE START -->
-        <div class="step-section" id="step-2">
-            <div class="timeline-connector"></div>
-            <div class="card">
-                <div class="date-badge">19th March</div>
-                <h2>The Start of Us</h2>
-                <div class="photo-container">
-                    <img src="WhatsApp Image 2026-07-23 at 11.37.12 PM (1).jpeg" alt="The Beginning">
+            <!-- Beginning Milestone -->
+            <div class="milestone" onclick="this.classList.toggle('active')">
+                <div class="date">19th March</div>
+                <h3>The Beginning</h3>
+                <div class="details">
+                    <p class="milestone-text">The official start of "Us". Two hearts deciding to build a world together, matching in spirit (and sometimes style!).</p>
+                    <img src="WhatsApp Image 2026-07-23 at 11.37.12 PM (1).jpeg" alt="Beginning Moment" class="milestone-image">
                 </div>
-                <p>Our official Day One. Two hands held tight, two hearts deciding to build a beautiful world together.</p>
-                <button class="reveal-btn" onclick="revealNext(3)">
-                    Continue Our Story 🌹
-                </button>
             </div>
-        </div>
 
-        <!-- STEP 3: 5 MONTHS -->
-        <div class="step-section" id="step-3">
-            <div class="timeline-connector"></div>
-            <div class="card">
-                <div class="date-badge">5 Months Going Strong</div>
-                <h2>Today & Tomorrow</h2>
-                <div class="photo-container">
-                    <img src="WhatsApp Image 2026-07-23 at 11.37.13 PM.jpeg" alt="5 Months">
+            <!-- Today Milestone -->
+            <div class="milestone" onclick="this.classList.toggle('active')">
+                <div class="date">Today</div>
+                <h3>5 Months Going Strong</h3>
+                <div class="details">
+                    <p class="milestone-text">Every single day since March has been an absolute dream. Here's to us, and to a lifetime of more milestones.</p>
+                    <img src="WhatsApp Image 2026-07-23 at 11.37.12 PM.jpeg" alt="5 Months Moment" class="milestone-image">
                 </div>
-                <p>Every single day since March has been an absolute dream. 5 months of magic, beautiful chaos, and endless love.</p>
-                <button class="reveal-btn" onclick="revealNext(4)">
-                    Read Your Surprise 💌
-                </button>
             </div>
-        </div>
+        </section>
 
-        <!-- STEP 4: POEM -->
-        <div class="step-section" id="step-4">
-            <div class="timeline-connector"></div>
-            <div class="card">
-                <h2 class="romantic-title" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Our Love Poem</h2>
-                <p class="poem-text">
-                    From a whispered confession in the spring,<br>
-                    To the joy that every new morning brings.<br>
-                    March 17th, my heart took a chance,<br>
-                    March 19th began our beautiful dance.<br>
-                    Five months of magic, of laughter and light,<br>
-                    With you, Subhanwita, everything's right.
-                </p>
-                <button class="reveal-btn" style="margin-top: 2rem;" onclick="this.innerHTML = 'I Love You! ❤️'; this.style.transform = 'scale(1.1)';">
-                    Just Click Me
-                </button>
+        <section class="poem-section">
+            <div class="poem">
+                From a whispered confession in the spring,<br>
+                To the joy that every new morning brings.<br>
+                March 17th, my heart took a chance,<br>
+                March 19th began our beautiful dance.<br>
+                Five months of magic, of laughter and light,<br>
+                With you, Subhanwita, everything's right.
             </div>
-        </div>
+        </section>
 
+        <button class="magic-btn" onclick="triggerLoveBurst()">Click For A Surprise</button>
     </div>
 
     <script>
-        function revealNext(stepNumber) {
-            // Find the next step element
-            const nextStep = document.getElementById('step-' + stepNumber);
-            
-            // Find the button that was just clicked and hide it to clean up the UI
-            const previousStep = document.getElementById('step-' + (stepNumber - 1));
-            const btnToHide = previousStep.querySelector('.reveal-btn');
-            if (btnToHide) {
-                btnToHide.style.display = 'none';
+        // Floating Hearts Canvas Logic
+        const canvas = document.getElementById('heart-canvas');
+        const ctx = canvas.getContext('2d');
+        let hearts = [];
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        class Heart {
+            constructor(x, y, size, velocity) {
+                this.x = x || Math.random() * canvas.width;
+                this.y = y || canvas.height + Math.random() * 100;
+                this.size = size || Math.random() * 15 + 5;
+                this.velocity = velocity || Math.random() * 2 + 1;
+                this.alpha = Math.random() * 0.5 + 0.1;
             }
 
-            // Display the new step
-            nextStep.classList.add('visible');
-            
-            // Trigger animation and scroll after a tiny delay for smooth rendering
-            setTimeout(() => {
-                nextStep.classList.add('animate-in');
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.translate(this.x, this.y);
+                ctx.scale(this.size / 30, this.size / 30);
                 
-                // Smooth scroll to the newly revealed card
-                nextStep.scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'center' 
-                });
-            }, 50);
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(-15, -15, -30, 15, 0, 30);
+                ctx.bezierCurveTo(30, 15, 15, -15, 0, 0);
+                ctx.fillStyle = '#ff4d6d';
+                ctx.fill();
+                ctx.restore();
+            }
+
+            update() {
+                this.y -= this.velocity;
+                if (this.y < -50) {
+                    this.y = canvas.height + 50;
+                    this.x = Math.random() * canvas.width;
+                }
+                this.draw();
+            }
+        }
+
+        // Initialize background hearts
+        for (let i = 0; i < 40; i++) {
+            hearts.push(new Heart());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hearts.forEach(heart => heart.update());
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+
+        // Button Magic Burst Logic
+        function triggerLoveBurst() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    hearts.push(new Heart(
+                        canvas.width / 2 + (Math.random() - 0.5) * 200, 
+                        canvas.height, 
+                        Math.random() * 30 + 10, 
+                        Math.random() * 5 + 3
+                    ));
+                }, i * 20);
+            }
+            
+            const btn = document.querySelector('.magic-btn');
+            btn.textContent = "I Love You! ❤️";
+            btn.style.transform = "scale(1.1)";
+            
+            setTimeout(() => {
+                btn.textContent = "Click For A Surprise";
+                btn.style.transform = "scale(1)";
+            }, 3000);
         }
     </script>
 </body>
