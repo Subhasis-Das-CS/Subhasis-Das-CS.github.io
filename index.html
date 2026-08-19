@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -436,8 +437,7 @@
       </div>
 
       <div class="filters reveal">
-        <button class="filter-btn active" data-filter="all">All papers</button>
-        <button class="filter-btn" data-filter="icse8">ICSE · Class 8</button>
+        <button class="filter-btn active" data-filter="icse8">ICSE · Class 8</button>
         <button class="filter-btn" data-filter="icse9">ICSE · Class 9</button>
         <button class="filter-btn" data-filter="icse10">ICSE · Class 10</button>
         <button class="filter-btn" data-filter="bca-mca">BCA / MCA</button>
@@ -446,7 +446,7 @@
 
       <div class="papers-list reveal" id="papersList"><!-- injected by JS --></div>
 
-      <p class="lib-note">↳ ICSE Class 8,9 and Class 10 papers are live now — send more topics any time and I'll add them the same way. Other boards and programs still show sample sheets until their notes are uploaded.</p>
+      <p class="lib-note">↳ ICSE Class 8, 9 and 10 papers are live now — send more topics any time and I'll add them the same way. Other boards and programs still show sample sheets until their notes are uploaded.</p>
     </div>
   </section>
 
@@ -599,10 +599,7 @@
 
 <script>
   // ---------- paper library data ----------
- // ---------- paper library data ----------
-  // ---------- paper library data ----------
- // ---------- paper library data ----------
-  const papers = [
+const papers = [
     // ICSE Class 8
    {code:"ICSE8.PROG.01", title:"Class 8 Programming Exercises", level:"icse8", tag:"ICSE · Class 8", file:"papers/Class 8 programming exercise.pdf",
      abstract:"42 programming exercises covering basic math, successive discounts, simple interest, slab-based bill calculations, triangle validity, and digit manipulation[cite: 52]."},
@@ -683,8 +680,7 @@
      abstract:"Extensive homework set for evaluating prefix and postfix increment/decrement operators in complex equations. Includes converting mathematical expressions into Java format."},
     {code:"ICSE9.TEST.03", title:"Comprehensive Java Concepts Test", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test on Introduction to object oriented programming concepts.pdf",
      abstract:"Covers OOP concepts, basic Java, data types, operators, input, Math methods, conditionals, and loops. Includes MCQs on procedure vs. object-oriented programming, logical operators, and Math.round() return types. Also includes output snippets and programming questions like calculating discounts and converting temperatures."},
-    {code:"ICSE9.PROG.04", title:"Patterns, Sequences, and Series Test", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test on patterns^J sequences and series.pdf",
-     abstract:"Includes 60 marks worth of programming questions focusing on star and number pattern printing. Covers Floyd's triangle generation, sequence printing, and calculating the sum of fractional series."},
+   
     {code:"ICSE9.TEST.04", title:"Programming Test 1: Conditionals & Math", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test On Programming class 9 test 1.pdf",
      abstract:"A 50-mark test covering second smallest number checks, leap year logic, and slab-based calculations for electricity and internet bills. Includes quadratic equation root calculations using Math methods."},
     {code:"ICSE9.THRY.02", title:"Values and Data Types Test", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test on Values and Data Types.pdf",
@@ -753,12 +749,14 @@
      {code:"ICSE10.ERR.01", title:"Categories of Errors in Java & Snippets", level:"icse10", tag:"ICSE · Class 10", file:"papers/errors.pdf",
      abstract:"Explains compile-time, run-time, and logical errors in Java with common examples like ArithmeticException and NullPointerException[cite: 78]. Includes 24 error-finding exercises and additional snippets covering Math functions, nested loops, and object constructors[cite: 78]."},
   ];
+
   const listEl = document.getElementById('papersList');
   const dlIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>';
 
   function renderPapers(filter){
+    if (!listEl) return;
     listEl.innerHTML = papers
-      .filter(p => filter === 'all' || p.level === filter)
+      .filter(p => p.level === filter)
       .map(p => `
         <div class="paper">
           <div class="code mono">${p.code}</div>
@@ -771,7 +769,11 @@
         </div>
       `).join('');
   }
-  renderPapers('all');
+
+  // Automatically load Class 8 papers by default on page load
+  window.addEventListener("DOMContentLoaded", () => {
+    renderPapers('icse8');
+  });
 
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -781,7 +783,6 @@
     });
   });
 
-  // ---------- pdf download (real file, or generated sample sheet as fallback) ----------
   function downloadPaper(code, title, abstract, file){
     if (file) {
       const a = document.createElement('a');
@@ -816,14 +817,12 @@
     doc.save(code.replace(/\./g,'_') + '.pdf');
   }
 
-  // ---------- admissions form ----------
   document.getElementById('admForm').addEventListener('submit', function(e){
     e.preventDefault();
     document.getElementById('formFields').style.display = 'none';
     document.getElementById('formSuccess').classList.add('show');
   });
 
-  // ---------- scroll reveal ----------
   const io = new IntersectionObserver(entries => {
     entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
   }, {threshold:0.12});
