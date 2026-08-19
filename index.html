@@ -1,442 +1,834 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pi & Pixels by Subhasis Das</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f8f9fb;
-      color: #1e1e2f;
-      line-height: 1.6;
-    }
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      background: white;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-    nav .logo {
-      display: flex;
-      align-items: center;
-      font-weight: 700;
-      font-size: 1.2em;
-    }
-    nav .logo img {
-      height: 30px;
-      margin-right: 10px;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 30px;
-    }
-    nav ul li a {
-      text-decoration: none;
-      color: #2e2e3e;
-      font-weight: 500;
-    }
-    .hero {
-      background: #0f172a;
-      color: white;
-      text-align: center;
-      padding: 100px 20px 60px;
-    }
-    .hero h1 { font-size: 3em; font-weight: 800; }
-    .hero h2 { font-size: 2em; color: #818cf8; margin-top: 10px; }
-    .hero p { margin: 20px 0; font-size: 1.1em; color: #cbd5e1; }
-    .hero .buttons a {
-      padding: 15px 25px;
-      margin: 10px;
-      font-weight: 600;
-      text-decoration: none;
-      border-radius: 8px;
-      display: inline-block;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-    .hero .btn-primary {
-      background: #6366f1;
-      color: white;
-    }
-    .hero .btn-primary:hover {
-      background: #4f46e5;
-    }
-    .hero .btn-secondary {
-      background: white;
-      color: #6366f1;
-    }
-    .hero .btn-secondary:hover {
-      background: #e0e7ff;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pi and Pixels — Computer Science Teaching Institute</title>
+<meta name="description" content="Pi and Pixels teaches Computer Science for ICSE, CBSE, WBCHSE boards and B.Tech, BCA, MCA, B.Sc Computer Science degree programs. Free topic-wise notes, admissions open.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --paper:#F3F4EF;
+    --paper-raised:#FFFFFF;
+    --ink:#14161F;
+    --ink-soft:#4B4E5A;
+    --rule:#D9DAD2;
+    --indigo:#3B45D1;
+    --indigo-deep:#262E9E;
+    --amber:#E2933B;
+    --teal:#2E7D6B;
+    --radius:2px;
+    --max:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Newsreader',serif;
+    font-weight:500;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 32px;}
+  img,svg{display:block;max-width:100%;}
+  ::selection{background:var(--indigo);color:#fff;}
+  :focus-visible{outline:2px solid var(--indigo);outline-offset:3px;}
 
-    .section {
-      padding: 60px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-    .section h2 {
-      text-align: center;
-      font-size: 2em;
-      margin-bottom: 10px;
-    }
-    .section p {
-      text-align: center;
-      margin-bottom: 40px;
-      color: #6b7280;
-    }
-    .resources {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-    .resource-card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-    .resource-card h3 {
-      margin-top: 10px;
-    }
-    .resource-card p {
-      font-size: 0.95em;
-      color: #555;
-    }
-    .resource-card a {
-      display: inline-block;
-      margin-top: 15px;
-      text-decoration: none;
-      background: #6366f1;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-size: 0.9em;
-      transition: background 0.3s ease;
-    }
-    .resource-card a:hover {
-      background: #4f46e5;
-    }
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(243,244,239,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 0;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Newsreader',serif;font-size:1.25rem;font-weight:600;}
+  .brand .mark{
+    width:30px;height:30px;border:1.5px solid var(--ink);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Newsreader',serif;font-style:italic;font-size:1.05rem;
+    flex-shrink:0;
+  }
+  nav.links{display:flex;gap:34px;align-items:center;}
+  nav.links a{
+    font-size:0.86rem;font-family:'JetBrains Mono',monospace;
+    color:var(--ink-soft);
+    text-transform:uppercase;letter-spacing:0.04em;
+    transition:color .15s ease;
+  }
+  nav.links a:hover{color:var(--indigo);}
+  .nav-cta{
+    background:var(--ink);color:var(--paper)!important;
+    padding:9px 18px;border-radius:var(--radius);
+    font-size:0.8rem!important;
+  }
+  .nav-cta:hover{background:var(--indigo)!important;color:#fff!important;}
+  .menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;}
+  .menu-btn span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0;}
 
-    .contact-section {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      align-items: flex-start;
-    }
-    .contact-info, .contact-form {
-      flex: 1;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      min-width: 300px;
-    }
-    .contact-info h3, .contact-form h3 {
-      margin-bottom: 20px;
-    }
-    .contact-info p, .contact-info a {
-      font-size: 0.95em;
-      color: #333;
-      margin-bottom: 10px;
-    }
-    .contact-form input, .contact-form textarea {
-      width: 100%;
-      margin-bottom: 15px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .contact-form button {
-      background: #6366f1;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .contact-form button:hover {
-      background: #4f46e5;
-    }
-    .contact-form form {
-      display: flex;
-      flex-direction: column;
-    }
-    .contact-form input,
-    .contact-form select,
-    .contact-form textarea {
-      width: 100%;
-      margin-bottom: 15px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1em;
-    }
-    .contact-form button {
-      background: #6366f1;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      font-weight: 600;
-    }
-    .contact-form button:hover {
-      background: #4f46e5;
-    }
-    footer {
-      background: #1e293b;
-      color: #cbd5e1;
-      padding: 40px 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-    footer div {
-      flex: 1 1 300px;
-      margin: 10px 20px;
-    }
-    footer h4 {
-      margin-bottom: 10px;
-    }
-    footer input {
-      width: 70%;
-      padding: 8px;
-      border-radius: 4px;
-      border: none;
-    }
-    footer button {
-      background: #6366f1;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      margin-left: 8px;
-      transition: background 0.3s ease;
-    }
-    footer button:hover {
-      background: #4f46e5;
-    }
-    footer a {
-      color: #cbd5e1;
-      display: block;
-      text-decoration: none;
-      margin-bottom: 6px;
-    }
-  </style>
+  /* ---------- hero ---------- */
+  .hero{
+    padding:88px 0 60px;
+    border-bottom:1px solid var(--rule);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-grid{
+    position:absolute;inset:0;pointer-events:none;
+    background-image:
+      linear-gradient(var(--rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size:44px 44px;
+    opacity:0.35;
+    mask-image:radial-gradient(ellipse 70% 60% at 70% 20%, black, transparent);
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:0.78rem;
+    color:var(--indigo-deep);letter-spacing:0.08em;text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;margin-bottom:22px;position:relative;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--indigo);}
+  .hero h1{
+    font-size:clamp(2.4rem, 5.4vw, 4.1rem);
+    line-height:1.06;
+    max-width:15ch;
+    position:relative;
+  }
+  .hero h1 em{font-style:italic;color:var(--indigo-deep);}
+  .hero-abstract{
+    display:flex;gap:56px;margin-top:38px;position:relative;
+    align-items:flex-start;
+  }
+  .hero-abstract p{
+    max-width:46ch;color:var(--ink-soft);font-size:1.03rem;
+  }
+  .abstract-label{
+    font-family:'JetBrains Mono',monospace;font-size:0.72rem;
+    color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.08em;
+    padding-top:4px;flex-shrink:0;
+  }
+  .tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px;}
+  .tag{
+    font-family:'JetBrains Mono',monospace;font-size:0.76rem;
+    border:1px solid var(--rule);background:var(--paper-raised);
+    padding:6px 12px;border-radius:20px;color:var(--ink-soft);
+  }
+  .hero-ctas{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap;}
+  .btn{
+    font-family:'JetBrains Mono',monospace;font-size:0.82rem;
+    padding:13px 24px;border-radius:var(--radius);
+    display:inline-flex;align-items:center;gap:8px;
+    border:1px solid var(--ink);transition:all .15s ease;
+    letter-spacing:0.02em;
+  }
+  .btn-solid{background:var(--amber);border-color:var(--amber);color:#1a1000;}
+  .btn-solid:hover{background:#c67c25;border-color:#c67c25;}
+  .btn-outline{background:transparent;color:var(--ink);}
+  .btn-outline:hover{background:var(--ink);color:var(--paper);}
+  .pi-strip{
+    margin-top:56px;padding-top:18px;border-top:1px dashed var(--rule);
+    font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--rule);
+    white-space:nowrap;overflow:hidden;letter-spacing:0.15em;
+  }
+
+  /* ---------- section shell ---------- */
+  section{padding:76px 0;border-bottom:1px solid var(--rule);}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:24px;margin-bottom:44px;flex-wrap:wrap;position:relative;
+  }
+  .section-num{
+    font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--indigo-deep);
+    letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;display:block;
+  }
+  .section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);max-width:20ch;}
+  .section-head .desc{max-width:38ch;color:var(--ink-soft);font-size:0.95rem;}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- programs ---------- */
+  .program-clusters{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  .cluster{
+    background:var(--paper-raised);border:1px solid var(--rule);border-radius:var(--radius);
+    padding:34px;
+  }
+  .cluster-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+  .cluster h3{font-size:1.4rem;}
+  .cluster .count{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--ink-soft);}
+  .cluster > p.lead{color:var(--ink-soft);font-size:0.92rem;margin:6px 0 22px;}
+  .board-row{
+    display:flex;justify-content:space-between;gap:16px;
+    padding:16px 0;border-top:1px solid var(--rule);
+  }
+  .board-row:last-child{padding-bottom:0;}
+  .board-row .name{font-weight:600;font-size:0.98rem;}
+  .board-row .subjects{color:var(--ink-soft);font-size:0.86rem;margin-top:4px;max-width:34ch;}
+  .board-row .code{font-family:'JetBrains Mono',monospace;font-size:0.74rem;color:var(--teal);flex-shrink:0;padding-top:2px;}
+
+  /* ---------- papers library ---------- */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:30px;}
+  .filter-btn{
+    font-family:'JetBrains Mono',monospace;font-size:0.78rem;
+    padding:9px 16px;border:1px solid var(--rule);border-radius:20px;
+    background:var(--paper-raised);color:var(--ink-soft);cursor:pointer;
+    transition:all .15s ease;
+  }
+  .filter-btn:hover{border-color:var(--indigo);}
+  .filter-btn.active{background:var(--ink);border-color:var(--ink);color:var(--paper);}
+  .papers-list{border-top:1px solid var(--rule);}
+  .paper{
+    display:grid;grid-template-columns:120px 1fr auto;gap:24px;
+    padding:24px 0;border-bottom:1px solid var(--rule);align-items:start;
+  }
+  .paper .code{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--teal);padding-top:3px;}
+  .paper .title{font-family:'Newsreader',serif;font-size:1.15rem;font-weight:500;margin-bottom:6px;}
+  .paper .abstract{color:var(--ink-soft);font-size:0.88rem;max-width:58ch;}
+  .paper .board-tag{
+    display:inline-block;margin-top:10px;font-family:'JetBrains Mono',monospace;
+    font-size:0.7rem;color:var(--indigo-deep);text-transform:uppercase;letter-spacing:0.05em;
+  }
+  .dl-btn{
+    font-family:'JetBrains Mono',monospace;font-size:0.76rem;
+    border:1px solid var(--ink);padding:9px 16px;border-radius:var(--radius);
+    background:none;cursor:pointer;white-space:nowrap;transition:all .15s ease;
+    display:flex;align-items:center;gap:7px;color:var(--ink);
+  }
+  .dl-btn:hover{background:var(--indigo);border-color:var(--indigo);color:#fff;}
+  .dl-btn svg{width:13px;height:13px;}
+  .lib-note{
+    margin-top:26px;font-size:0.82rem;color:var(--ink-soft);
+    font-family:'JetBrains Mono',monospace;
+  }
+
+  /* ---------- admissions ---------- */
+  .adm-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;}
+  .adm-copy h3{font-size:1.5rem;margin-bottom:16px;}
+  .adm-copy p{color:var(--ink-soft);font-size:0.95rem;margin-bottom:18px;}
+  .adm-steps{margin-top:28px;}
+  .adm-step{display:flex;gap:16px;padding:16px 0;border-top:1px solid var(--rule);}
+  .adm-step .n{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--teal);flex-shrink:0;padding-top:2px;}
+  .adm-step .t{font-weight:600;font-size:0.92rem;}
+  .adm-step .d{color:var(--ink-soft);font-size:0.85rem;margin-top:3px;}
+
+  form.adm-form{background:var(--paper-raised);border:1px solid var(--rule);border-radius:var(--radius);padding:36px;}
+  .field{margin-bottom:20px;}
+  .field label{
+    display:block;font-family:'JetBrains Mono',monospace;font-size:0.72rem;
+    text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-soft);margin-bottom:8px;
+  }
+  .field input, .field select, .field textarea{
+    width:100%;border:1px solid var(--rule);border-radius:var(--radius);
+    padding:12px 14px;font-family:'Inter',sans-serif;font-size:0.95rem;
+    background:var(--paper);color:var(--ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none;border-color:var(--indigo);
+  }
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  form.adm-form .btn{width:100%;justify-content:center;margin-top:6px;border:none;cursor:pointer;font-size:0.88rem;padding:15px;}
+  .form-success{
+    display:none;text-align:center;padding:40px 10px;
+  }
+  .form-success.show{display:block;}
+  .form-success .mark{
+    width:44px;height:44px;border:1.5px solid var(--teal);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:var(--teal);
+  }
+  .form-success h4{font-size:1.2rem;margin-bottom:8px;}
+  .form-success p{color:var(--ink-soft);font-size:0.9rem;}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:start;}
+  .about-grid p{color:var(--ink-soft);font-size:0.98rem;margin-bottom:16px;}
+  .principles{display:flex;flex-direction:column;gap:0;}
+  .principle{padding:18px 0;border-top:1px solid var(--rule);}
+  .principle:last-child{border-bottom:1px solid var(--rule);}
+  .principle .t{font-family:'Newsreader',serif;font-size:1.1rem;font-weight:500;}
+  .principle .d{color:var(--ink-soft);font-size:0.85rem;margin-top:5px;}
+
+  /* ---------- footer ---------- */
+  footer{padding:56px 0 40px;}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+  .foot-brand .brand{margin-bottom:14px;}
+  .foot-brand p{color:var(--ink-soft);font-size:0.88rem;max-width:34ch;}
+  .foot-col h5{
+    font-family:'JetBrains Mono',monospace;font-size:0.72rem;text-transform:uppercase;
+    letter-spacing:0.06em;color:var(--ink-soft);margin-bottom:14px;
+  }
+  .foot-col a, .foot-col p{
+    display:block;font-size:0.88rem;color:var(--ink);margin-bottom:9px;
+  }
+  .foot-col a:hover{color:var(--indigo);}
+  .foot-bottom{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:26px;border-top:1px solid var(--rule);
+    font-family:'JetBrains Mono',monospace;font-size:0.74rem;color:var(--ink-soft);
+    flex-wrap:wrap;gap:10px;
+  }
+
+  @media (max-width:860px){
+    nav.links{display:none;}
+    .menu-btn{display:block;}
+    .hero-abstract{flex-direction:column;gap:14px;}
+    .program-clusters{grid-template-columns:1fr;}
+    .paper{grid-template-columns:1fr;gap:12px;}
+    .paper .code{padding-top:0;}
+    .adm-grid{grid-template-columns:1fr;}
+    .field-row{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr;gap:28px;}
+  }
+</style>
 </head>
 <body>
 
-<nav>
-  <div class="logo">
-    <!-- <img src="logo.png" alt="Logo" /> -->
-    Pi & Pixels
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand"><span class="mark">π</span>Pi and Pixels</a>
+    <nav class="links">
+      <a href="#programs">Programs</a>
+      <a href="#papers">Free Papers</a>
+      <a href="#admissions">Admissions</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#admissions" class="nav-cta">Apply Now</a>
+    </nav>
+    <button class="menu-btn" aria-label="Menu" onclick="document.querySelector('nav.links').style.display = document.querySelector('nav.links').style.display==='flex'?'none':'flex'">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  <ul>
-    <li><a href="#home">Home</a></li>
-     <li><a href="#contact">Admission Inquiry</a></li>
-    <li><a href="#about">About</a></li>
-    
-   
-  </ul>
-</nav>
+</header>
 
-<section class="hero" id="home">
-  <h1>Welcome to</h1>
-  <h2>Pi & Pixels</h2>
-  <p style="font-family: 'Segoe Script', cursive; font-size: 1.2em; margin-top: -10px; color: #a5b4fc;">By Subhasis Sir</p>
-  <p>Empowering students in Computer Science with clarity and passion.</p>
-  <div class="buttons">
-    <a href="#contact" class="btn-primary">Contact Us</a>
-    <a href="#resources" class="btn-secondary">Resources</a>
+<main id="top">
 
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="wrap">
+      <div class="eyebrow">Institute of Computer Science · Est. teaching ICSE to M.C.A.</div>
+      <h1>Where mathematics<br>meets the <em>machine.</em></h1>
+      <div class="hero-abstract">
+        <span class="abstract-label">Abstract —</span>
+        <p>Pi and Pixels teaches Computer Science as one continuous subject — from your first Class&nbsp;9 programming lesson to your final semester project. We coach students across the ICSE, CBSE and WBCHSE boards, and undergraduates in B.Tech CSE, BCA, MCA and B.Sc Computer Science, with topic-wise notes, solved papers and doubt-clearing built around each syllabus.</p>
+      </div>
+      <div class="tags">
+        <span class="tag">ICSE</span>
+        <span class="tag">CBSE</span>
+        <span class="tag">WBCHSE</span>
+        <span class="tag">B.Tech CSE</span>
+        <span class="tag">BCA</span>
+        <span class="tag">MCA</span>
+        <span class="tag">B.Sc Computer Science</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#admissions" class="btn btn-solid">Apply for admission →</a>
+        <a href="#papers" class="btn btn-outline">Browse free papers</a>
+      </div>
+      <div class="pi-strip mono">3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651...</div>
+    </div>
+  </section>
+
+  <section id="programs">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="section-num">01 — Programs</span>
+          <h2>Two tracks, one syllabus-first method.</h2>
+        </div>
+        <p class="desc">Every batch is built around what your board or university actually examines — not a generic curriculum.</p>
+      </div>
+
+      <div class="program-clusters">
+        <div class="cluster reveal">
+          <div class="cluster-head">
+            <h3>School Boards</h3>
+            <span class="count">3 boards</span>
+          </div>
+          <p class="lead">Class 9–12 Computer Applications / Computer Science, taught to the exact board syllabus and paper pattern.</p>
+
+          <div class="board-row">
+            <div>
+              <div class="name">ICSE</div>
+              <div class="subjects">Computer Applications — Java fundamentals, OOP, Class 10 board paper practice.</div>
+            </div>
+            <div class="code">CLS 9–10</div>
+          </div>
+          <div class="board-row">
+            <div>
+              <div class="name">CBSE</div>
+              <div class="subjects">Computer Science — Python, data structures, SQL, computer networks, AI basics.</div>
+            </div>
+            <div class="code">CLS 11–12</div>
+          </div>
+          <div class="board-row">
+            <div>
+              <div class="name">WBCHSE</div>
+              <div class="subjects">Computer Application / Computer Science — programming in C/Python, DBMS fundamentals.</div>
+            </div>
+            <div class="code">CLS 11–12</div>
+          </div>
+        </div>
+
+        <div class="cluster reveal">
+          <div class="cluster-head">
+            <h3>Degree Programs</h3>
+            <span class="count">4 programs</span>
+          </div>
+          <p class="lead">Semester-wise coaching for university papers, mapped to your actual course structure and exam pattern.</p>
+
+          <div class="board-row">
+            <div>
+              <div class="name">B.Tech CSE</div>
+              <div class="subjects">DSA, DBMS, OS, Computer Networks, Algorithms, OOP, core semester papers.</div>
+            </div>
+            <div class="code">SEM 1–8</div>
+          </div>
+          <div class="board-row">
+            <div>
+              <div class="name">BCA</div>
+              <div class="subjects">Programming in C/Java, DBMS, Web Technologies, Software Engineering.</div>
+            </div>
+            <div class="code">SEM 1–6</div>
+          </div>
+          <div class="board-row">
+            <div>
+              <div class="name">MCA</div>
+              <div class="subjects">Advanced DSA, DBMS, Software Engineering, AI/ML, Cloud Computing.</div>
+            </div>
+            <div class="code">SEM 1–4</div>
+          </div>
+          <div class="board-row">
+            <div>
+              <div class="name">B.Sc Computer Science</div>
+              <div class="subjects">Discrete Math, Computer Organization, DBMS, Networks, core papers.</div>
+            </div>
+            <div class="code">SEM 1–6</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="papers">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="section-num">02 — Open Access</span>
+          <h2>Free, topic-wise papers.</h2>
+        </div>
+        <p class="desc">Short notes on individual topics, free to download — no sign-up required. New topics added through the term.</p>
+      </div>
+
+      <div class="filters reveal">
+        <button class="filter-btn active" data-filter="all">All papers</button>
+        <button class="filter-btn" data-filter="icse8">ICSE · Class 8</button>
+        <button class="filter-btn" data-filter="icse9">ICSE · Class 9</button>
+        <button class="filter-btn" data-filter="icse10">ICSE · Class 10</button>
+        <button class="filter-btn" data-filter="bca-mca">BCA / MCA</button>
+        <button class="filter-btn" data-filter="bsc">B.Sc CS</button>
+      </div>
+
+      <div class="papers-list reveal" id="papersList"><!-- injected by JS --></div>
+
+      <p class="lib-note">↳ ICSE Class 8,9 and Class 10 papers are live now — send more topics any time and I'll add them the same way. Other boards and programs still show sample sheets until their notes are uploaded.</p>
+    </div>
+  </section>
+
+  <section id="admissions">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="section-num">03 — Admissions</span>
+          <h2>Enrolment open for the new term.</h2>
+        </div>
+      </div>
+
+      <div class="adm-grid">
+        <div class="adm-copy reveal">
+          <h3>How it works</h3>
+          <p>Tell us your board or program and current level — we'll place you in the right batch and share the syllabus schedule before your first class.</p>
+          <div class="adm-steps">
+            <div class="adm-step">
+              <span class="n">01</span>
+              <div>
+                <div class="t">Submit the form</div>
+                <div class="d">Share your board/program, current class or semester, and how to reach you.</div>
+              </div>
+            </div>
+            <div class="adm-step">
+              <span class="n">02</span>
+              <div>
+                <div class="t">Placement call</div>
+                <div class="d">We call within a day to understand your syllabus and confirm batch timing.</div>
+              </div>
+            </div>
+            <div class="adm-step">
+              <span class="n">03</span>
+              <div>
+                <div class="t">First class</div>
+                <div class="d">You get a syllabus map and topic-wise notes before day one.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <form class="adm-form" id="admForm">
+            <div id="formFields">
+              <div class="field-row">
+                <div class="field">
+                  <label for="fname">Full name</label>
+                  <input type="text" id="fname" required>
+                </div>
+                <div class="field">
+                  <label for="fphone">Phone number</label>
+                  <input type="tel" id="fphone" required>
+                </div>
+              </div>
+              <div class="field">
+                <label for="femail">Email address</label>
+                <input type="email" id="femail" required>
+              </div>
+              <div class="field">
+                <label for="fprogram">Board / program interested in</label>
+                <select id="fprogram" required>
+                  <option value="">Select one</option>
+                  <option>ICSE — Class 9 / 10</option>
+                  <option>CBSE — Class 11 / 12</option>
+                  <option>WBCHSE — Class 11 / 12</option>
+                  <option>B.Tech CSE</option>
+                  <option>BCA</option>
+                  <option>MCA</option>
+                  <option>B.Sc Computer Science</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="fmsg">Message (optional)</label>
+                <textarea id="fmsg" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn btn-solid">Submit application →</button>
+            </div>
+            <div class="form-success" id="formSuccess">
+              <div class="mark">✓</div>
+              <h4>Application received</h4>
+              <p>Thank you — our team will call you within one working day to confirm your batch.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="section-num">04 — About</span>
+          <h2>How we teach.</h2>
+        </div>
+      </div>
+      <div class="about-grid">
+        <div class="reveal">
+          <p>Pi and Pixels started from a simple observation: students preparing for a board exam and students preparing for a semester exam are usually taught computer science the same generic way — even though ICSE Java, CBSE Python and a B.Tech algorithms paper have almost nothing in common in structure or depth.</p>
+          <p>So every batch here is built around the actual paper — its weightage, its previous years' questions, its practical component — rather than a one-size course. Small batches, doubt sessions between classes, and notes you can revisit topic by topic instead of hunting through a full textbook.</p>
+        </div>
+        <div class="principles reveal">
+          <div class="principle">
+            <div class="t">Syllabus-first</div>
+            <div class="d">We start from your board or university's own syllabus document, not a generic CS curriculum.</div>
+          </div>
+          <div class="principle">
+            <div class="t">Topic-wise material</div>
+            <div class="d">Notes broken down by individual topic, so revision doesn't mean re-reading a whole chapter.</div>
+          </div>
+          <div class="principle">
+            <div class="t">Small batches</div>
+            <div class="d">Enough room for every student to get their code reviewed and their doubts actually answered.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="brand"><span class="mark">π</span>Pi and Pixels</a>
+        <p>A computer science teaching institute for ICSE, CBSE and WBCHSE board students, and B.Tech, BCA, MCA and B.Sc Computer Science undergraduates.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Site</h5>
+        <a href="#programs">Programs</a>
+        <a href="#papers">Free papers</a>
+        <a href="#admissions">Admissions</a>
+        <a href="#about">About</a>
+      </div>
+      <div class="foot-col">
+        <h5>Contact</h5>
+        <p>admissions@piandpixels.in</p>
+        <a href="tel:+917449858122">+91 74498 58122</a>
+        <a href="https://wa.me/917450935104" target="_blank" rel="noopener">WhatsApp: +91 74509 35104</a>
+        <p>Indradip, Pincol, Shyamnagar,<br>Ichhapur Defence Estate,<br>West Bengal 743133</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Pi and Pixels · piandpixels.in</span>
+      <span>Built for board & university computer science</span>
+    </div>
   </div>
-</section>
-
-<section class="section" id="about">
-  <h2>What We Teach</h2>
-  <p>Offering classes tailored for school and college students with depth, simplicity, and real-world relevance.</p>
-  <div class="resources">
-    <div class="resource-card">
-      <h3>School Level</h3>
-      <p>Classes 8–12 (ICSE, ISC) </p>
-      <p>Classes 11, 12 (CBSE)</p>
-      <p>Subjects: Computer Science</p>
-    </div>
-    <div class="resource-card">
-      <h3>College Level</h3>
-      <p>B.Tech, BCA, BSc Computer Science</p>
-      <p>Topics: DSA, AI, DBMS, OS, CN, DAA, Java, React, and more</p>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="resources">
-  <h2>Free Resources</h2>
-  <p>Download our free educational materials and PDF notes.</p>
-  <p>Class 8</p>
-  <div class="resources">
-    <div class="resource-card">
-      <h3>Basic Programming Questions</h3>
-      <p>Free PDF for beginners in Java programming.</p>
-      <a href="Class 8 java revision worksheet.pdf">Download PDF</a>
-    </div>
-    <div class="resource-card">
-      <h3>Algorithms</h3>
-      <p>Concise PDF on Algorithm for school level learners.</p>
-      <a href="algo.pdf">Download PDF</a>
-    </div>
-  </div>
-  <br/>
-   <div class="resources">
-    <div class="resource-card">
-      <h3>Questions and answers on Internet and Intranet</h3>
-    
-      <a href="Internet and Intranet.pdf">Download PDF</a>
-    </div>
-    <div class="resource-card">
-      <h3>Condition Writing</h3>
-      <p>Concise PDF on Condition Writing in JAVA</p>
-      <a href="Writing Conditions.pdf">Download PDF</a>
-    </div>
-  </div>
-  <br/>
-   <p><b>Class 9</b></p>
-  <div class="resources">
-    <div class="resource-card">
-      <h3>Introduction to OOP (Study Material)</h3>
-      <p>Free PDF for beginners in Java programming.</p>
-      <a href="Introduction to OOP.pdf">Download PDF</a>
-    </div>
-    <div class="resource-card">
-      <h3>Values and Data types PART 1 (Study material)</h3>
-     
-      <a href="values and data types part 1.pdf">Download PDF</a>
-    </div>
-  </div>
-  <br/>
-   <div class="resources">
-    <div class="resource-card">
-      <h3>Values and Data Types PART 2 (Study material)</h3>
-    
-      <a href="Values & Data Types Module 2.pdf">Download PDF</a>
-    </div>
-    <div class="resource-card">
-      <h3>Conditional Constructs (Study Material)</h3>
-      <p>Concise PDF on Condition Writing in JAVA</p>
-      <a href="Conditional Constructs Class 9.pdf">Download PDF</a>
-    </div>
-  </div>
-  <br/>
-   <div class="resources">
-    <div class="resource-card">
-      <h3>Mathematical Library(Study Material)</h3>
-    
-      <a href="Math Library Functions.pdf">Download PDF</a>
-    </div>
-    <div class="resource-card">
-      <h3>Input Using Scanner</h3>
-      <p>Concise PDF on Taking inputs using Scanner class in JAVA</p>
-      <a href="Notes- Input Using Scanner Class.pdf">Download PDF</a>
-    </div>
-  </div>
-  <br/>
-   <div class="resources">
-    <div class="resource-card">
-      <h3>Introduction to Iterative Constructs (Study material, Yet to be uploaded)</h3>
-    
-      <a href="#">Download PDF</a>
-    </div>
-    <div class="resource-card">
-      <h3>Notes on Nested Loops (Yet to be uploaded)</h3>
-      <p>© 2023 Subhasis Das. All rights reserved.
-No part of this document may be modified without written permission of the author.
-</p>
-      <a href="#">Download PDF</a>
-    </div>
-  </div>
-</section>
-
-<section class="section contact-section" id="contact">
-  <div class="contact-info">
-    <h3>Contact Information</h3>
-    <p><strong>Address:</strong><br />Indradip, Pincol (Behind SBI and icici Bank), Shyamnagar, PIN- 743127, WB, India</p>
-    <p><strong>Phone:</strong><br />+91 7449858122</p>
-    <p><strong>Email:</strong><br />subhasisdascs@gmail.com</p>
-   
-  </div>
-  <div class="contact-form">
-    <h3>Admission Inquiry</h3>
-  
-<form action="https://formsubmit.co/subhasisdascs@gmail.com" method="POST">
-  <!-- Full Name -->
-  <input type="text" name="full_name" placeholder="Full Name" required />
-
-  <!-- Phone Number -->
-  <input type="text" name="phone" placeholder="Phone Number" required />
-
-  <!-- School Name -->
-  <input type="text" name="school" placeholder="School Name" required />
-
-  <!-- Class -->
-  <select name="class" required>
-    <option value="">Select Class</option>
-    <option value="5">Class 5</option>
-    <option value="6">Class 6</option>
-    <option value="7">Class 7</option>
-    <option value="8">Class 8</option>
-    <option value="9">Class 9</option>
-    <option value="10">Class 10</option>
-    <option value="11">Class 11</option>
-    <option value="12">Class 12</option>
-  </select>
-
-  <!-- Board -->
-  <select name="board" required>
-    <option value="">Select Board</option>
-    <option value="ICSE">ICSE</option>
-    <option value="ISC">ISC</option>
-    <option value="CBSE">CBSE</option>
-    <option value="WBCHSE">WBCHSE</option>
-    <option value="Other">Other</option>
-  </select>
-
-  <!-- Anti-spam honeypot field -->
-  <input type="text" name="_honey" style="display:none">
-
-  <!-- Disable CAPTCHA -->
-  <input type="hidden" name="_captcha" value="false">
-
-  <!-- Redirect to thank you page after submit -->
-  <input type="hidden" name="_next" value="https://piandpixels.in/">
-
-  <!-- Submit Button -->
-  <button type="submit">Send Message</button>
-</form>
-
-</section>
-
-<footer>
-  <div>
-    <h4>Pi & Pixels</h4>
-    <p>Clarity. Curiosity. Code. Learn better with us.</p>
-  </div>
-  <div>
-    <h4>Quick Links</h4>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#resources">Resources</a>
-    <a href="#contact">Contact</a>
-  </div>
-  
 </footer>
+
+<script>
+  // ---------- paper library data ----------
+ // ---------- paper library data ----------
+  // ---------- paper library data ----------
+ // ---------- paper library data ----------
+  const papers = [
+    // ICSE Class 8
+   {code:"ICSE8.PROG.01", title:"Class 8 Programming Exercises", level:"icse8", tag:"ICSE · Class 8", file:"papers/Class 8 programming exercise.pdf",
+     abstract:"42 programming exercises covering basic math, successive discounts, simple interest, slab-based bill calculations, triangle validity, and digit manipulation[cite: 52]."},
+    {code:"ICSE8.EXPR.01", title:"Past Exam Snippets & Expressions", level:"icse8", tag:"ICSE · Class 8", file:"papers/Doc2 (1).pdf",
+     abstract:"A collection of past exam snippets from 2005-2012 covering operator precedence, mathematical expressions, prefix/postfix evaluation, and Math library functions[cite: 53]."},
+    {code:"ICSE8.THRY.01", title:"Quick Notes: Java Fundamentals", level:"icse8", tag:"ICSE · Class 8", file:"papers/Few Notes.pdf",
+     abstract:"Quick notes on Java basics including IPO, JVM/JRE/JDK, operator precedence, comments, and the compilation flow from source code to bytecode[cite: 54]."},
+    {code:"ICSE8.NET.01", title:"Internet and Intranet Basics", level:"icse8", tag:"ICSE · Class 8", file:"papers/Internet and Intranet.pdf",
+     abstract:"100 questions covering networking fundamentals. Includes IP addresses, DNS, switches/routers, transmission media, cloud computing, and network topologies[cite: 55]."},
+    {code:"ICSE8.THRY.02", title:"Errors, Compilation & ASCII", level:"icse8", tag:"ICSE · Class 8", file:"papers/Notes_2.pdf",
+     abstract:"Theory notes distinguishing syntax, logical, and runtime errors. Explains source code, object code, JVM compilation flow, and the ASCII table character ranges[cite: 56]."},
+    {code:"ICSE8.TEST.01", title:"Class 8 Practice Paper", level:"icse8", tag:"ICSE · Class 8", file:"papers/Practice Paper Class 8.pdf",
+     abstract:"A test paper featuring MCQs on networking and Java basics, dry run snippets, flowchart analysis, and programming questions like Heron's formula[cite: 57]."},
+    {code:"ICSE8.THRY.03", title:"Core Theory Points", level:"icse8", tag:"ICSE · Class 8", file:"papers/A few theoritical points.pdf",
+     abstract:"Concise theory points on jump statements, entry/exit-controlled loops, switch-case fall-through, and expression type promotion[cite: 58]."},
+    {code:"ICSE8.ALGO.01", title:"Introduction to Algorithms", level:"icse8", tag:"ICSE · Class 8", file:"papers/algo.pdf",
+     abstract:"Theory and examples of algorithms. Defines algorithm characteristics and provides step-by-step logic for finding largest numbers, factorials, and area calculations[cite: 59]."},
+    {code:"ICSE8.THRY.04", title:"Java Concepts & Operations", level:"icse8", tag:"ICSE · Class 8", file:"papers/Class 8 Concepts.pdf",
+     abstract:"Explains modulus and division properties, Math.pow behavior, operator precedence, data type memory sizes, type casting, and error types[cite: 60]."},
+    {code:"ICSE8.REV.01", title:"Java Revision Worksheet", level:"icse8", tag:"ICSE · Class 8", file:"papers/Class 8 java revision worksheet.pdf",
+     abstract:"A revision worksheet featuring theory questions, output prediction snippets, and 15 core programming questions ranging from value swapping to tiered billing[cite: 61]."},
+    {code:"ICSE8.COND.02", title:"Writing Conditions: Class Notes", level:"icse8", tag:"ICSE · Class 8", file:"papers/Writing Conditions.pdf",
+     abstract:"Explains relational and logical operators along with their precedence[cite: 62]. Covers conditional checking using if-else statements and ternary operators[cite: 62]. Includes techniques for divisibility checks and extracting the last digit of a number using modulo[cite: 62]."},
+    {code:"ICSE8.PROG.03", title:"Practice Questions Class 8", level:"icse8", tag:"ICSE · Class 8", file:"papers/Practice Questions Class 8.pdf",
+     abstract:"Features a class design problem to calculate an electricity bill using specific tariff slabs and surcharges[cite: 63]. Includes menu-driven programs using switch-case for shape areas and VIBGYOR spectrum colors[cite: 63]. Contains a tiered commission calculation program based on sales and hourly wages[cite: 63]."},
+    {code:"ICSE8.LOOP.02", title:"Star Pattern Example With Homework", level:"icse8", tag:"ICSE · Class 8", file:"papers/Star Pattern Example With Homework.pdf",
+     abstract:"Demonstrates how to write nested loops for dependent and independent star patterns[cite: 64]. Includes homework exercises for generating decreasing star shapes and mixed symbol patterns using odd and even logic[cite: 64]."},
+    // ICSE Class 9 
+    {code:"ICSE9.FUND.01", title:"Java Fundamentals: JRE, JDK & Object Code", level:"icse9", tag:"ICSE · Class 9", file:"papers/Chapter 1 Part 2.pdf",
+     abstract:"Explains JRE, JDK, JVM, and IDEs. Covers the transition from Java source code to object code, and Java's WORA (Write Once, Run Anywhere) feature."},
+    {code:"ICSE9.COND.01", title:"Conditional Constructs: If-Else & Switch-Case", level:"icse9", tag:"ICSE · Class 9", file:"papers/Conditional Constructs Class 9.pdf",
+     abstract:"Comprehensive notes on relational and logical operators, if-else constructs, ternary operators, and switch-case mechanics including fall-through. Includes modulo arithmetic for divisibility and digit extraction."},
+    {code:"ICSE9.COND.02", title:"Applied Conditions: Menu-Driven & Slab Calculations", level:"icse9", tag:"ICSE · Class 9", file:"papers/Conditional Construct Questions.pdf",
+     abstract:"Practice programs focusing on slab-based calculations like electricity bills, taxes, and discounts. Includes menu-driven examples using switch-case for area and temperature conversions."},
+    {code:"ICSE9.LOOP.01", title:"Iterations: Entry and Exit Controlled Loops", level:"icse9", tag:"ICSE · Class 9", file:"papers/Class 9 Loops.pdf",
+     abstract:"Theory on for, while (entry-controlled) and do-while (exit-controlled) loops. Covers jump statements (break, continue) and formulas for calculating loop iterations."},
+    {code:"ICSE9.PROG.01", title:"Class 9 Java Project: 15 Core Programs", level:"icse9", tag:"ICSE · Class 9", file:"papers/class 9 2025 project.pdf",
+     abstract:"A complete project set covering math functions (Math.sqrt, Math.PI), simple and compound interest, leap year checking, and condition-based discounting."},
+    {code:"ICSE9.TEST.01", title:"Class 9 Comprehensive Practice Test", level:"icse9", tag:"ICSE · Class 9", file:"papers/CL 9 Test.pdf",
+     abstract:"A full 100-mark test covering operator precedence, type casting, loop dry runs, series summation, duck number checking, and ternary operators."},
+    {code:"ICSE9.INP.01", title:"Input Using Scanner Class", level:"icse9", tag:"ICSE · Class 9", file:"papers/Notes- Input Using Scanner Class.pdf",
+     abstract:"Explains how to import and use the java.util.Scanner class. Covers object creation and non-static functions like nextInt(), nextDouble(), and next().charAt(0) for various data types."},
+    {code:"ICSE9.ETH.01", title:"Ethical Issues in Computing & Cyber Security", level:"icse9", tag:"ICSE · Class 9", file:"papers/Ethical Issues.pdf",
+     abstract:"Covers computing ethics, privacy concerns, and the digital divide. Explains intellectual property rights, data protection laws like GDPR and DPA 1998, and defenses against spam, piracy, and malicious hacking."},
+    {code:"ICSE9.LOOP.02", title:"Loop Practice: Sequences and Series", level:"icse9", tag:"ICSE · Class 9", file:"papers/Homework.pdf",
+     abstract:"Homework exercises focusing on writing loops for mathematical sequences and fractional series summation. Includes a nested loop problem for calculating a series of sums."},
+    {code:"ICSE9.OOP.01", title:"Introduction to Object-Oriented Programming", level:"icse9", tag:"ICSE · Class 9", file:"papers/Introduction to OOP.pdf",
+     abstract:"Contrasts high-level and low-level languages and their translators (compilers vs interpreters). Details core OOP principles: encapsulation, inheritance, polymorphism, and data abstraction, along with Java's JVM compilation process."},
+    {code:"ICSE9.LOOP.03", title:"Advanced Loop Snippets & Dry Runs", level:"icse9", tag:"ICSE · Class 9", file:"papers/Loop Snippets (Practice set).pdf",
+     abstract:"A comprehensive practice set for loop conversions and output prediction. Includes complex nested loops, modulo operations, and the use of labeled break and continue statements."},
+    {code:"ICSE9.LOOP.04", title:"Loop Conversions & Output Practice", level:"icse9", tag:"ICSE · Class 9", file:"papers/Loop Snippets.pdf",
+     abstract:"Exercises on converting between for, while, and do-while loops. Features output prediction questions involving increment/decrement operators and break/continue statements within loops."},
+    {code:"ICSE9.LOOP.05", title:"Syntax Guide: Java Loop Structures", level:"icse9", tag:"ICSE · Class 9", file:"papers/Loop structures.pdf",
+     abstract:"A quick reference guide outlining the exact syntax for initialization, condition, and update statements in for, while, and do-while loops."},
+    {code:"ICSE9.LOOP.06", title:"Iterations, Sequences, and Mathematical Series", level:"icse9", tag:"ICSE · Class 9", file:"papers/Loops, Sequence, Series (2).pdf",
+     abstract:"Explains entry and exit-controlled loops, null loops, and a formula for calculating iterations. Covers generating sequences and computing mathematical series sums using Sigma and products using Pi."},
+    {code:"ICSE9.MATH.01", title:"Math Library Functions (java.lang)", level:"icse9", tag:"ICSE · Class 9", file:"papers/Math Library Functions.pdf",
+     abstract:"Details the static methods of the java.lang.Math class, including rounding (ceil, floor, rint), powers, and absolute values. Explains return types, mathematical constants like Math.PI, and function nesting."},
+    {code:"ICSE9.TEST.02", title:"Programming Test: Loops & Special Numbers", level:"icse9", tag:"ICSE · Class 9", file:"papers/TEST  ON   PROGRAMMING class 9 loops.pdf",
+     abstract:"A 90-mark test covering Niven, perfect, spy, and special 2-digit numbers. Includes prime palindrome, duck, pronic, automorphic, and tech numbers, plus class average calculations."},
+    {code:"ICSE9.THRY.01", title:"Errors, Compilation, and ASCII", level:"icse9", tag:"ICSE · Class 9", file:"papers/Notes.pdf",
+     abstract:"Theory notes distinguishing syntax, logical, and runtime errors. Explains source code, object code, JVM compilation flow, and the ASCII table character ranges."},
+    {code:"ICSE9.OOP.02", title:"Objects, Classes & Access Specifiers", level:"icse9", tag:"ICSE · Class 9", file:"papers/Object and classes.pdf",
+     abstract:"MCQs and theory distinguishing classes from objects, the new keyword, and the dot operator. Covers fundamental vs user-defined data types and public, private, protected, and default access specifiers."},
+    {code:"ICSE9.PROG.02", title:"15 Core Programs: Expected Outputs", level:"icse9", tag:"ICSE · Class 9", file:"papers/outputs.pdf",
+     abstract:"Sample inputs and outputs for 15 basic Java programs, including arithmetic, leap year checks, scalene triangle area, and switch-case calculators."},
+    {code:"ICSE9.COND.03", title:"Menu-Driven Switch-Case: Fibonacci & Series", level:"icse9", tag:"ICSE · Class 9", file:"papers/Pattern Switch Case Example.pdf",
+     abstract:"A worked example of a menu-driven program using switch-case to generate the Fibonacci sequence or calculate the sum of a fractional series based on user choice."},
+    {code:"ICSE9.PROG.03", title:"20 Number Logic & Series Programs", level:"icse9", tag:"ICSE · Class 9", file:"papers/Programs (Moupriya).pdf",
+     abstract:"Extensive program list covering Amicable, Tech, Dudney, Spy, and Super Spy numbers. Includes Fibonacci, Tribonacci, Pell, and Lucas series, plus prime checking variations."},
+    {code:"ICSE9.LOOP.07", title:"Loops: Factors, Primes & Perfect Numbers", level:"icse9", tag:"ICSE · Class 9", file:"papers/Questions with factors of a number involved.pdf",
+     abstract:"Programs demonstrating how to print, count, and sum the factors of a number. Includes applications for prime and perfect number checking, plus Fibonacci and Pell series generation."},
+    {code:"ICSE9.REV.02", title:"Quick Recall: Java Fundamentals & Operators", level:"icse9", tag:"ICSE · Class 9", file:"papers/Recall.pdf",
+     abstract:"Revision notes on switch-case rules, loop types, jump statements, and operator precedence. Covers data type memory sizes, type casting, access specifiers, and core OOP principles."},
+    {code:"ICSE9.SNIP.01", title:"Code Snippets & Dry Run Practice", level:"icse9", tag:"ICSE · Class 9", file:"papers/Snippets Class 9.pdf",
+     abstract:"Practice questions on arithmetic, conditional, and mathematical snippets. Features loop conversions and dry runs for for, while, do-while, and nested loops with break and continue statements."},
+    {code:"ICSE9.SNIP.02", title:"Increment/Decrement & Expression Snippets", level:"icse9", tag:"ICSE · Class 9", file:"papers/Solve the following (class IX).pdf",
+     abstract:"Extensive homework set for evaluating prefix and postfix increment/decrement operators in complex equations. Includes converting mathematical expressions into Java format."},
+    {code:"ICSE9.TEST.03", title:"Comprehensive Java Concepts Test", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test on Introduction to object oriented programming concepts.pdf",
+     abstract:"Covers OOP concepts, basic Java, data types, operators, input, Math methods, conditionals, and loops. Includes MCQs on procedure vs. object-oriented programming, logical operators, and Math.round() return types. Also includes output snippets and programming questions like calculating discounts and converting temperatures."},
+    {code:"ICSE9.PROG.04", title:"Patterns, Sequences, and Series Test", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test on patterns^J sequences and series.pdf",
+     abstract:"Includes 60 marks worth of programming questions focusing on star and number pattern printing. Covers Floyd's triangle generation, sequence printing, and calculating the sum of fractional series."},
+    {code:"ICSE9.TEST.04", title:"Programming Test 1: Conditionals & Math", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test On Programming class 9 test 1.pdf",
+     abstract:"A 50-mark test covering second smallest number checks, leap year logic, and slab-based calculations for electricity and internet bills. Includes quadratic equation root calculations using Math methods."},
+    {code:"ICSE9.THRY.02", title:"Values and Data Types Test", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test on Values and Data Types.pdf",
+     abstract:"Examines concepts like ASCII, UNICODE, primitive data types, tokens, and punctuators in Java. Features MCQs, true/false questions, and short answer queries on type casting (implicit vs explicit) and escape sequences."},
+    {code:"ICSE9.TEST.05", title:"Loop & Function Snippet Test", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test1.pdf",
+     abstract:"A comprehensive MCQ test evaluating for, while, and do-while loops, break/continue statements, and method overloading. Includes output prediction questions involving arrays, constructors, and object manipulation. Contains programming questions for factorial calculation and applying category-based discounts."},
+    {code:"ICSE9.THRY.03", title:"Core Theory Quick Reference", level:"icse9", tag:"ICSE · Class 9", file:"papers/theory.pdf",
+     abstract:"Short notes on jump statements, entry/exit-controlled loops, and multiple branching using switch-case. Explains fall-through, infinite loops, labeled loops, and the difference between break and System.exit(0)."},
+    {code:"ICSE9.SNIP.03", title:"Snippets: Math, Loops & Conditions", level:"icse9", tag:"ICSE · Class 9", file:"papers/Topics to study and practice.pdf",
+     abstract:"Practice guide for arithmetic snippets, converting mathematical expressions to Java, and nested Math functions. Covers ternary conversions, loop syntax transitions, and series/factor summation logic."},
+    {code:"ICSE9.PROG.05", title:"Nested Loops & Series Expansion", level:"icse9", tag:"ICSE · Class 9", file:"papers/Untitled document (3).pdf",
+     abstract:"Extensive programming exercises for finding sums of primes, perfect numbers, and factorions (special numbers). Includes generating Fibonacci, Pell, and Lucas series, along with a wide variety of nested loop patterns and fractional series calculations."},
+    {code:"ICSE9.TEST.06", title:"Foundations & Operators Test", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test 1 class 9 ICSE.pdf",
+     abstract:"A 60-mark test covering low vs high-level languages, Java compilation, and OOP properties. Features extensive snippet evaluations involving type promotion, ASCII calculations, and ternary operator logic."},
+    {code:"ICSE9.TEST.07", title:"Chapter 1 Theory Test", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test on Chapter 1.pdf",
+     abstract:"Focuses on programming language classification, language translators (compiler, interpreter, assembler), and core OOP principles like polymorphism and encapsulation."},
+    {code:"ICSE9.TEST.08", title:"Comprehensive Java Concepts Test (Version 2)", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test on Introduction to object oriented programming concepts_2.pdf",
+     abstract:"Covers OOP concepts, Java basics, data types, and operators. Includes questions on input, Math library methods, conditionals, and iterative constructs."},
+    {code:"ICSE9.PROG.06", title:"Patterns, Sequences, and Series Test (Version 2)", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test on patterns^J sequences and series_2.pdf",
+     abstract:"Features programming questions to print star patterns and number patterns. Includes programs to print Floyd's triangle, reverse Floyd's triangle, and calculate the sum of fractional series."},
+    {code:"ICSE9.TEST.09", title:"Programming Test 1: Conditionals & Math (Version 2)", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test On Programming class 9 test 1_2.pdf",
+     abstract:"Contains a 50-mark test covering leap year checks, electricity bill calculation, and internet bill calculation. Requires finding quadratic equation roots using the discriminant formula and calculating the sum of digits."},
+    {code:"ICSE9.THRY.04", title:"Values and Data Types Test (Version 2)", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test on Values and Data Types_2.pdf",
+     abstract:"Evaluates knowledge of UNICODE, ASCII, and boolean literals. Includes questions on primitive data types, logical operator precedence, implicit type casting, and escape sequences."},
+    {code:"ICSE9.TEST.10", title:"Loop & Function Snippet Test (Version 2)", level:"icse9", tag:"ICSE · Class 9", file:"papers/Test1_2.pdf",
+     abstract:"A test evaluating for loop mechanics, while loops, and method overloading. Contains snippets to predict output for arrays and constructors, along with programming questions for laptop discounts and factorials."},
+    {code:"ICSE9.THRY.05", title:"Core Theory Quick Reference (Version 2)", level:"icse9", tag:"ICSE · Class 9", file:"papers/theory_2.pdf",
+     abstract:"Quick theory points on jump statements, entry-controlled loops, and exit-controlled loops. Explains switch case fall-through, multiple data type expressions, and the difference between break and System.exit(0)."},
+    {code:"ICSE9.SNIP.04", title:"Snippets: Math, Loops & Conditions (Version 2)", level:"icse9", tag:"ICSE · Class 9", file:"papers/Topics to study and practice_2.pdf",
+     abstract:"Practice material covering arithmetic snippets, conversion from mathematical expressions to Java, and if-else to ternary conversions. Includes dry runs for loops, Fibonacci sequence generation, and factor counting."},
+    {code:"ICSE9.PROG.07", title:"Nested Loops & Series Expansion (Version 2)", level:"icse9", tag:"ICSE · Class 9", file:"papers/Untitled document (3)_2.pdf",
+     abstract:"Programming questions on finding the sum of prime numbers, perfect numbers, and factorions. Features complex nested loop patterns, sequence generation, and fractional mathematical series."},
+    {code:"ICSE9.THRY.06", title:"Values & Data Types Module 2", level:"icse9", tag:"ICSE · Class 9", file:"papers/Values & Data Types Module 2.pdf",
+     abstract:"Categorizes primitive and non-primitive data types, their memory sizes, and default values. Discusses implicit and explicit type casting, Java keywords, identifiers, and pure versus impure expressions."},
+    {code:"ICSE9.THRY.07", title:"Values and Data Types Part 1", level:"icse9", tag:"ICSE · Class 9", file:"papers/values and data types part 1.pdf",
+     abstract:"Details character sets, Unicode, ASCII, and escape sequences. Explains Java tokens, delimiters, pre-defined library classes like java.lang and java.util, and the difference between standalone applications and applets."},
+    {code:"ICSE9.LOOP.08", title:"Notes for Nested Loops", level:"icse9", tag:"ICSE · Class 9", file:"papers/Notes for Nested Loops.pdf",
+     abstract:"Explains the structure and properties of nested loops, including dependent vs. independent loops and loop labeling[cite: 51]. Covers techniques for generating symbol and number patterns, as well as converting mathematical series representations (Sigma and Pi) into nested Java loops[cite: 51]."},
+//Class 10
+    {code:"ICSE10.FUNC.01", title:"Functions: Memory Occupations and Related Concepts", level:"icse10", tag:"ICSE · Class 10", file:"papers/Functions - Memory Occupations and Related Concepts.pdf",
+     abstract:"Explains the differences between instance, class, and local variables. Details how object creation allocates heap memory, the accessing rules for static and non-static members, and how to handle variable shadowing using the 'this' keyword."},
+    {code:"ICSE10.FUNC.02", title:"Functions (Focused on return type)", level:"icse10", tag:"ICSE · Class 10", file:"papers/Functions (focused on return type).pdf",
+     abstract:"Details function structure, including access specifiers (public, private, protected) and the use of the void keyword. Explains how to return variables and how to handle type casting when return types differ from variable types."},
+    {code:"ICSE10.FUNC.03", title:"Functions Questions", level:"icse10", tag:"ICSE · Class 10", file:"papers/Functions Questions.pdf",
+     abstract:"A comprehensive set of practice questions focusing on method overloading and class design. Includes programs to overload methods for mathematical series, pattern generation (Pascal's triangle, Floyd's triangle), and tiered billing (electricity, water)."},
+    {code:"ICSE10.FUNC.04", title:"User Defined Functions/Methods: Questions and programs", level:"icse10", tag:"ICSE · Class 10", file:"papers/Method-Functions Questions.pdf",
+     abstract:"Theory questions on function concepts like formal/actual parameters, pure/impure functions, and call by value/reference. Includes 34 programming exercises requiring the design of specific methods to handle tasks like checking prime numbers, string manipulation, and calculating volume."},
+    {code:"ICSE10.FUNC.05", title:"Function Prototype & Snippets Practice", level:"icse10", tag:"ICSE · Class 10", file:"papers/Write prototype of a function that takes a String and character and returns integer.pdf",
+     abstract:"Short exercises on writing function prototypes and evaluating outputs involving class constructors and variable updates. Includes snippets for ternary conversions, random number generation, and predicting outputs of nested loops."},
+    {code:"ICSE10.FUNC.06", title:"Functions (module 3)", level:"icse10", tag:"ICSE · Class 10", file:"papers/Function Module 3.pdf",
+     abstract:"Explains parameterized functions, differentiating between formal and actual parameters. Covers call by value versus call by reference, method signatures, function overloading rules, and pure versus impure functions."},
+    {code:"ICSE10.ARR.01", title:"1D Array Programming Questions", level:"icse10", tag:"ICSE · Class 10", file:"papers/Questions on array CUSTOM.pdf",
+     abstract:"A set of 46 programming questions focusing on single-dimensional arrays. Covers element traversal, duplicate removal, merging, linear and binary searching, and bubble and selection sorting techniques."},
+    {code:"ICSE10.ARR.02", title:"Array Searching and Sorting Algorithms", level:"icse10", tag:"ICSE · Class 10", file:"papers/Array Algorithms.pdf",
+     abstract:"Detailed Java code implementations for Linear Search, Binary Search, Selection Sort, and Bubble Sort. Also includes algorithms for duplicate removal, duplicate collection, array reversal, and string comparison logic."},
+    {code:"ICSE10.ARR.03", title:"Array Code Snippets and Dry Runs", level:"icse10", tag:"ICSE · Class 10", file:"papers/array snippets.pdf",
+     abstract:"A practice set containing 13 array-based code snippets for output prediction. Demonstrates loop iterations over arrays, element modification, and passing arrays to methods to highlight reference behavior."},
+    {code:"ICSE10.ARR.04", title:"Two-Dimensional Array Questions", level:"icse10", tag:"ICSE · Class 10", file:"papers/Two Dimensional Array.pdf",
+     abstract:"A collection of 20 programming questions on 2D arrays and matrices. Covers matrix properties like symmetric, identity, sparse, and magic squares, as well as operations like transposing, sorting, and boundary element summation."},
+    {code:"ICSE10.LIB.01", title:"Library Classes (Wrapper Classes)", level:"icse10", tag:"ICSE · Class 10", file:"papers/Library Classes (Wrapper Classes).pdf",
+     abstract:"Explains Java wrapper classes, autoboxing, and unboxing. Details Character class methods, String conversions using parse methods and valueOf(), common exceptions like NumberFormatException, and provides an overview of standard Java library packages."},
+    {code:"ICSE10.STR.01", title:"String Handling Functions", level:"icse10", tag:"ICSE · Class 10", file:"papers/DOC-20250723-WA0005..pdf",
+     abstract:"Comprehensive notes on String handling in Java, including immutability and various declaration methods. Covers essential String functions for length, searching, comparison, extraction, modification, and condition checking, alongside common exceptions."},
+    {code:"ICSE10.OOP.01", title:"Inheritance (Theory) & Variable Scope", level:"icse10", tag:"ICSE · Class 10", file:"papers/Inheritance (Theory).pdf",
+     abstract:"Defines types of inheritance including single, multilevel, hierarchical, hybrid, and multiple inheritance via interfaces. Explains access specifiers (public, protected, default, private) and details variable scopes including local, instance, static, and block."},
+     {code:"ICSE10.ERR.01", title:"Categories of Errors in Java & Snippets", level:"icse10", tag:"ICSE · Class 10", file:"papers/errors.pdf",
+     abstract:"Explains compile-time, run-time, and logical errors in Java with common examples like ArithmeticException and NullPointerException[cite: 78]. Includes 24 error-finding exercises and additional snippets covering Math functions, nested loops, and object constructors[cite: 78]."},
+  ];
+  const listEl = document.getElementById('papersList');
+  const dlIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>';
+
+  function renderPapers(filter){
+    listEl.innerHTML = papers
+      .filter(p => filter === 'all' || p.level === filter)
+      .map(p => `
+        <div class="paper">
+          <div class="code mono">${p.code}</div>
+          <div>
+            <div class="title">${p.title}</div>
+            <div class="abstract">${p.abstract}</div>
+            <span class="board-tag">${p.tag}</span>
+          </div>
+          <button class="dl-btn" onclick="downloadPaper('${p.code}','${p.title.replace(/'/g,"\\'")}','${p.abstract.replace(/'/g,"\\'")}', ${p.file ? `'${p.file}'` : 'null'})">${dlIcon}<span>PDF</span></button>
+        </div>
+      `).join('');
+  }
+  renderPapers('all');
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderPapers(btn.dataset.filter);
+    });
+  });
+
+  // ---------- pdf download (real file, or generated sample sheet as fallback) ----------
+  function downloadPaper(code, title, abstract, file){
+    if (file) {
+      const a = document.createElement('a');
+      a.href = file;
+      a.download = file.split('/').pop();
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      return;
+    }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(9);
+    doc.setTextColor(120);
+    doc.text('PI AND PIXELS  ·  ' + code, 20, 20);
+    doc.setDrawColor(220);
+    doc.line(20, 24, 190, 24);
+    doc.setFontSize(18);
+    doc.setTextColor(20);
+    doc.text(doc.splitTextToSize(title, 170), 20, 38);
+    doc.setFontSize(11);
+    doc.setTextColor(90);
+    const abs = doc.splitTextToSize('Abstract — ' + abstract, 170);
+    doc.text(abs, 20, 56);
+    doc.setFontSize(10);
+    doc.setTextColor(150);
+    doc.text(doc.splitTextToSize('This is a sample cover sheet generated from the Pi and Pixels topic library. Replace this file with the full topic notes for ' + code + ' when your PDF set is ready.', 170), 20, 90);
+    doc.setFontSize(9);
+    doc.setTextColor(180);
+    doc.text('piandpixels.in', 20, 280);
+    doc.save(code.replace(/\./g,'_') + '.pdf');
+  }
+
+  // ---------- admissions form ----------
+  document.getElementById('admForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('formFields').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  });
+
+  // ---------- scroll reveal ----------
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
 
 </body>
 </html>
