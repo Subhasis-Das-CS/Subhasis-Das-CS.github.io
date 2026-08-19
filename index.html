@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,6 +55,7 @@
     border-bottom:1px solid var(--rule);
   }
   .nav{
+    position:relative;
     display:flex;align-items:center;justify-content:space-between;
     padding:18px 0;
   }
@@ -81,7 +81,10 @@
   }
   .nav-cta:hover{background:var(--indigo)!important;color:#fff!important;}
   .menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;}
-  .menu-btn span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0;}
+  .menu-btn span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0;transition:transform .15s ease, opacity .15s ease;}
+  .menu-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .menu-btn.open span:nth-child(2){opacity:0;}
+  .menu-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
   /* ---------- hero ---------- */
   .hero{
@@ -285,8 +288,38 @@
   }
 
   @media (max-width:860px){
-    nav.links{display:none;}
+    nav.links{
+      display:none;
+      position:absolute;
+      top:100%;
+      left:0;
+      right:0;
+      flex-direction:column;
+      align-items:stretch;
+      gap:0;
+      padding:8px 0 16px;
+      margin:0 -32px;
+      width:auto;
+      background:var(--paper);
+      border-bottom:1px solid var(--rule);
+      box-shadow:0 16px 28px rgba(20,22,31,0.10);
+    }
+    nav.links.nav-open{display:flex;}
+    nav.links a{
+      padding:15px 32px;
+      border-top:1px solid var(--rule);
+      font-size:0.9rem;
+    }
+    nav.links a:first-child{border-top:none;}
+    nav.links .nav-cta{
+      margin:14px 32px 4px;
+      padding:12px 18px;
+      text-align:center;
+      justify-content:center;
+      border-top:none;
+    }
     .menu-btn{display:block;}
+    .hero{padding:64px 0 44px;}
     .hero-abstract{flex-direction:column;gap:14px;}
     .program-clusters{grid-template-columns:1fr;}
     .paper{grid-template-columns:1fr;gap:12px;}
@@ -311,7 +344,7 @@
       <a href="#contact">Contact</a>
       <a href="#admissions" class="nav-cta">Apply Now</a>
     </nav>
-    <button class="menu-btn" aria-label="Menu" onclick="document.querySelector('nav.links').style.display = document.querySelector('nav.links').style.display==='flex'?'none':'flex'">
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -598,6 +631,29 @@
 </footer>
 
 <script>
+  // ---------- mobile nav toggle ----------
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.querySelector('nav.links');
+  menuBtn.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('nav-open');
+    menuBtn.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('nav-open');
+      menuBtn.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 860) {
+      navLinks.classList.remove('nav-open');
+      menuBtn.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
   // ---------- paper library data ----------
 const papers = [
     // ICSE Class 8
