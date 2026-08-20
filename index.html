@@ -24,7 +24,15 @@
     --max:1180px;
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{
+    scroll-behavior:smooth;
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+  }
+  html, body{
+    max-width:100%;
+    overflow-x:hidden;
+  }
   body{
     margin:0;
     background:var(--paper);
@@ -33,6 +41,10 @@
     font-size:16px;
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
+  }
+  button{
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
   }
   h1,h2,h3,h4{
     font-family:'Newsreader',serif;
@@ -241,6 +253,7 @@
     width:100%;border:1px solid var(--rule);border-radius:var(--radius);
     padding:12px 14px;font-family:'Inter',sans-serif;font-size:0.95rem;
     background:var(--paper);color:var(--ink);
+    -webkit-appearance:none;appearance:none;
   }
   .field input:focus, .field select:focus, .field textarea:focus{
     outline:none;border-color:var(--indigo);
