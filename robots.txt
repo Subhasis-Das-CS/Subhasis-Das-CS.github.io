@@ -1,4 +1,5 @@
 User-agent: *
+Disallow: /subhasis-and-subhanwita.html
 Allow: /
 
-Sitemap: https://piandpixels.com/sitemap.xml
+Sitemap: https://piandpixels.in/sitemap.xml
