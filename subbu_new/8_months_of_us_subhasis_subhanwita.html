@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8 Months of Us — For My Subbu, My Momo, My 💎✨</title>
+
+  <!-- Google Fonts: Cormorant Garamond (Romantic Serif) & Plus Jakarta Sans (Clean Modern UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            midnight: '#160b14',
+            burgundy: '#2a1220',
+            velvet: '#3b172a',
+            gold: {
+              light: '#f7e5c0',
+              DEFAULT: '#e5c07b',
+              warm: '#d4a359',
+              deep: '#9e7334',
+            },
+            rose: {
+              blush: '#f5cfd6',
+              petal: '#d97a8c',
+              deep: '#7d283f',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Base velvety background & smooth typography rendering */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at 50% 18%, #341528 0%, #220e1a 48%, #160b14 100%);
+      color: #f9f1ed;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Glassmorphic Card Styling */
+    .glass-card {
+      background: linear-gradient(
+        145deg,
+        rgba(48, 20, 36, 0.74) 0%,
+        rgba(24, 11, 21, 0.86) 100%
+      );
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(229, 192, 123, 0.24);
+      box-shadow:
+        0 24px 60px -12px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 rgba(247, 229, 192, 0.14);
+    }
+
+    /* Delicate gold shimmer text */
+    .text-gold-gradient {
+      background: linear-gradient(120deg, #f9e8c7 0%, #e5c07b 50%, #f5d8a3 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Smooth step entrance animations */
+    @keyframes fadeSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(18px) scale(0.985);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .animate-step-in {
+      animation: fadeSlideUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Wax seal gentle pulse */
+    @keyframes sealPulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(229, 192, 123, 0.45), 0 10px 28px rgba(0, 0, 0, 0.55);
+      }
+      50% {
+        transform: scale(1.06);
+        box-shadow: 0 0 0 14px rgba(229, 192, 123, 0), 0 14px 34px rgba(217, 122, 140, 0.35);
+      }
+    }
+
+    .wax-seal-pulse {
+      animation: sealPulse 2.8s ease-in-out infinite;
+    }
+
+    /* Envelope Flap 3D Opening Animation */
+    .envelope-scene {
+      perspective: 1000px;
+    }
+
+    .envelope-flap {
+      transform-origin: top center;
+      transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .envelope-opened .envelope-flap {
+      transform: rotateX(175deg);
+    }
+
+    .envelope-letter {
+      transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.22s, opacity 0.6s ease 0.22s;
+    }
+
+    .envelope-opened .envelope-letter {
+      transform: translateY(-54px);
+      opacity: 1;
+    }
+
+    .envelope-opened .wax-seal-wrapper {
+      opacity: 0;
+      transform: scale(1.35);
+      pointer-events: none;
+    }
+
+    /* Floating Heart & Diamond Burst DOM particles */
+    @keyframes floatBurst {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(var(--sc)) rotate(var(--rot));
+      }
+    }
+
+    .burst-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      animation: floatBurst var(--dur) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Secret Note Smooth Accordion */
+    .secret-note-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+      opacity: 0;
+    }
+
+    .secret-note-panel.open {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .secret-note-inner {
+      overflow: hidden;
+    }
+
+    /* Subtle Glow for Active Reason Stars */
+    .reason-btn-active {
+      background: radial-gradient(circle at 50% 40%, rgba(229, 192, 123, 0.3), rgba(217, 122, 140, 0.16));
+      border-color: rgba(247, 229, 192, 0.72);
+      box-shadow: 0 0 22px rgba(229, 192, 123, 0.28), inset 0 0 12px rgba(247, 229, 192, 0.14);
+    }
+
+    /* Zoomable Photo Hover Cue */
+    .zoomable-photo {
+      cursor: zoom-in;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .zoomable-photo:hover {
+      transform: scale(1.035);
+    }
+
+    /* Lightbox Transition */
+    .lightbox-backdrop {
+      transition: opacity 0.3s ease;
+    }
+
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(229, 192, 123, 0.25);
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-rose-petal/30 selection:text-gold-light">
+  <!-- Ambient Starlit Particles, Diamond Sparkles & Drifting Rose Petals Canvas -->
+  <canvas
+    id="ambientCanvas"
+    class="fixed inset-0 w-full h-full pointer-events-none z-0"
+    aria-hidden="true"
+  ></canvas>
+
+  <!-- Soft Vignette Glow Overlay -->
+  <div
+    class="fixed inset-0 pointer-events-none z-0"
+    style="background: radial-gradient(circle at 50% 50%, transparent 45%, rgba(12, 4, 10, 0.62) 100%);"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Full-Screen Tap-to-Zoom Photo Lightbox Modal -->
+  <div
+    id="photoLightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Full-size photo viewer"
+    class="lightbox-backdrop fixed inset-0 z-50 hidden opacity-0 bg-midnight/92 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-6"
+  >
+    <button
+      id="lightboxCloseBtn"
+      type="button"
+      aria-label="Close photo viewer"
+      class="absolute top-4 right-4 sm:top-6 sm:right-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-gold/30 text-gold-light text-lg flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/60"
+    >
+      ✕
+    </button>
+
+    <div class="max-w-3xl max-h-[82vh] w-full flex flex-col items-center justify-center">
+      <img
+        id="lightboxImg"
+        src=""
+        alt="Full memory photo"
+        class="max-w-full max-h-[75vh] object-contain rounded-2xl border border-gold/35 shadow-2xl"
+      />
+      <p
+        id="lightboxCaption"
+        class="mt-3.5 text-center font-serif italic text-base sm:text-lg text-gold-light/90 px-4"
+      ></p>
+    </div>
+  </div>
+
+  <!-- Main Full-Viewport Centered App Container -->
+  <div class="relative z-10 min-h-screen flex flex-col justify-between items-center px-4 py-5 sm:px-6 sm:py-7">
+
+    <!-- Top Progress Header (Hidden on Cover Screen, Visible on Steps 1–11) -->
+    <header
+      id="topHeader"
+      class="w-full max-w-xl flex flex-col items-center gap-2.5 transition-all duration-500 opacity-0 pointer-events-none"
+    >
+      <div class="w-full flex items-center justify-between text-xs tracking-widest uppercase text-gold-light/70">
+        <span id="stageLabel" class="font-medium">Our Story</span>
+        <span id="stepCounter" class="font-sans text-gold-light/60">1 / 11</span>
+      </div>
+
+      <!-- 11-Step Interactive Progress Dots -->
+      <nav
+        id="progressDots"
+        aria-label="Story Progress"
+        class="flex items-center justify-center gap-1.5 sm:gap-2 w-full"
+      >
+        <!-- Dots injected dynamically by JavaScript -->
+      </nav>
+    </header>
+
+    <!-- Dynamic Stage Container (Renders Active Step Card) -->
+    <main
+      id="stageContainer"
+      class="w-full max-w-xl my-auto py-4 flex flex-col items-center justify-center"
+      aria-live="polite"
+    >
+      <!-- Active Step Content Rendered Here -->
+    </main>
+
+    <!-- Bottom Navigation Bar (Hidden on Cover Screen) -->
+    <footer
+      id="bottomNav"
+      class="w-full max-w-xl flex items-center justify-between gap-3 pt-2 transition-all duration-500 opacity-0 pointer-events-none"
+    >
+      <button
+        id="prevBtn"
+        type="button"
+        class="group inline-flex items-center gap-2 px-4 py-3 rounded-full text-sm font-medium text-gold-light/75 hover:text-gold-light bg-white/5 hover:bg-white/10 border border-gold/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold/50"
+      >
+        <span class="transition-transform duration-300 group-hover:-translate-x-0.5">←</span>
+        <span>Back</span>
+      </button>
+
+      <span class="hidden sm:inline text-[11px] tracking-wider uppercase text-gold-light/35 select-none">
+        Use ← / → or Tap
+      </span>
+
+      <button
+        id="nextBtn"
+        type="button"
+        class="group inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium text-midnight bg-gradient-to-r from-gold-light via-gold to-gold-warm hover:brightness-110 shadow-lg shadow-gold/20 transition-all duration-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-gold-light"
+      >
+        <span id="nextBtnText">Continue</span>
+        <span class="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+      </button>
+    </footer>
+  </div>
+
+  <script>
+    /**
+     * ============================================================================
+     * 8 MONTHS OF US — FIRST-PERSON LOVE STORY FROM SUBHASIS (YOUR SMOLL BABY 🐣)
+     * TO SUBHANWITA (MY SUBBU, MY MOMO, MY 💎✨)
+     * ============================================================================
+     * All text, dates, photo filenames, and framing positions are centralized here.
+     * Keep this HTML file in the same folder as your 10 WhatsApp .jpeg photos.
+     */
+    const STORY_CONFIG = {
+      coupleTitle: '8 Months of Us',
+      anniversaryDateLabel: '19th March 2026 — 19th November 2026',
+
+      // Cover Envelope Copy & Medallion Photo (Step 1 / Index 0)
+      coverPhoto: {
+        url: 'WhatsApp Image 2026-11-18 at 8.03.57 PM.jpeg',
+        position: '50% 25%',
+        caption: 'My playful, gorgeous Subbu & your smoll baby 🐣 💎✨',
+      },
+      envelopeSealText: 'S & S 💎✨',
+      envelopeTo: 'My Subbu, My Momo, my 💎✨',
+      envelopeIntro: 'I made this little corner of the internet just for you, Subhanwita…',
+      envelopeTapPrompt: 'Tap the seal to open what I’ve been wanting to tell you',
+      envelopeFrom: 'Subhasis (your smoll baby 🐣)',
+
+      // Milestone Counter Step (Step 2 / Index 1 — Clean overview without duplicate photo)
+      milestoneTitle: '8 Months With You, My Subbu 💎✨',
+      milestoneSubtitle: '19th March 2026 — 19th November 2026',
+      milestones: [
+        { target: 8, label: 'Months', isNumber: true },
+        { target: 245, label: 'Days', isNumber: true },
+        { target: 5880, label: 'Hours', isNumber: true },
+        { target: '∞', label: 'Smiles', isNumber: false },
+      ],
+      openingNote:
+        'Ever since 19th March 2026, every single day with you has felt like my favorite chapter. Loving you, Subhanwita—and getting to be your smoll baby 🐣—fills my heart with a warmth I treasure more and more each day.',
+
+      // The 8 Timeless Moment Cards (Steps 3 to 10 — Dateless Chapters, Strictly First-Person)
+      moments: [
+        {
+          roman: 'I',
+          title: 'Your Sweetest Little Creation',
+          subtitle: 'Two little hearts wrapped in yours',
+          photoUrl: 'WhatsApp Image 2026-11-18 at 8.04.16 PM (1).jpeg',
+          photoPosition: '50% 35%',
+          photoCaption: 'When your creativity turned our hands into two little hearts hugging—I completely melted',
+          gradient: 'from-[#4a1a30] via-[#2c1122] to-[#1a0b15]',
+          svgArt: 'spark',
+          story:
+            'When your creativity turned a simple photo of our hands into this amazing, adorable little moment of our fingers hugging with tiny hearts all around us, my heart completely melted. I love how playfully and thoughtfully you turn something so simple into something so cute and full of love, my Subbu.',
+          secretNote:
+            'I still smile every single time I look at this—your creativity and the love behind it make it priceless to me.',
+        },
+        {
+          roman: 'II',
+          title: 'Our Everyday Routine Together',
+          subtitle: 'Simple days made warm by you, my Momo',
+          photoUrl: 'WhatsApp Image 2026-11-18 at 8.04.16 PM (2).jpeg',
+          photoPosition: '50% 25%',
+          photoCaption: 'Backpacks on for an ordinary day—and just having you beside me makes it special',
+          gradient: 'from-[#361734] via-[#241028] to-[#160a18]',
+          svgArt: 'compass',
+          story:
+            'Even on the most ordinary everyday days, with our backpacks on and our usual routine ahead, just having you right beside me makes everything feel warm and special. You turn my simplest daily moments into my favorite part of the day, my Momo.',
+          secretNote:
+            'Even a few quiet minutes standing next to you in the middle of a normal day instantly lifts my whole mood.',
+        },
+        {
+          roman: 'III',
+          title: 'My Adorable, Silly Momo',
+          subtitle: 'The face that melts me every time',
+          photoUrl: 'WhatsApp Image 2026-11-18 at 8.04.04 PM.jpeg',
+          photoPosition: '50% 25%',
+          photoCaption: 'Your cute pout and peace sign—I swear I stand zero chance against this face',
+          gradient: 'from-[#4c2029] via-[#2d131c] to-[#180b12]',
+          svgArt: 'laughter',
+          story:
+            'Your little pout and goofy peace sign melt me every single time, and I don’t even try to hide it. I love your playful, silly side just as deeply as I love your soft side—you make me laugh from the heart, my Momo.',
+          secretNote:
+            'Whenever you make that cute little pout, you already know your smoll baby 🐣 will happily say yes to everything.',
+        },
+        {
+          roman: 'IV',
+          title: 'My Favorite Sunshine',
+          subtitle: 'Every sunny day is brighter with you',
+          photoUrl: 'WhatsApp Image 2026-11-18 at 8.04.18 PM.jpeg',
+          photoPosition: '50% 22%',
+          photoCaption: 'Stepping out into the sunshine with your smile right next to me',
+          gradient: 'from-[#45212c] via-[#2b141f] to-[#170b14]',
+          svgArt: 'moon',
+          story:
+            'Stepping out into the afternoon sun with you feels effortless and happy. With your hand close to mine and your smile right beside me, my Subbu, even the brightest day feels warmer just because you are in it.',
+          secretNote:
+            'Behind those sunglasses, I kept sneaking extra glances at you because you looked so pretty.',
+        },
+        {
+          roman: 'V',
+          title: 'My Shining 💎✨',
+          subtitle: 'Effortlessly breathtaking to me',
+          photoUrl: 'WhatsApp Image 2026-11-18 at 8.04.16 PM.jpeg',
+          photoPosition: '50% 22%',
+          photoCaption: 'Every time I see you smile like this, I remember why I call you my 💎✨',
+          gradient: 'from-[#522331] via-[#311422] to-[#190b15]',
+          svgArt: 'bloom',
+          story:
+            'Seeing you dressed up and smiling so softly like this takes my breath away every single time, Subhanwita. Your grace, your glow, and the way you carry yourself remind me over and over why I call you my 💎✨.',
+          secretNote:
+            'Every time I look at this photo, I pause for a second just to admire how gorgeous my Subbu is.',
+        },
+        {
+          roman: 'VI',
+          title: 'Right Next to You Is Home',
+          subtitle: 'Where all the noise fades away',
+          photoUrl: 'WhatsApp Image 2026-11-18 at 8.04.17 PM.jpeg',
+          photoPosition: '50% 25%',
+          photoCaption: 'Leaning my cheek against yours is my favorite place to rest',
+          gradient: 'from-[#471d35] via-[#2b1224] to-[#170a15]',
+          svgArt: 'home',
+          story:
+            'Leaning my cheek against yours makes all the noise and stress fade away. With you, my Momo, I can breathe easy, melt right into your warmth, and just happily be your smoll baby 🐣.',
+          secretNote:
+            'Pressing my cheek to yours softens every tired, heavy feeling in my head within seconds.',
+        },
+        {
+          roman: 'VII',
+          title: 'My Favorite Feeling in the World',
+          subtitle: 'One kiss from you fixes everything',
+          photoUrl: 'WhatsApp Image 2026-11-18 at 8.04.06 PM.jpeg',
+          photoPosition: '50% 25%',
+          photoCaption: 'One kiss on the cheek from you and I’m instantly smiling like crazy ♥',
+          gradient: 'from-[#3e1b2d] via-[#261120] to-[#150a14]',
+          svgArt: 'hourglass',
+          story:
+            'I swear, one kiss on the cheek from you instantly makes me grin from ear to ear and brightens my whole day. I love how gently you hold me, how sweetly you pamper me, and how cherished you make your smoll baby 🐣 feel.',
+          secretNote:
+            'Look at my face in this photo—I wasn’t even trying to pose, I was just completely melted by my Subbu.',
+        },
+        {
+          roman: 'VIII',
+          title: 'Stealing Kisses From My Subbu',
+          subtitle: 'My favorite habit forever',
+          photoUrl: 'WhatsApp Image 2026-11-18 at 8.04.07 PM.jpeg',
+          photoPosition: '50% 25%',
+          photoCaption: 'Kissing your cheek and watching that soft, shy smile appear on your face 💎✨',
+          gradient: 'from-[#562233] via-[#341424] to-[#1b0b16]',
+          svgArt: 'constellation',
+          story:
+            'Kissing your cheek and watching that soft, happy smile bloom across your face is one of my absolute favorite things to do. Holding you close like this, my Subbu, I feel so full of love for you.',
+          secretNote:
+            'I will never get tired of stealing cheek kisses from you, my Momo—not today, not ever.',
+        },
+      ],
+
+      // Interactive "8 Little Reasons I Love You" (Step 11)
+      reasonsHeading: '8 Little Reasons I Love You 💎✨',
+      reasons: [
+        {
+          short: 'Your Cute Pout',
+          detail: 'I love the way your playful pouts and goofy little faces instantly turn my mood golden, my Momo.',
+        },
+        {
+          short: 'Being Your Smoll Baby 🐣',
+          detail: 'I love how safe, cherished, and completely myself I feel whenever you pamper me and let me be your smoll baby 🐣.',
+        },
+        {
+          short: 'The Way You Look at Me',
+          detail: 'I love the sparkle in your eyes when you look at me—it makes my heart skip a beat every single time.',
+        },
+        {
+          short: 'Your Cheek Kisses',
+          detail: 'I love how just one sweet kiss on the cheek from you keeps me smiling for the rest of the day.',
+        },
+        {
+          short: 'Your Pure Heart',
+          detail: 'I love how deeply, gently, and sincerely you care—you truly are my precious 💎✨.',
+        },
+        {
+          short: 'Our Everyday Moments',
+          detail: 'I love how even our simplest ordinary days with our backpacks on feel warm and unforgettable beside you.',
+        },
+        {
+          short: 'Your Warmth',
+          detail: 'I love how leaning close to you feels like coming home—every ounce of stress melts away when I’m next to you.',
+        },
+        {
+          short: 'Everything You Are',
+          detail: 'I love you simply for being you, Subhanwita—my Subbu, my Momo, my 💎✨, and the love of my heart.',
+        },
+      ],
+
+      // Finale Love Letter (Step 12 — Last Photo: Saree & Panjabi Romantic Gaze)
+      finalePhoto: {
+        url: 'WhatsApp Image 2026-11-18 at 8.03.57 PM (1).jpeg',
+        position: '50% 25%',
+        caption: 'Looking into your eyes in your red saree—my heart is completely yours 💎✨',
+      },
+      letterHeading: 'My dearest Subhanwita — my Subbu, my Momo, my 💎✨',
+      letterParagraphs: [
+        'It still feels magical that it’s been eight months since 19th March 2026, and somehow I find myself falling even deeper in love with you every single day. Thank you for filling my life with so much warmth, laughter, and tenderness.',
+        'Thank you for every sweet cheek kiss, every adorable little creation your creativity brings to us, every ordinary day you brighten, and for always holding me close and letting me be your smoll baby 🐣. I love the way you look at me, the way you laugh, and the way you love me with all your heart.',
+        'Eight months with you is only the beginning, my Subbu. I want all of our tomorrows together—every simple routine, every dress-up in saree and panjabi, every silly moment, and every milestone ahead of us. Happy 8 Months, my Momo, my precious 💎✨. I love you so deeply.',
+      ],
+      yourSignature: 'Forever yours, Subhasis (your smoll baby 🐣) 💎✨',
+    };
+
+    /**
+     * ============================================================================
+     * ARTISTIC SVG FALLBACK ILLUSTRATIONS (If a photo hasn't loaded locally)
+     * ============================================================================
+     */
+    function getSvgIllustration(type) {
+      const icons = {
+        spark: `<svg viewBox="0 0 120 120" class="w-20 h-20 text-gold-light/80" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M60 16 L67 48 L99 55 L67 62 L60 94 L53 62 L21 55 L53 48 Z" fill="rgba(229,192,123,0.16)"/>
+          <circle cx="92" cy="28" r="3" fill="currentColor"/><circle cx="28" cy="86" r="2.5" fill="currentColor"/>
+        </svg>`,
+        compass: `<svg viewBox="0 0 120 120" class="w-20 h-20 text-gold-light/80" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="60" cy="60" r="36" stroke-dasharray="4 4"/><polygon points="60,26 69,60 60,94 51,60" fill="rgba(217,122,140,0.2)"/>
+          <circle cx="60" cy="60" r="4" fill="currentColor"/>
+        </svg>`,
+        laughter: `<svg viewBox="0 0 120 120" class="w-20 h-20 text-gold-light/80" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M60 92 C60 92 24 68 24 44 C24 31 34 22 46 22 C53 22 58 26 60 31 C62 26 67 22 74 22 C86 22 96 31 96 44 C96 68 60 92 60 92 Z" fill="rgba(217,122,140,0.2)"/>
+        </svg>`,
+        moon: `<svg viewBox="0 0 120 120" class="w-20 h-20 text-gold-light/80" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="60" cy="60" r="22" fill="rgba(229,192,123,0.18)"/>
+          <path d="M60 18 V28 M60 92 V102 M18 60 H28 M92 60 H102 M30 30 L37 37 M83 83 L90 90 M90 30 L83 37 M37 83 L30 90"/>
+        </svg>`,
+        bloom: `<svg viewBox="0 0 120 120" class="w-20 h-20 text-gold-light/80" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polygon points="60,18 88,46 60,102 32,46" fill="rgba(229,192,123,0.16)"/>
+          <line x1="32" y1="46" x2="88" y2="46"/><line x1="60" y1="18" x2="60" y2="102"/>
+        </svg>`,
+        home: `<svg viewBox="0 0 120 120" class="w-20 h-20 text-gold-light/80" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M24 58 L60 26 L96 58 V94 H24 Z" fill="rgba(229,192,123,0.12)"/>
+          <path d="M60 78 C60 78 46 68 46 59 C46 54 50 51 54 51 C57 51 59 53 60 55 C61 53 63 51 66 51 C70 51 74 54 74 59 C74 68 60 78 60 78 Z" fill="rgba(217,122,140,0.35)"/>
+        </svg>`,
+        hourglass: `<svg viewBox="0 0 120 120" class="w-20 h-20 text-gold-light/80" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M60 90 C60 90 26 68 26 45 C26 33 35 24 47 24 C54 24 58 28 60 32 C62 28 66 24 73 24 C85 24 94 33 94 45 C94 68 60 90 60 90 Z" fill="rgba(229,192,123,0.15)"/>
+          <circle cx="60" cy="54" r="8" fill="rgba(217,122,140,0.35)"/>
+        </svg>`,
+        constellation: `<svg viewBox="0 0 120 120" class="w-20 h-20 text-gold-light/80" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M26 74 L48 44 L74 56 L94 32" stroke-dasharray="3 3"/>
+          <circle cx="26" cy="74" r="4" fill="currentColor"/><circle cx="48" cy="44" r="5" fill="currentColor"/>
+          <circle cx="74" cy="56" r="4" fill="currentColor"/><circle cx="94" cy="32" r="5" fill="currentColor"/>
+        </svg>`,
+      };
+      return icons[type] || icons.spark;
+    }
+
+    /**
+     * ============================================================================
+     * APP STATE & DOM REFERENCES
+     * ============================================================================
+     */
+    const TOTAL_STEPS = 12; // 0: Envelope, 1: Milestone, 2..9: 8 Moments, 10: Reasons, 11: Finale
+    let currentStep = 0;
+    let envelopeOpening = false;
+    let lightboxOpen = false;
+    let activeReasonIndex = null;
+    const discoveredReasons = new Set();
+
+    const topHeader = document.getElementById('topHeader');
+    const stageLabel = document.getElementById('stageLabel');
+    const stepCounter = document.getElementById('stepCounter');
+    const progressDots = document.getElementById('progressDots');
+    const stageContainer = document.getElementById('stageContainer');
+    const bottomNav = document.getElementById('bottomNav');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const nextBtnText = document.getElementById('nextBtnText');
+
+    // Lightbox DOM elements
+    const photoLightbox = document.getElementById('photoLightbox');
+    const lightboxCloseBtn = document.getElementById('lightboxCloseBtn');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+
+    /**
+     * Lightbox Open / Close & Photo Fallback Binding
+     */
+    function openLightbox(url, caption) {
+      if (!url) return;
+      lightboxImg.src = url;
+      lightboxCaption.textContent = caption || '';
+      photoLightbox.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        photoLightbox.classList.remove('opacity-0');
+        photoLightbox.classList.add('opacity-100');
+      });
+      lightboxOpen = true;
+    }
+
+    function closeLightbox() {
+      photoLightbox.classList.remove('opacity-100');
+      photoLightbox.classList.add('opacity-0');
+      setTimeout(() => {
+        photoLightbox.classList.add('hidden');
+        lightboxImg.src = '';
+      }, 280);
+      lightboxOpen = false;
+    }
+
+    lightboxCloseBtn.addEventListener('click', closeLightbox);
+    photoLightbox.addEventListener('click', (e) => {
+      if (e.target === photoLightbox) closeLightbox();
+    });
+
+    function bindPhotoZoom(imgEl, url, caption, svgArt, gradient) {
+      if (!imgEl) return;
+
+      // Graceful SVG fallback if local image is missing in preview
+      imgEl.addEventListener('error', () => {
+        const parent = imgEl.parentElement;
+        if (!parent) return;
+        parent.innerHTML = `
+          <div class="w-full h-full bg-gradient-to-br ${gradient} flex flex-col items-center justify-center p-4 text-center">
+            ${getSvgIllustration(svgArt)}
+            <span class="mt-2 text-[10px] uppercase tracking-widest text-gold-light/65">Photo Preview Ready</span>
+          </div>
+        `;
+      });
+
+      imgEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openLightbox(url, caption);
+      });
+    }
+
+    /**
+     * Smooth Number Counter Animation (Used on Milestone Screen)
+     */
+    function animateCount(el, start, end, duration) {
+      if (!el) return;
+      const startTime = performance.now();
+      function tick(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(start + (end - start) * eased);
+        el.textContent = current.toLocaleString();
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = end.toLocaleString();
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    /**
+     * Header, Progress Dots & Bottom Navigation Sync
+     */
+    function updateChrome() {
+      if (currentStep === 0) {
+        topHeader.classList.add('opacity-0', 'pointer-events-none');
+        topHeader.classList.remove('opacity-100', 'pointer-events-auto');
+        bottomNav.classList.add('opacity-0', 'pointer-events-none');
+        bottomNav.classList.remove('opacity-100', 'pointer-events-auto');
+        return;
+      }
+
+      topHeader.classList.remove('opacity-0', 'pointer-events-none');
+      topHeader.classList.add('opacity-100', 'pointer-events-auto');
+      bottomNav.classList.remove('opacity-0', 'pointer-events-none');
+      bottomNav.classList.add('opacity-100', 'pointer-events-auto');
+
+      stepCounter.textContent = `${currentStep} / ${TOTAL_STEPS - 1}`;
+
+      if (currentStep === 1) {
+        stageLabel.textContent = 'Our Milestone';
+        nextBtnText.textContent = 'Relive Our Moments';
+      } else if (currentStep >= 2 && currentStep <= 9) {
+        const m = STORY_CONFIG.moments[currentStep - 2];
+        stageLabel.textContent = `Moment ${m.roman} of VIII`;
+        nextBtnText.textContent = currentStep === 9 ? '8 Little Reasons' : 'Next Moment';
+      } else if (currentStep === 10) {
+        stageLabel.textContent = '8 Little Reasons';
+        nextBtnText.textContent = 'Read My Letter';
+      } else {
+        stageLabel.textContent = 'My Letter to You';
+      }
+
+      // Hide Next button on Finale step (Finale has Celebrate + Replay buttons)
+      if (currentStep === TOTAL_STEPS - 1) {
+        nextBtn.classList.add('invisible', 'pointer-events-none');
+      } else {
+        nextBtn.classList.remove('invisible', 'pointer-events-none');
+      }
+
+      // Render 11 interactive progress dots (Steps 1–11)
+      progressDots.innerHTML = '';
+      for (let i = 1; i < TOTAL_STEPS; i++) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `Go to step ${i}`);
+        const isActive = i === currentStep;
+        const isVisited = i < currentStep;
+        dot.className = `h-2 rounded-full transition-all duration-300 focus:outline-none ${
+          isActive
+            ? 'w-7 bg-gradient-to-r from-gold-light to-gold shadow-sm shadow-gold/50'
+            : isVisited
+            ? 'w-2 bg-gold/65 hover:bg-gold-light'
+            : 'w-2 bg-white/20 hover:bg-white/40'
+        }`;
+        dot.addEventListener('click', () => goToStep(i));
+        progressDots.appendChild(dot);
+      }
+    }
+
+    /**
+     * Master Step Renderer
+     */
+    function renderCurrentStep() {
+      stageContainer.innerHTML = '';
+      updateChrome();
+
+      if (currentStep === 0) {
+        renderCoverStep();
+      } else if (currentStep === 1) {
+        renderMilestoneStep();
+      } else if (currentStep >= 2 && currentStep <= 9) {
+        renderMomentStep(currentStep - 2);
+      } else if (currentStep === 10) {
+        renderReasonsStep();
+      } else {
+        renderFinaleLetterStep();
+      }
+    }
+
+    /**
+     * STEP 1 (Index 0): Interactive Sealed Love Envelope Cover Screen
+     */
+    function renderCoverStep() {
+      envelopeOpening = false;
+      const wrapper = document.createElement('section');
+      wrapper.className = 'w-full flex flex-col items-center text-center animate-step-in';
+
+      wrapper.innerHTML = `
+        <p class="text-xs sm:text-sm uppercase tracking-[0.26em] text-gold-light/75 mb-2.5">
+          ${STORY_CONFIG.anniversaryDateLabel}
+        </p>
+
+        <h1 class="font-serif text-4xl sm:text-5xl font-semibold tracking-tight text-gold-gradient mb-1.5">
+          ${STORY_CONFIG.coupleTitle}
+        </h1>
+        <p class="font-serif italic text-lg sm:text-xl text-rose-blush/95 mb-1 max-w-md">
+          For ${STORY_CONFIG.envelopeTo}
+        </p>
+        <p class="text-xs sm:text-sm text-rose-blush/75 mb-5 max-w-sm leading-relaxed">
+          ${STORY_CONFIG.envelopeIntro}
+        </p>
+
+        <!-- Glowing Circular Rose-Gold Medallion Photo (Tap to Zoom) -->
+        <div class="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-5">
+          <div class="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-gold-warm/65 via-rose-petal/50 to-gold-light/75 blur-[3px] opacity-85"></div>
+          <div class="relative w-full h-full rounded-full overflow-hidden border-2 border-gold-light/70 shadow-2xl bg-burgundy">
+            <img
+              id="coverMedallionImg"
+              src="${STORY_CONFIG.coverPhoto.url}"
+              alt="${STORY_CONFIG.coverPhoto.caption}"
+              style="object-position: ${STORY_CONFIG.coverPhoto.position};"
+              class="zoomable-photo w-full h-full object-cover"
+            />
+          </div>
+          <span
+            class="pointer-events-none absolute -bottom-1 right-1 px-2 py-0.5 rounded-full bg-midnight/85 border border-gold/40 text-[9px] tracking-wider uppercase text-gold-light"
+          >
+            Tap 🔍
+          </span>
+        </div>
+
+        <!-- Interactive Sealed Envelope -->
+        <div id="envelopeBox" class="envelope-scene relative w-72 sm:w-80 h-48 sm:h-52 cursor-pointer select-none group">
+          <!-- Envelope Back -->
+          <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#3a1629] to-[#1e0b16] border border-gold/30 shadow-2xl overflow-hidden"></div>
+
+          <!-- Inner Letter Peek -->
+          <div class="envelope-letter absolute left-4 right-4 top-5 bottom-4 rounded-xl bg-gradient-to-b from-[#fdf6ec] to-[#f4e3ce] text-midnight flex flex-col items-center justify-center px-4 opacity-95 shadow-inner">
+            <span class="text-[10px] tracking-[0.22em] uppercase text-velvet/65 mb-1">To My Subbu · My Momo · My 💎✨</span>
+            <span class="font-serif italic text-xl text-velvet font-semibold">Subhanwita</span>
+            <span class="w-10 h-px bg-gold-warm/60 my-2"></span>
+            <span class="text-[10px] tracking-widest uppercase text-velvet/75">From ${STORY_CONFIG.envelopeFrom}</span>
+          </div>
+
+          <!-- Envelope Front Bottom Pocket -->
+          <svg class="absolute inset-0 w-full h-full pointer-events-none rounded-2xl" viewBox="0 0 320 220" preserveAspectRatio="none">
+            <polygon points="0,0 160,124 0,220" fill="#2e1222" opacity="0.96"/>
+            <polygon points="320,0 160,124 320,220" fill="#29101f" opacity="0.96"/>
+            <polygon points="0,220 160,104 320,220" fill="#361628"/>
+            <line x1="0" y1="220" x2="160" y2="104" stroke="rgba(229,192,123,0.28)" stroke-width="1"/>
+            <line x1="320" y1="220" x2="160" y2="104" stroke="rgba(229,192,123,0.28)" stroke-width="1"/>
+          </svg>
+
+          <!-- Envelope Top Flap -->
+          <div class="envelope-flap absolute inset-x-0 top-0 h-[58%] pointer-events-none">
+            <svg class="w-full h-full drop-shadow-md" viewBox="0 0 320 128" preserveAspectRatio="none">
+              <polygon points="0,0 320,0 160,124" fill="#431a31" stroke="rgba(229,192,123,0.32)" stroke-width="1"/>
+            </svg>
+          </div>
+
+          <!-- Glowing Wax Seal Button -->
+          <button
+            id="waxSealBtn"
+            type="button"
+            aria-label="Open love envelope"
+            class="wax-seal-wrapper absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 transition-all duration-500 focus:outline-none"
+          >
+            <div class="wax-seal-pulse px-4 h-14 min-w-[84px] rounded-full bg-gradient-to-br from-[#b83b5e] via-[#8b2140] to-[#5e1329] border-2 border-gold-light/75 flex items-center justify-center shadow-xl">
+              <span class="font-serif text-base sm:text-lg font-bold tracking-wide text-gold-light drop-shadow whitespace-nowrap">
+                ${STORY_CONFIG.envelopeSealText}
+              </span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Sender Credit & Tap Prompt -->
+        <p class="mt-5 text-xs text-rose-blush/75 tracking-wide">
+          Written with all my heart, <span class="text-gold-light font-medium">${STORY_CONFIG.envelopeFrom}</span>
+        </p>
+        <p class="mt-2.5 text-xs sm:text-sm tracking-[0.14em] uppercase text-gold-light/85 animate-pulse max-w-xs">
+          ${STORY_CONFIG.envelopeTapPrompt}
+        </p>
+      `;
+
+      stageContainer.appendChild(wrapper);
+
+      // Attach tap-to-zoom lightbox on cover medallion
+      bindPhotoZoom(
+        document.getElementById('coverMedallionImg'),
+        STORY_CONFIG.coverPhoto.url,
+        STORY_CONFIG.coverPhoto.caption,
+        'constellation',
+        'from-[#562233] to-[#1b0b16]'
+      );
+
+      const envelopeBox = document.getElementById('envelopeBox');
+      const openHandler = (e) => {
+        if (envelopeOpening) return;
+        envelopeOpening = true;
+
+        const rect = envelopeBox.getBoundingClientRect();
+        const cx = e.clientX || rect.left + rect.width / 2;
+        const cy = e.clientY || rect.top + rect.height / 2;
+        spawnHeartBurst(cx, cy, 22);
+
+        envelopeBox.classList.add('envelope-opened');
+        setTimeout(() => {
+          goToStep(1);
+        }, 1050);
+      };
+
+      envelopeBox.addEventListener('click', openHandler);
+    }
+
+    /**
+     * STEP 2 (Index 1): Clean, Romantic Milestone Counter Overview
+     */
+    function renderMilestoneStep() {
+      const card = document.createElement('section');
+      card.className = 'glass-card w-full rounded-3xl p-6 sm:p-9 text-center animate-step-in';
+
+      card.innerHTML = `
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold/10 border border-gold/30 text-[11px] uppercase tracking-[0.22em] text-gold-light mb-5">
+          <span>💎✨</span>
+          <span>${STORY_CONFIG.milestoneSubtitle}</span>
+        </div>
+
+        <h2 class="font-serif text-3xl sm:text-5xl font-semibold text-gold-gradient mb-4">
+          ${STORY_CONFIG.milestoneTitle}
+        </h2>
+
+        <p class="text-sm sm:text-[15px] text-rose-blush/90 leading-relaxed max-w-md mx-auto mb-7">
+          ${STORY_CONFIG.openingNote}
+        </p>
+
+        <!-- Animated Counters Grid (4 Cards) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mb-5">
+          ${STORY_CONFIG.milestones
+            .map(
+              (m, idx) => `
+            <div class="rounded-2xl bg-white/[0.04] border border-gold/20 px-2 py-4 sm:py-5 flex flex-col items-center justify-center">
+              <div
+                id="counter-${idx}"
+                class="font-serif text-3xl sm:text-4xl font-semibold text-gold-light tracking-tight"
+              >
+                ${m.isNumber ? '0' : m.target}
+              </div>
+              <div class="mt-1.5 text-[11px] uppercase tracking-wider text-rose-blush/75">
+                ${m.label}
+              </div>
+            </div>
+          `
+            )
+            .join('')}
+        </div>
+
+        <p class="font-serif italic text-base sm:text-lg text-gold-light/80">
+          — Forever your smoll baby 🐣, Subhasis
+        </p>
+      `;
+
+      stageContainer.appendChild(card);
+
+      // Animate numeric counters
+      STORY_CONFIG.milestones.forEach((m, idx) => {
+        if (!m.isNumber) return;
+        const el = document.getElementById(`counter-${idx}`);
+        animateCount(el, 0, m.target, 1350);
+      });
+    }
+
+    /**
+     * STEPS 3–10 (Indices 2–9): 8 Timeless Moment Story Cards
+     */
+    function renderMomentStep(momentIdx) {
+      const m = STORY_CONFIG.moments[momentIdx];
+      const card = document.createElement('section');
+      card.className = 'glass-card w-full rounded-3xl p-5 sm:p-7 text-center animate-step-in';
+
+      card.innerHTML = `
+        <!-- Moment Roman Numeral Badge -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold/10 border border-gold/25 text-[11px] uppercase tracking-[0.24em] text-gold-light mb-4">
+          <span>✦</span>
+          <span>Moment ${m.roman}</span>
+          <span>✦</span>
+        </div>
+
+        <!-- Arch-Framed Photo (Tap to Zoom) -->
+        <div class="relative w-56 h-64 sm:w-64 sm:h-72 mx-auto mb-5 rounded-t-[130px] rounded-b-2xl overflow-hidden border border-gold/35 shadow-2xl bg-gradient-to-br ${m.gradient}">
+          <img
+            id="momentPhotoImg"
+            src="${m.photoUrl}"
+            alt="${m.photoCaption}"
+            style="object-position: ${m.photoPosition};"
+            class="zoomable-photo w-full h-full object-cover"
+          />
+          <span class="pointer-events-none absolute bottom-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-midnight/80 border border-gold/35 text-[10px] tracking-wider uppercase text-gold-light/90 backdrop-blur-sm">
+            Tap 🔍
+          </span>
+        </div>
+
+        <!-- Title & Subtitle -->
+        <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-gold-gradient leading-tight mb-1">
+          ${m.title}
+        </h2>
+        <p class="font-serif italic text-base sm:text-lg text-rose-blush/80 mb-4">
+          ${m.subtitle}
+        </p>
+
+        <!-- First-Person Romantic Memory Paragraph -->
+        <p class="text-sm sm:text-[15px] text-rose-blush/90 leading-relaxed max-w-md mx-auto mb-5">
+          ${m.story}
+        </p>
+
+        <!-- Secret Note Toggle -->
+        <div class="max-w-md mx-auto">
+          <button
+            id="secretNoteBtn"
+            type="button"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs uppercase tracking-[0.16em] text-gold-light/90 bg-white/[0.06] hover:bg-white/[0.12] border border-gold/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold/50"
+          >
+            <span id="secretNoteIcon">💌</span>
+            <span id="secretNoteLabel">Tap for a secret note</span>
+          </button>
+
+          <div id="secretNotePanel" class="secret-note-panel mt-3">
+            <div class="secret-note-inner">
+              <div class="rounded-2xl bg-gradient-to-br from-rose-deep/35 to-burgundy/65 border border-gold/25 px-4 py-3.5 text-sm font-serif italic text-gold-light/95 leading-relaxed">
+                “${m.secretNote}”
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      stageContainer.appendChild(card);
+
+      // Bind photo zoom & SVG fallback
+      bindPhotoZoom(
+        document.getElementById('momentPhotoImg'),
+        m.photoUrl,
+        m.photoCaption,
+        m.svgArt,
+        m.gradient
+      );
+
+      // Secret note accordion handler
+      const secretBtn = document.getElementById('secretNoteBtn');
+      const secretPanel = document.getElementById('secretNotePanel');
+      const secretLabel = document.getElementById('secretNoteLabel');
+
+      secretBtn.addEventListener('click', (e) => {
+        const isOpen = secretPanel.classList.toggle('open');
+        secretLabel.textContent = isOpen ? 'Hide secret note' : 'Tap for a secret note';
+        if (isOpen) {
+          spawnHeartBurst(e.clientX, e.clientY, 10);
+        }
+      });
+    }
+
+    /**
+     * STEP 11 (Index 10): Interactive "8 Little Reasons I Love You"
+     */
+    function renderReasonsStep() {
+      const card = document.createElement('section');
+      card.className = 'glass-card w-full rounded-3xl p-6 sm:p-8 text-center animate-step-in';
+
+      card.innerHTML = `
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold/10 border border-gold/25 text-[11px] uppercase tracking-[0.22em] text-gold-light mb-3">
+          <span>✨</span>
+          <span id="reasonsCounter">${discoveredReasons.size} / 8 Unlocked</span>
+        </div>
+
+        <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-gold-gradient mb-2">
+          ${STORY_CONFIG.reasonsHeading}
+        </h2>
+        <p class="text-xs sm:text-sm text-rose-blush/80 mb-6">
+          Tap each glowing star to read why my heart is completely yours, my Subbu.
+        </p>
+
+        <!-- 8 Interactive Star/Heart Buttons (Hidden until tapped) -->
+        <div id="reasonsGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mb-6">
+          ${STORY_CONFIG.reasons
+            .map((r, idx) => {
+              const unlocked = discoveredReasons.has(idx);
+              const isSelected = activeReasonIndex === idx;
+              return `
+              <button
+                type="button"
+                data-idx="${idx}"
+                class="reason-btn ${isSelected || unlocked ? 'reason-btn-active' : 'bg-white/[0.04] border-gold/20 hover:bg-white/[0.09]'} rounded-2xl border p-3 flex flex-col items-center justify-center gap-1.5 transition-all duration-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-gold/50"
+              >
+                <span class="reason-icon text-lg">${unlocked ? '💎' : '✦'}</span>
+                <span class="reason-label text-[11px] sm:text-xs font-medium ${unlocked ? 'text-gold-light/95' : 'text-gold-light/60'} leading-snug">
+                  ${unlocked ? r.short : `Reason #${idx + 1}`}
+                </span>
+              </button>
+            `;
+            })
+            .join('')}
+        </div>
+
+        <!-- Revealed Reason Ribbon -->
+        <div
+          id="reasonRibbon"
+          class="min-h-[96px] rounded-2xl bg-gradient-to-br from-rose-deep/30 via-burgundy/60 to-midnight/70 border border-gold/25 px-5 py-4 flex items-center justify-center transition-all duration-300"
+        >
+          <p id="reasonDetailText" class="font-serif italic text-base sm:text-lg text-gold-light/95 leading-relaxed">
+            ${
+              activeReasonIndex !== null
+                ? STORY_CONFIG.reasons[activeReasonIndex].detail
+                : 'Tap any star above to reveal a little note from your smoll baby 🐣…'
+            }
+          </p>
+        </div>
+      `;
+
+      stageContainer.appendChild(card);
+
+      const grid = document.getElementById('reasonsGrid');
+      const detailEl = document.getElementById('reasonDetailText');
+      const counterEl = document.getElementById('reasonsCounter');
+
+      grid.querySelectorAll('.reason-btn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          const idx = Number(btn.dataset.idx);
+          activeReasonIndex = idx;
+          discoveredReasons.add(idx);
+
+          btn.classList.add('reason-btn-active');
+          btn.querySelector('.reason-icon').textContent = '💎';
+          const labelEl = btn.querySelector('.reason-label');
+          labelEl.textContent = STORY_CONFIG.reasons[idx].short;
+          labelEl.classList.remove('text-gold-light/60');
+          labelEl.classList.add('text-gold-light/95');
+
+          counterEl.textContent = `${discoveredReasons.size} / 8 Unlocked`;
+          detailEl.textContent = STORY_CONFIG.reasons[idx].detail;
+
+          spawnHeartBurst(e.clientX, e.clientY, 10);
+        });
+      });
+    }
+
+    /**
+     * STEP 12 (Index 11): Finale Love Letter with Polaroid-Framed Saree & Panjabi Photo
+     */
+    function renderFinaleLetterStep() {
+      const card = document.createElement('section');
+      card.className = 'glass-card w-full rounded-3xl p-6 sm:p-8 text-center animate-step-in';
+
+      card.innerHTML = `
+        <!-- Polaroid-Framed Romantic Saree & Panjabi Gaze Photo (Tap to Zoom) -->
+        <div class="w-52 sm:w-56 mx-auto mb-6 -rotate-1 hover:rotate-0 transition-transform duration-500">
+          <div class="bg-gradient-to-b from-[#fdf8f1] to-[#f3e5d2] p-2.5 pb-6 rounded-xl shadow-2xl border border-gold/40">
+            <div class="w-full h-52 sm:h-56 rounded-lg overflow-hidden bg-burgundy relative">
+              <img
+                id="finalePhotoImg"
+                src="${STORY_CONFIG.finalePhoto.url}"
+                alt="${STORY_CONFIG.finalePhoto.caption}"
+                style="object-position: ${STORY_CONFIG.finalePhoto.position};"
+                class="zoomable-photo w-full h-full object-cover"
+              />
+            </div>
+            <p class="mt-2.5 font-serif italic text-sm text-velvet font-medium">
+              My Subbu & your smoll baby 🐣 💎✨
+            </p>
+          </div>
+        </div>
+
+        <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-gold-gradient leading-snug mb-5">
+          ${STORY_CONFIG.letterHeading}
+        </h2>
+
+        <div class="space-y-3.5 text-sm sm:text-[15px] text-rose-blush/90 leading-relaxed text-left sm:text-center max-w-lg mx-auto mb-6">
+          ${STORY_CONFIG.letterParagraphs.map((p) => `<p>${p}</p>`).join('')}
+        </div>
+
+        <p class="font-serif italic text-xl sm:text-2xl text-gold-light mb-7">
+          — ${STORY_CONFIG.yourSignature}
+        </p>
+
+        <!-- Finale Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button
+            id="celebrateBtn"
+            type="button"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold text-midnight bg-gradient-to-r from-gold-light via-gold to-gold-warm hover:brightness-110 shadow-lg shadow-gold/25 transition-all duration-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-gold-light"
+          >
+            <span>Celebrate Us 💎✨</span>
+          </button>
+
+          <button
+            id="replayBtn"
+            type="button"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-medium text-gold-light/85 hover:text-gold-light bg-white/5 hover:bg-white/10 border border-gold/25 transition-all duration-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-gold/40"
+          >
+            <span>↺</span>
+            <span>Replay Our Journey</span>
+          </button>
+        </div>
+      `;
+
+      stageContainer.appendChild(card);
+
+      // Attach tap-to-zoom lightbox
+      bindPhotoZoom(
+        document.getElementById('finalePhotoImg'),
+        STORY_CONFIG.finalePhoto.url,
+        STORY_CONFIG.finalePhoto.caption,
+        'constellation',
+        'from-[#562233] to-[#1b0b16]'
+      );
+
+      document.getElementById('celebrateBtn').addEventListener('click', (e) => {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        spawnHeartBurst(e.clientX || vw / 2, e.clientY || vh / 2, 28);
+        setTimeout(() => spawnHeartBurst(vw * 0.25, vh * 0.35, 18), 180);
+        setTimeout(() => spawnHeartBurst(vw * 0.75, vh * 0.35, 18), 340);
+        triggerCanvasCelebration();
+      });
+
+      document.getElementById('replayBtn').addEventListener('click', () => {
+        discoveredReasons.clear();
+        activeReasonIndex = null;
+        goToStep(0);
+      });
+    }
+
+    /**
+     * Navigation Helpers & Input Listeners
+     */
+    function goToStep(stepIndex) {
+      if (stepIndex < 0 || stepIndex >= TOTAL_STEPS) return;
+      currentStep = stepIndex;
+      renderCurrentStep();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentStep > 0) goToStep(currentStep - 1);
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+      if (currentStep < TOTAL_STEPS - 1) {
+        spawnHeartBurst(e.clientX, e.clientY, 7);
+        goToStep(currentStep + 1);
+      }
+    });
+
+    // Keyboard Navigation (Escape closes lightbox; Left/Right/Space navigate steps)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightboxOpen) {
+        closeLightbox();
+        return;
+      }
+      if (lightboxOpen) return;
+
+      if (e.key === 'ArrowRight') {
+        if (currentStep === 0) {
+          const box = document.getElementById('envelopeBox');
+          if (box) box.click();
+        } else if (currentStep < TOTAL_STEPS - 1) {
+          goToStep(currentStep + 1);
+        }
+      } else if (e.key === 'ArrowLeft') {
+        if (currentStep > 0) goToStep(currentStep - 1);
+      } else if (e.key === ' ' && document.activeElement === document.body) {
+        e.preventDefault();
+        if (currentStep === 0) {
+          const box = document.getElementById('envelopeBox');
+          if (box) box.click();
+        } else if (currentStep < TOTAL_STEPS - 1) {
+          goToStep(currentStep + 1);
+        }
+      }
+    });
+
+    // Mobile Touch Swipe Support
+    let touchStartX = 0;
+    let touchStartY = 0;
+    window.addEventListener(
+      'touchstart',
+      (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      },
+      { passive: true }
+    );
+    window.addEventListener(
+      'touchend',
+      (e) => {
+        if (currentStep === 0 || lightboxOpen) return;
+        const dx = e.changedTouches[0].screenX - touchStartX;
+        const dy = e.changedTouches[0].screenY - touchStartY;
+        if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+          if (dx < 0 && currentStep < TOTAL_STEPS - 1) {
+            goToStep(currentStep + 1);
+          } else if (dx > 0 && currentStep > 0) {
+            goToStep(currentStep - 1);
+          }
+        }
+      },
+      { passive: true }
+    );
+
+    /**
+     * ============================================================================
+     * FLOATING HEART, DIAMOND & SPARKLE CLICK BURST EFFECT
+     * ============================================================================
+     */
+    function spawnHeartBurst(x, y, count = 12) {
+      const symbols = ['♥', '💎', '✨', '✦', '♡'];
+      const colors = ['#f7e5c0', '#e5c07b', '#f5cfd6', '#d97a8c'];
+
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement('span');
+        el.className = 'burst-particle select-none';
+        el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
+        el.style.color = colors[Math.floor(Math.random() * colors.length)];
+        el.style.fontSize = `${12 + Math.random() * 13}px`;
+
+        const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.6;
+        const distance = 45 + Math.random() * 98;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance - 36;
+
+        el.style.setProperty('--tx', `${tx}px`);
+        el.style.setProperty('--ty', `${ty}px`);
+        el.style.setProperty('--sc', (0.8 + Math.random() * 0.9).toFixed(2));
+        el.style.setProperty('--rot', `${Math.floor(Math.random() * 70 - 35)}deg`);
+        el.style.setProperty('--dur', `${0.75 + Math.random() * 0.55}s`);
+
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 1400);
+      }
+    }
+
+    /**
+     * ============================================================================
+     * AMBIENT CANVAS: GOLDEN PARTICLES, ROSE PETALS & SUBTLE DIAMOND SPARKLES
+     * ============================================================================
+     */
+    const canvas = document.getElementById('ambientCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let celebrationBoost = 0;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createParticle(isBurst = false) {
+      const rand = Math.random();
+      const kind = rand < 0.22 ? 'petal' : rand < 0.38 ? 'diamond' : 'gold';
+      return {
+        x: Math.random() * canvas.width,
+        y: isBurst ? canvas.height + 10 : Math.random() * canvas.height,
+        size:
+          kind === 'petal'
+            ? 3.5 + Math.random() * 3.5
+            : kind === 'diamond'
+            ? 2.2 + Math.random() * 2.4
+            : 1 + Math.random() * 2.2,
+        speedY: isBurst ? -(1.3 + Math.random() * 2.2) : -(0.18 + Math.random() * 0.42),
+        speedX: (Math.random() - 0.5) * 0.35,
+        swayOffset: Math.random() * Math.PI * 2,
+        opacity: 0.2 + Math.random() * 0.55,
+        kind,
+        color:
+          kind === 'petal'
+            ? '#d97a8c'
+            : kind === 'diamond'
+            ? '#f7e5c0'
+            : Math.random() > 0.35
+            ? '#f7e5c0'
+            : '#e5c07b',
+        rotation: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.02,
+      };
+    }
+
+    function initParticles() {
+      particles = [];
+      const count = window.innerWidth < 640 ? 42 : 70;
+      for (let i = 0; i < count; i++) {
+        particles.push(createParticle(false));
+      }
+    }
+
+    function triggerCanvasCelebration() {
+      celebrationBoost = 45;
+      for (let i = 0; i < 26; i++) {
+        particles.push(createParticle(true));
+      }
+      setTimeout(() => {
+        const targetCount = window.innerWidth < 640 ? 42 : 70;
+        if (particles.length > targetCount) {
+          particles.splice(0, particles.length - targetCount);
+        }
+      }, 4500);
+    }
+
+    function animateCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (celebrationBoost > 0) celebrationBoost *= 0.96;
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.swayOffset += 0.015;
+        p.x += p.speedX + Math.sin(p.swayOffset) * 0.28;
+        p.y += p.speedY * (1 + celebrationBoost * 0.03);
+        p.rotation += p.rotSpeed;
+
+        if (p.y < -15) {
+          p.y = canvas.height + 15;
+          p.x = Math.random() * canvas.width;
+        }
+        if (p.x < -15) p.x = canvas.width + 15;
+        if (p.x > canvas.width + 15) p.x = -15;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation);
+        ctx.globalAlpha = p.opacity;
+
+        if (p.kind === 'petal') {
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (p.kind === 'diamond') {
+          // Delicate 4-point diamond sparkle
+          ctx.fillStyle = p.color;
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = '#f7e5c0';
+          ctx.beginPath();
+          ctx.moveTo(0, -p.size * 1.4);
+          ctx.lineTo(p.size * 0.65, 0);
+          ctx.lineTo(0, p.size * 1.4);
+          ctx.lineTo(-p.size * 0.65, 0);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          ctx.fillStyle = p.color;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = p.color;
+          ctx.beginPath();
+          ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      requestAnimationFrame(animateCanvas);
+    }
+
+    // Initialize App on Load
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('load', () => {
+      resizeCanvas();
+      initParticles();
+      animateCanvas();
+      renderCurrentStep();
+    });
+  </script>
+</body>
+</html>
