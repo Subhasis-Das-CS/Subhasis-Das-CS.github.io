@@ -198,6 +198,143 @@
       transition: opacity 0.3s ease;
     }
 
+    /* Cinematic Slideshow Soft Slow-Zoom (Ken Burns) & Crossfade Effects */
+    @keyframes kenBurnsZoomIn {
+      0% {
+        transform: scale(1) translate3d(0, 0, 0);
+      }
+      100% {
+        transform: scale(1.13) translate3d(0, -1.5%, 0);
+      }
+    }
+
+    @keyframes kenBurnsPanRight {
+      0% {
+        transform: scale(1.02) translate3d(-1.5%, 0, 0);
+      }
+      100% {
+        transform: scale(1.14) translate3d(1.5%, -1%, 0);
+      }
+    }
+
+    @keyframes kenBurnsPanLeft {
+      0% {
+        transform: scale(1.02) translate3d(1.5%, 0, 0);
+      }
+      100% {
+        transform: scale(1.14) translate3d(-1.5%, -1%, 0);
+      }
+    }
+
+    @keyframes kenBurnsDriftUp {
+      0% {
+        transform: scale(1.01) translate3d(0, 1.5%, 0);
+      }
+      100% {
+        transform: scale(1.13) translate3d(0, -1.8%, 0);
+      }
+    }
+
+    .kb-anim-0 {
+      animation: kenBurnsZoomIn 6.8s ease-out forwards;
+    }
+    .kb-anim-1 {
+      animation: kenBurnsPanRight 6.8s ease-out forwards;
+    }
+    .kb-anim-2 {
+      animation: kenBurnsPanLeft 6.8s ease-out forwards;
+    }
+    .kb-anim-3 {
+      animation: kenBurnsDriftUp 6.8s ease-out forwards;
+    }
+
+    .slideshow-paused .kb-anim-0,
+    .slideshow-paused .kb-anim-1,
+    .slideshow-paused .kb-anim-2,
+    .slideshow-paused .kb-anim-3 {
+      animation-play-state: paused;
+    }
+
+    .slide-layer {
+      transition: opacity 1.35s cubic-bezier(0.4, 0, 0.2, 1), filter 1.35s ease;
+      will-change: transform, opacity;
+    }
+
+    @keyframes captionSoftIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .caption-fade-in {
+      animation: captionSoftIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Dreamy, Softly Blurred Background Photo Slideshow */
+    @keyframes bgKenBurns0 {
+      0% {
+        transform: scale(1.06) translate3d(0, 0, 0);
+      }
+      100% {
+        transform: scale(1.22) translate3d(-1.5%, -2%, 0);
+      }
+    }
+
+    @keyframes bgKenBurns1 {
+      0% {
+        transform: scale(1.08) translate3d(-2%, 1%, 0);
+      }
+      100% {
+        transform: scale(1.24) translate3d(2%, -1.5%, 0);
+      }
+    }
+
+    @keyframes bgKenBurns2 {
+      0% {
+        transform: scale(1.08) translate3d(2%, -1%, 0);
+      }
+      100% {
+        transform: scale(1.22) translate3d(-2%, 1.5%, 0);
+      }
+    }
+
+    @keyframes bgKenBurns3 {
+      0% {
+        transform: scale(1.06) translate3d(0, 2%, 0);
+      }
+      100% {
+        transform: scale(1.23) translate3d(1%, -2%, 0);
+      }
+    }
+
+    .bg-slide-layer {
+      transition: opacity 2.6s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: opacity;
+    }
+
+    .bg-slide-img {
+      filter: blur(7px) saturate(1.18) brightness(0.62) contrast(1.04);
+      will-change: transform;
+    }
+
+    .bg-kb-0 {
+      animation: bgKenBurns0 10.5s ease-out forwards;
+    }
+    .bg-kb-1 {
+      animation: bgKenBurns1 10.5s ease-out forwards;
+    }
+    .bg-kb-2 {
+      animation: bgKenBurns2 10.5s ease-out forwards;
+    }
+    .bg-kb-3 {
+      animation: bgKenBurns3 10.5s ease-out forwards;
+    }
+
     /* Custom subtle scrollbar */
     ::-webkit-scrollbar {
       width: 5px;
@@ -212,12 +349,34 @@
   </style>
 </head>
 <body class="font-sans antialiased selection:bg-rose-petal/30 selection:text-gold-light">
+  <!-- Dreamy, Softly Blurred Ambient Background Photo Slideshow -->
+  <div
+    id="bgSlideshow"
+    class="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden"
+    aria-hidden="true"
+  >
+    <div id="bgSlideLayerA" class="bg-slide-layer absolute inset-0 opacity-0">
+      <img src="" alt="" class="bg-slide-img w-full h-full object-cover" />
+    </div>
+    <div id="bgSlideLayerB" class="bg-slide-layer absolute inset-0 opacity-0">
+      <img src="" alt="" class="bg-slide-img w-full h-full object-cover" />
+    </div>
+    <!-- Warm Rose-Burgundy Dreamy Atmospheric Veil -->
+    <div
+      class="absolute inset-0"
+      style="background: radial-gradient(circle at 50% 35%, rgba(46, 18, 35, 0.44) 0%, rgba(24, 11, 21, 0.72) 62%, rgba(16, 7, 14, 0.9) 100%);"
+    ></div>
+  </div>
+
   <!-- Ambient Starlit Particles, Diamond Sparkles & Drifting Rose Petals Canvas -->
   <canvas
     id="ambientCanvas"
     class="fixed inset-0 w-full h-full pointer-events-none z-0"
     aria-hidden="true"
   ></canvas>
+
+  <!-- Invisible Background Music (Starts on first tap/click anywhere, no UI controls) -->
+  <audio id="bgMusic" src="ms.mp3" loop preload="auto" playsinline class="hidden"></audio>
 
   <!-- Soft Vignette Glow Overlay -->
   <div
@@ -257,6 +416,117 @@
     </div>
   </div>
 
+  <!-- Full-Screen Cinematic Photo Slideshow Modal -->
+  <div
+    id="slideshowModal"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Romantic Photo Slideshow"
+    class="lightbox-backdrop fixed inset-0 z-50 hidden opacity-0 bg-midnight/95 backdrop-blur-xl flex flex-col items-center justify-between p-4 sm:p-6"
+  >
+    <!-- Slideshow Top Bar -->
+    <div class="w-full max-w-3xl flex items-center justify-between gap-3 z-10">
+      <div class="flex items-center gap-2.5">
+        <span class="inline-block w-2 h-2 rounded-full bg-gold-light animate-pulse"></span>
+        <span class="text-[11px] sm:text-xs uppercase tracking-[0.22em] text-gold-light/85">
+          Our Moments Slideshow
+        </span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span id="slideshowCounter" class="text-xs tracking-widest text-gold-light/70">1 / 10</span>
+        <button
+          id="slideshowCloseBtn"
+          type="button"
+          aria-label="Close slideshow"
+          class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-gold/30 text-gold-light text-base flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/60"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Cinematic Frame (Dual Crossfade Layers + Soft Glow Vignette) -->
+    <div class="relative w-full max-w-2xl flex-1 my-4 flex flex-col items-center justify-center">
+      <div
+        id="slideshowStage"
+        class="relative w-full h-[58vh] sm:h-[64vh] max-h-[560px] rounded-3xl overflow-hidden border border-gold/35 shadow-[0_28px_80px_-12px_rgba(0,0,0,0.85)] bg-burgundy"
+      >
+        <!-- Dual Stacked Layers for Seamless Soft Crossfades -->
+        <div id="slideLayerA" class="slide-layer absolute inset-0 opacity-0">
+          <img src="" alt="" class="w-full h-full object-cover" />
+        </div>
+        <div id="slideLayerB" class="slide-layer absolute inset-0 opacity-0">
+          <img src="" alt="" class="w-full h-full object-cover" />
+        </div>
+
+        <!-- Soft Romantic Dreamy Vignette & Warm Glow -->
+        <div
+          class="pointer-events-none absolute inset-0"
+          style="background: radial-gradient(circle at 50% 42%, transparent 48%, rgba(22, 11, 20, 0.78) 100%), linear-gradient(to top, rgba(22, 11, 20, 0.88) 0%, rgba(22, 11, 20, 0.15) 34%, transparent 60%);"
+        ></div>
+
+        <!-- Floating Caption Overlay -->
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 p-5 sm:p-7 text-center">
+          <p
+            id="slideshowTag"
+            class="text-[10px] sm:text-[11px] uppercase tracking-[0.26em] text-gold-light/80 mb-1"
+          ></p>
+          <h3
+            id="slideshowTitle"
+            class="font-serif text-2xl sm:text-3xl font-semibold text-gold-gradient leading-tight mb-1"
+          ></h3>
+          <p
+            id="slideshowCaption"
+            class="font-serif italic text-sm sm:text-base text-rose-blush/90 max-w-lg mx-auto"
+          ></p>
+        </div>
+
+        <!-- Soft Golden Slide Progress Bar -->
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 h-1 bg-white/10">
+          <div
+            id="slideshowProgressBar"
+            class="h-full w-0 bg-gradient-to-r from-rose-petal via-gold to-gold-light"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slideshow Bottom Controls -->
+    <div class="w-full max-w-md flex flex-col items-center gap-3 z-10">
+      <div class="flex items-center justify-center gap-3">
+        <button
+          id="slideshowPrevBtn"
+          type="button"
+          aria-label="Previous photo"
+          class="w-11 h-11 rounded-full bg-white/5 hover:bg-white/15 border border-gold/25 text-gold-light flex items-center justify-center transition-all duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-gold/50"
+        >
+          ←
+        </button>
+
+        <button
+          id="slideshowPlayPauseBtn"
+          type="button"
+          class="px-6 py-2.5 rounded-full text-xs sm:text-sm font-medium text-midnight bg-gradient-to-r from-gold-light via-gold to-gold-warm hover:brightness-110 shadow-lg shadow-gold/20 transition-all duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-gold-light"
+        >
+          ⏸ Pause
+        </button>
+
+        <button
+          id="slideshowNextBtn"
+          type="button"
+          aria-label="Next photo"
+          class="w-11 h-11 rounded-full bg-white/5 hover:bg-white/15 border border-gold/25 text-gold-light flex items-center justify-center transition-all duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-gold/50"
+        >
+          →
+        </button>
+      </div>
+
+      <!-- Mini Slide Indicator Dots -->
+      <div id="slideshowDots" class="flex items-center justify-center gap-1.5"></div>
+    </div>
+  </div>
+
   <!-- Main Full-Viewport Centered App Container -->
   <div class="relative z-10 min-h-screen flex flex-col justify-between items-center px-4 py-5 sm:px-6 sm:py-7">
 
@@ -267,7 +537,17 @@
     >
       <div class="w-full flex items-center justify-between text-xs tracking-widest uppercase text-gold-light/70">
         <span id="stageLabel" class="font-medium">Our Story</span>
-        <span id="stepCounter" class="font-sans text-gold-light/60">1 / 11</span>
+        <div class="flex items-center gap-2.5">
+          <button
+            id="headerSlideshowBtn"
+            type="button"
+            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.06] hover:bg-white/[0.14] border border-gold/25 text-[10px] tracking-[0.16em] uppercase text-gold-light transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/40"
+          >
+            <span>✦</span>
+            <span>Slideshow</span>
+          </button>
+          <span id="stepCounter" class="font-sans text-gold-light/60">1 / 11</span>
+        </div>
       </div>
 
       <!-- 11-Step Interactive Progress Dots -->
@@ -575,12 +855,14 @@
     let currentStep = 0;
     let envelopeOpening = false;
     let lightboxOpen = false;
+    let slideshowOpen = false;
     let activeReasonIndex = null;
     const discoveredReasons = new Set();
 
     const topHeader = document.getElementById('topHeader');
     const stageLabel = document.getElementById('stageLabel');
     const stepCounter = document.getElementById('stepCounter');
+    const headerSlideshowBtn = document.getElementById('headerSlideshowBtn');
     const progressDots = document.getElementById('progressDots');
     const stageContainer = document.getElementById('stageContainer');
     const bottomNav = document.getElementById('bottomNav');
@@ -1140,13 +1422,22 @@
         </p>
 
         <!-- Finale Action Buttons -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <div class="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3">
           <button
             id="celebrateBtn"
             type="button"
             class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold text-midnight bg-gradient-to-r from-gold-light via-gold to-gold-warm hover:brightness-110 shadow-lg shadow-gold/25 transition-all duration-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-gold-light"
           >
             <span>Celebrate Us 💎✨</span>
+          </button>
+
+          <button
+            id="watchSlideshowBtn"
+            type="button"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-medium text-gold-light bg-rose-deep/45 hover:bg-rose-deep/65 border border-gold/35 shadow-lg shadow-rose-deep/20 transition-all duration-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-gold/50"
+          >
+            <span>✦</span>
+            <span>Watch Our Slideshow</span>
           </button>
 
           <button
@@ -1180,12 +1471,216 @@
         triggerCanvasCelebration();
       });
 
+      document.getElementById('watchSlideshowBtn').addEventListener('click', () => {
+        openSlideshow(0);
+      });
+
       document.getElementById('replayBtn').addEventListener('click', () => {
         discoveredReasons.clear();
         activeReasonIndex = null;
         goToStep(0);
       });
     }
+
+    /**
+     * ============================================================================
+     * CINEMATIC PHOTO SLIDESHOW (Slow Ken Burns Zoom-In & Soft Crossfade)
+     * ============================================================================
+     */
+    const SLIDE_DURATION_MS = 5600;
+    const SLIDESHOW_ITEMS = [
+      {
+        tag: '8 Months of Us 💎✨',
+        title: 'My Subbu & Your Smoll Baby 🐣',
+        caption: STORY_CONFIG.coverPhoto.caption,
+        url: STORY_CONFIG.coverPhoto.url,
+        position: STORY_CONFIG.coverPhoto.position,
+      },
+      ...STORY_CONFIG.moments.map((m) => ({
+        tag: `Moment ${m.roman}`,
+        title: m.title,
+        caption: m.photoCaption,
+        url: m.photoUrl,
+        position: m.photoPosition,
+      })),
+      {
+        tag: 'Forever Yours 💎✨',
+        title: 'My Dearest Subhanwita',
+        caption: STORY_CONFIG.finalePhoto.caption,
+        url: STORY_CONFIG.finalePhoto.url,
+        position: STORY_CONFIG.finalePhoto.position,
+      },
+    ];
+
+    const slideshowModal = document.getElementById('slideshowModal');
+    const slideshowStage = document.getElementById('slideshowStage');
+    const slideLayerA = document.getElementById('slideLayerA');
+    const slideLayerB = document.getElementById('slideLayerB');
+    const slideshowTag = document.getElementById('slideshowTag');
+    const slideshowTitle = document.getElementById('slideshowTitle');
+    const slideshowCaption = document.getElementById('slideshowCaption');
+    const slideshowCounter = document.getElementById('slideshowCounter');
+    const slideshowProgressBar = document.getElementById('slideshowProgressBar');
+    const slideshowDots = document.getElementById('slideshowDots');
+    const slideshowCloseBtn = document.getElementById('slideshowCloseBtn');
+    const slideshowPrevBtn = document.getElementById('slideshowPrevBtn');
+    const slideshowNextBtn = document.getElementById('slideshowNextBtn');
+    const slideshowPlayPauseBtn = document.getElementById('slideshowPlayPauseBtn');
+
+    let slideIndex = 0;
+    let activeLayerToggle = true; // alternates between Layer A and Layer B for seamless crossfade
+    let slidePlaying = true;
+    let slideTimer = null;
+
+    function renderSlideshowDots() {
+      slideshowDots.innerHTML = '';
+      SLIDESHOW_ITEMS.forEach((_, idx) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `View slide ${idx + 1}`);
+        const isCurrent = idx === slideIndex;
+        dot.className = `h-1.5 rounded-full transition-all duration-300 focus:outline-none ${
+          isCurrent ? 'w-6 bg-gold-light' : 'w-1.5 bg-white/25 hover:bg-white/50'
+        }`;
+        dot.addEventListener('click', () => showSlide(idx));
+        slideshowDots.appendChild(dot);
+      });
+    }
+
+    function restartSlideProgress() {
+      slideshowProgressBar.style.transition = 'none';
+      slideshowProgressBar.style.width = '0%';
+      void slideshowProgressBar.offsetWidth;
+      if (slidePlaying) {
+        slideshowProgressBar.style.transition = `width ${SLIDE_DURATION_MS}ms linear`;
+        slideshowProgressBar.style.width = '100%';
+      }
+    }
+
+    function scheduleNextSlide() {
+      clearTimeout(slideTimer);
+      if (!slidePlaying || !slideshowOpen) return;
+      slideTimer = setTimeout(() => {
+        showSlide((slideIndex + 1) % SLIDESHOW_ITEMS.length);
+      }, SLIDE_DURATION_MS);
+    }
+
+    function showSlide(idx) {
+      slideIndex = (idx + SLIDESHOW_ITEMS.length) % SLIDESHOW_ITEMS.length;
+      const item = SLIDESHOW_ITEMS[slideIndex];
+
+      const incomingLayer = activeLayerToggle ? slideLayerA : slideLayerB;
+      const outgoingLayer = activeLayerToggle ? slideLayerB : slideLayerA;
+      activeLayerToggle = !activeLayerToggle;
+
+      const incomingImg = incomingLayer.querySelector('img');
+      incomingImg.src = item.url;
+      incomingImg.alt = item.caption;
+      incomingImg.style.objectPosition = item.position || '50% 25%';
+
+      // Reset & apply alternating soft slow-zoom / pan Ken Burns animation
+      incomingImg.className = 'w-full h-full object-cover';
+      void incomingImg.offsetWidth;
+      incomingImg.classList.add(`kb-anim-${slideIndex % 4}`);
+
+      // Crossfade layers smoothly
+      incomingLayer.style.zIndex = '2';
+      outgoingLayer.style.zIndex = '1';
+      incomingLayer.style.opacity = '1';
+      outgoingLayer.style.opacity = '0';
+
+      // Soft caption fade-in
+      [slideshowTag, slideshowTitle, slideshowCaption].forEach((el) => {
+        el.classList.remove('caption-fade-in');
+        void el.offsetWidth;
+        el.classList.add('caption-fade-in');
+      });
+      slideshowTag.textContent = item.tag;
+      slideshowTitle.textContent = item.title;
+      slideshowCaption.textContent = item.caption;
+      slideshowCounter.textContent = `${slideIndex + 1} / ${SLIDESHOW_ITEMS.length}`;
+
+      renderSlideshowDots();
+      restartSlideProgress();
+      scheduleNextSlide();
+    }
+
+    function openSlideshow(startIdx = 0) {
+      slideshowOpen = true;
+      slidePlaying = true;
+      slideshowStage.classList.remove('slideshow-paused');
+      slideshowPlayPauseBtn.textContent = '⏸ Pause';
+
+      // Reset both layers before opening
+      slideLayerA.style.opacity = '0';
+      slideLayerB.style.opacity = '0';
+
+      slideshowModal.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        slideshowModal.classList.remove('opacity-0');
+        slideshowModal.classList.add('opacity-100');
+      });
+
+      startBackgroundMusic();
+      showSlide(startIdx);
+    }
+
+    function closeSlideshow() {
+      clearTimeout(slideTimer);
+      slideshowModal.classList.remove('opacity-100');
+      slideshowModal.classList.add('opacity-0');
+      setTimeout(() => {
+        slideshowModal.classList.add('hidden');
+      }, 280);
+      slideshowOpen = false;
+    }
+
+    function toggleSlideshowPlayback() {
+      slidePlaying = !slidePlaying;
+      if (slidePlaying) {
+        slideshowStage.classList.remove('slideshow-paused');
+        slideshowPlayPauseBtn.textContent = '⏸ Pause';
+        restartSlideProgress();
+        scheduleNextSlide();
+      } else {
+        clearTimeout(slideTimer);
+        slideshowStage.classList.add('slideshow-paused');
+        slideshowPlayPauseBtn.textContent = '▶ Play';
+        const computedWidth = getComputedStyle(slideshowProgressBar).width;
+        slideshowProgressBar.style.transition = 'none';
+        slideshowProgressBar.style.width = computedWidth;
+      }
+    }
+
+    headerSlideshowBtn.addEventListener('click', () => openSlideshow(0));
+    slideshowCloseBtn.addEventListener('click', closeSlideshow);
+    slideshowPrevBtn.addEventListener('click', () => showSlide(slideIndex - 1));
+    slideshowNextBtn.addEventListener('click', () => showSlide(slideIndex + 1));
+    slideshowPlayPauseBtn.addEventListener('click', toggleSlideshowPlayback);
+    slideshowModal.addEventListener('click', (e) => {
+      if (e.target === slideshowModal) closeSlideshow();
+    });
+
+    // Touch Swipe inside Slideshow
+    let slideTouchX = 0;
+    slideshowStage.addEventListener(
+      'touchstart',
+      (e) => {
+        slideTouchX = e.changedTouches[0].screenX;
+      },
+      { passive: true }
+    );
+    slideshowStage.addEventListener(
+      'touchend',
+      (e) => {
+        const dx = e.changedTouches[0].screenX - slideTouchX;
+        if (Math.abs(dx) > 45) {
+          if (dx < 0) showSlide(slideIndex + 1);
+          else showSlide(slideIndex - 1);
+        }
+      },
+      { passive: true }
+    );
 
     /**
      * Navigation Helpers & Input Listeners
@@ -1201,15 +1696,26 @@
       if (currentStep > 0) goToStep(currentStep - 1);
     });
 
-    nextBtn.addEventListener('click', (e) => {
-      if (currentStep < TOTAL_STEPS - 1) {
-        spawnHeartBurst(e.clientX, e.clientY, 7);
-        goToStep(currentStep + 1);
-      }
+    nextBtn.addEventListener('click', () => {
+      if (currentStep < TOTAL_STEPS - 1) goToStep(currentStep + 1);
     });
 
-    // Keyboard Navigation (Escape closes lightbox; Left/Right/Space navigate steps)
+    // Keyboard Navigation (Escape closes lightbox/slideshow; Left/Right/Space navigate)
     window.addEventListener('keydown', (e) => {
+      if (slideshowOpen) {
+        if (e.key === 'Escape') {
+          closeSlideshow();
+        } else if (e.key === 'ArrowRight') {
+          showSlide(slideIndex + 1);
+        } else if (e.key === 'ArrowLeft') {
+          showSlide(slideIndex - 1);
+        } else if (e.key === ' ') {
+          e.preventDefault();
+          toggleSlideshowPlayback();
+        }
+        return;
+      }
+
       if (e.key === 'Escape' && lightboxOpen) {
         closeLightbox();
         return;
@@ -1250,7 +1756,7 @@
     window.addEventListener(
       'touchend',
       (e) => {
-        if (currentStep === 0 || lightboxOpen) return;
+        if (currentStep === 0 || lightboxOpen || slideshowOpen) return;
         const dx = e.changedTouches[0].screenX - touchStartX;
         const dy = e.changedTouches[0].screenY - touchStartY;
         if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4) {
@@ -1416,15 +1922,205 @@
         ctx.restore();
       }
 
+      drawAnalogMusicWave();
       requestAnimationFrame(animateCanvas);
     }
 
+    /**
+     * ============================================================================
+     * INVISIBLE BACKGROUND MUSIC (ms.mp3) & AMBIENT ANALOG WAVEFORM
+     * ============================================================================
+     * Starts silently on the first tap/click anywhere on the screen.
+     * Uses Web Audio AnalyserNode when hosted (real-time oscilloscope wave) and
+     * gracefully falls back to an organic analog wave when opened via file://
+     * so audio playback is never muted by local CORS restrictions.
+     */
+    const bgMusic = document.getElementById('bgMusic');
+    let musicStarted = false;
+    let audioCtx = null;
+    let analyser = null;
+    let waveData = null;
+    let waveEnergy = 0;
+    let wavePhase = 0;
+
+    function initAudioAnalyser() {
+      // Skip MediaElementSource on file:// protocol to prevent browser CORS muting
+      if (window.location.protocol === 'file:' || analyser) return;
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+        audioCtx = new AudioContextClass();
+        const source = audioCtx.createMediaElementSource(bgMusic);
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 256;
+        analyser.smoothingTimeConstant = 0.85;
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+        waveData = new Uint8Array(analyser.frequencyBinCount);
+      } catch (err) {
+        analyser = null;
+      }
+    }
+
+    function startBackgroundMusic() {
+      if (musicStarted || !bgMusic) return;
+      initAudioAnalyser();
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume().catch(() => {});
+      }
+      bgMusic.volume = 0.7;
+      const playPromise = bgMusic.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            musicStarted = true;
+            window.removeEventListener('pointerdown', startBackgroundMusic);
+            window.removeEventListener('click', startBackgroundMusic);
+            window.removeEventListener('keydown', startBackgroundMusic);
+          })
+          .catch(() => {
+            // Retry on next user gesture if browser blocked autoplay
+          });
+      }
+    }
+
+    // Trigger music seamlessly on the very first interaction anywhere on screen
+    window.addEventListener('pointerdown', startBackgroundMusic, { passive: true });
+    window.addEventListener('click', startBackgroundMusic, { passive: true });
+    window.addEventListener('keydown', startBackgroundMusic, { passive: true });
+
+    function drawAnalogMusicWave() {
+      const isPlaying = musicStarted && bgMusic && !bgMusic.paused;
+      const targetEnergy = isPlaying ? 1 : 0;
+      waveEnergy += (targetEnergy - waveEnergy) * 0.04;
+      if (waveEnergy < 0.005) return;
+
+      wavePhase += 0.032;
+
+      // Read live audio oscilloscope data if Web Audio analyser is active
+      let hasLiveSignal = false;
+      if (analyser && waveData) {
+        analyser.getByteTimeDomainData(waveData);
+        for (let i = 0; i < waveData.length; i++) {
+          if (Math.abs(waveData[i] - 128) > 2) {
+            hasLiveSignal = true;
+            break;
+          }
+        }
+      }
+
+      const w = canvas.width;
+      const baseY = canvas.height - (w < 640 ? 22 : 28);
+      const maxAmp = w < 640 ? 13 : 17;
+      const points = 96;
+
+      // Soft horizontal fade at left & right viewport edges
+      const goldGrad = ctx.createLinearGradient(0, baseY, w, baseY);
+      goldGrad.addColorStop(0, 'rgba(229, 192, 123, 0)');
+      goldGrad.addColorStop(0.2, 'rgba(217, 122, 140, 0.45)');
+      goldGrad.addColorStop(0.5, 'rgba(247, 229, 192, 0.78)');
+      goldGrad.addColorStop(0.8, 'rgba(217, 122, 140, 0.45)');
+      goldGrad.addColorStop(1, 'rgba(229, 192, 123, 0)');
+
+      const roseGrad = ctx.createLinearGradient(0, baseY, w, baseY);
+      roseGrad.addColorStop(0, 'rgba(217, 122, 140, 0)');
+      roseGrad.addColorStop(0.25, 'rgba(217, 122, 140, 0.32)');
+      roseGrad.addColorStop(0.5, 'rgba(245, 207, 214, 0.42)');
+      roseGrad.addColorStop(0.75, 'rgba(217, 122, 140, 0.32)');
+      roseGrad.addColorStop(1, 'rgba(217, 122, 140, 0)');
+
+      const layers = [
+        { stroke: roseGrad, width: 1.2, phaseOffset: 1.15, ampScale: 0.65, blur: 6 },
+        { stroke: goldGrad, width: 1.75, phaseOffset: 0, ampScale: 1, blur: 10 },
+      ];
+
+      layers.forEach((layer) => {
+        ctx.save();
+        ctx.beginPath();
+        ctx.strokeStyle = layer.stroke;
+        ctx.lineWidth = layer.width;
+        ctx.globalAlpha = 0.85 * waveEnergy;
+        ctx.shadowBlur = layer.blur;
+        ctx.shadowColor = 'rgba(247, 229, 192, 0.55)';
+
+        for (let i = 0; i <= points; i++) {
+          const t = i / points;
+          const x = t * w;
+          // Bell-curve envelope so wave tapers smoothly to 0 at edges
+          const envelope = Math.sin(t * Math.PI);
+          let yOffset = 0;
+
+          if (hasLiveSignal && waveData) {
+            const dataIdx = Math.min(waveData.length - 1, Math.floor(t * waveData.length));
+            const normalized = (waveData[dataIdx] - 128) / 128;
+            const subtleSway =
+              Math.sin(t * Math.PI * 5 + wavePhase + layer.phaseOffset) * 0.14;
+            yOffset = (normalized * 1.65 + subtleSway) * maxAmp * layer.ampScale * envelope;
+          } else {
+            // Smooth multi-harmonic analog wave fallback (e.g., on file:// local viewing)
+            const wave1 = Math.sin(t * Math.PI * 6 + wavePhase + layer.phaseOffset);
+            const wave2 = Math.sin(t * Math.PI * 11 - wavePhase * 1.45 + layer.phaseOffset) * 0.45;
+            const wave3 = Math.sin(t * Math.PI * 17 + wavePhase * 0.8) * 0.2;
+            const breath = 0.72 + 0.28 * Math.sin(wavePhase * 0.55);
+            yOffset = (wave1 + wave2 + wave3) * 0.52 * maxAmp * layer.ampScale * envelope * breath;
+          }
+
+          const y = baseY + yOffset * waveEnergy;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+
+        ctx.stroke();
+        ctx.restore();
+      });
+    }
+
     // Initialize App on Load
+    /**
+     * ============================================================================
+     * DREAMY AMBIENT BACKGROUND PHOTO SLIDESHOW (Slow Zoom & Soft Crossfade)
+     * ============================================================================
+     */
+    const bgSlideLayerA = document.getElementById('bgSlideLayerA');
+    const bgSlideLayerB = document.getElementById('bgSlideLayerB');
+    let bgSlideIndex = 0;
+    let bgLayerToggle = true;
+
+    function advanceBgSlide() {
+      if (!bgSlideLayerA || !bgSlideLayerB || !SLIDESHOW_ITEMS.length) return;
+      const item = SLIDESHOW_ITEMS[bgSlideIndex];
+      const incoming = bgLayerToggle ? bgSlideLayerA : bgSlideLayerB;
+      const outgoing = bgLayerToggle ? bgSlideLayerB : bgSlideLayerA;
+      bgLayerToggle = !bgLayerToggle;
+
+      const img = incoming.querySelector('img');
+      img.src = item.url;
+      img.style.objectPosition = item.position || '50% 25%';
+
+      // Restart smooth slow-zoom & gentle drift animation
+      img.className = 'bg-slide-img w-full h-full object-cover';
+      void img.offsetWidth;
+      img.classList.add(`bg-kb-${bgSlideIndex % 4}`);
+
+      incoming.style.zIndex = '2';
+      outgoing.style.zIndex = '1';
+      incoming.style.opacity = '0.52';
+      outgoing.style.opacity = '0';
+
+      bgSlideIndex = (bgSlideIndex + 1) % SLIDESHOW_ITEMS.length;
+    }
+
+    function initAmbientBgSlideshow() {
+      advanceBgSlide();
+      setInterval(advanceBgSlide, 7200);
+    }
+
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('load', () => {
       resizeCanvas();
       initParticles();
       animateCanvas();
+      initAmbientBgSlideshow();
       renderCurrentStep();
     });
   </script>
